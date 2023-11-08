@@ -1,0 +1,13 @@
+/.vscode
+/node_modules/
+./dist
+
+package.json
+package-lock.json
+
+.gitignore
+.eslintrc.cjs
+
+*.env
+.env
+.env.*
