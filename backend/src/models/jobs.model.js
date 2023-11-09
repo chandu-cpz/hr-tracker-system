@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
-const { Schema } = mongoose;
 
-const jobSchema =new Schema({
+const jobSchema =new mongoose.Schema({
     id: {
         type: String,
         required: true,
@@ -60,4 +59,4 @@ const jobSchema =new Schema({
     }],
     timestamps: true 
 });
-export const Jobs = mongoose.model('Jobs', jobSchema);
+export const Jobs = mongoose.model('Job', jobSchema);
