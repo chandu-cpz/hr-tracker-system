@@ -2,6 +2,7 @@ import express from "express"
 import cors from "cors"
 import cookieParser from "cookie-parser"
 import { signUpRouter } from "./routes/auth/signup.route.js"
+import { loginRouter } from "./routes/auth/login.route.js"
 
 const app = express()
 
@@ -16,6 +17,8 @@ app.use(express.static("public"))
 app.use(cookieParser())
 
 app.use("/signup", signUpRouter)
+
+app.use("/login",loginRouter)
 
 app.on("error", (error) => {
     console.log("ERRR: ", error);
