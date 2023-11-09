@@ -1,12 +1,6 @@
 import mongoose from "mongoose";
 
 const hrSchema = new mongoose.Schema({
-    userName: {
-        type: String,
-        required: true,
-        unique: true,
-        lowercase: true
-    },
     fullName: {
         type: String,
         required: true,
