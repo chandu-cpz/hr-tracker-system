@@ -23,20 +23,17 @@ export async function loginController(req, res) {
 
         //setting cookie options
         const options = {
-            expires: new Date(Date.now() + Number(process.env.ACCESS_TOKEN_EXPIRY_DAYS) * 24 * 60 * 60 * 1000),
+            expires: new Date(Date.now() + Number(process.env.ACCESS_TOKEN_EXPIRY_DAYS)*24* 60 * 60* 1000),
             httpOnly: true,
-        }
+        };
 
         //set the token in cookie's
-        res.status(200).cookie("token", token, options)
+        res.status(200).cookie("token", token, options);
 
-        //send the user details 
-        res.status(200).json({
-            fullName: user.fullName,
-            email: user.email,
-            skills: user.skills,
-            gender: user.gender,
-        })
+        user.password = undefined;
+
+        //send the user details
+        res.status(200).json(user);
     } else {
         return res.status(401).send("Invalid credentials");
     }

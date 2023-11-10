@@ -33,13 +33,11 @@ const userSchema = new mongoose.Schema({
     },
     skills: [
         {
-            type: String,
-            required: true
+            type: String
         }
     ],
     experience: {
         type: String,
-        default: null
     },
     profileImage: {
         type: String
