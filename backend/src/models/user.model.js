@@ -7,6 +7,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    role: {
+        type: String,
+        enum: ["USER", "HR"],
+        default: "USER"
+    },
     gender: {
         type: String,
         enum: ['M', 'F', 'O'],
@@ -47,7 +52,10 @@ const userSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Job'
         }
-    ]
+    ],
+    company : {
+        type: String,
+    }
 
 }, { timestamps: true });
 
@@ -82,11 +90,15 @@ userSchema.methods.generateRefreshToken = function(){
             _id: this._id,
             
         },
-        process.env.REFRESH_TOKEN_SECRET,
+        process.env.ACCESS_TOKEN_SECRET,
         {
-            expiresIn: process.env.REFRESH_TOKEN_EXPIRY
+            expiresIn: process.env.ACCESS_TOKEN_EXPIRY
         }
     )
+}
+
+userSchema.methods.checkToken = function (token) {
+    return jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
 }
 
 export const User = mongoose.model('User', userSchema);

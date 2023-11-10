@@ -1,3 +1,6 @@
+// Currently no in use using role in user Model
+
+
 import mongoose from "mongoose";
 
 const hrSchema = new mongoose.Schema({
@@ -30,6 +33,6 @@ const hrSchema = new mongoose.Schema({
     profileImage: {
         type: String
     }
-}, {timestamps: true})
+}, { timestamps: true })
 
 export const Hr = new mongoose.model("Hr", hrSchema)

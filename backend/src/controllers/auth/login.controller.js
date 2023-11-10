@@ -1,6 +1,6 @@
 import { User } from "../../models/user.model.js";
 
-export async function loginController(req, res) {
+export async function loginUser(req, res) {
     const { email, password } = req.body;
 
     // validation of data

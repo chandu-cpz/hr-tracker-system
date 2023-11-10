@@ -1,6 +1,6 @@
 import { User } from "../../models/user.model.js";
 
-export async function signUpController(req, res) {
+export async function createUser(req, res) {
     const {
         fullName,
         email,
@@ -13,6 +13,8 @@ export async function signUpController(req, res) {
         experience,
         profileImage,
         jobsApplied,
+        role,
+        company
     } = req.body;
 
     let userData = {
@@ -22,30 +24,26 @@ export async function signUpController(req, res) {
         gender,
     };
 
+    if (company)  userData.company = company;
+    if(role) userData.role = role;
     if (skills) {
         userData.skills = skills;
     }
-
     if (phoneNumber) {
         userData.phoneNumber = phoneNumber;
     }
-
     if (address) {
         userData.address = address;
     }
-
     if (education) {
         userData.education = education;
     }
-
     if (experience) {
         userData.experience = experience;
     }
-
     if (profileImage) {
         userData.profileImage = profileImage;
     }
-
     if (jobsApplied) {
         userData.jobsApplied = jobsApplied;
     }
