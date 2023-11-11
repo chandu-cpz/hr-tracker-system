@@ -1,7 +1,14 @@
+import axios from 'axios'
 import './App.css'
 import './index.css'
 
 function App() {
+  axios.get("/api/jobs").
+  then((response) => {
+    console.log(response.data);
+  }).catch((error) => {
+    console.log(error.message);
+  });
 
   return (
     <>

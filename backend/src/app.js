@@ -17,10 +17,10 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.static("public"));
 app.use(cookieParser());
 
-app.use("/signup", signUpRouter);
+app.use("/api/signup", signUpRouter);
 
-app.use("/login",loginRouter);
-app.use("/jobs", jobsRouter);
+app.use("/api/login",loginRouter);
+app.use("/api/jobs", jobsRouter);
 
 
 app.on("error", (error) => {
