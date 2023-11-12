@@ -23,7 +23,14 @@ export async function loginUser(req, res) {
 
         //setting cookie options
         const options = {
-            expires: new Date(Date.now() + Number(process.env.ACCESS_TOKEN_EXPIRY_DAYS)*24* 60 * 60* 1000),
+            expires: new Date(
+                Date.now() +
+                    Number(process.env.ACCESS_TOKEN_EXPIRY_DAYS) *
+                        24 *
+                        60 *
+                        60 *
+                        1000
+            ),
             httpOnly: true,
         };
 
