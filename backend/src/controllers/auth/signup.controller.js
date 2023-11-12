@@ -14,7 +14,7 @@ export async function createUser(req, res) {
         profileImage,
         jobsApplied,
         role,
-        company
+        company,
     } = req.body;
 
     let userData = {
@@ -24,8 +24,8 @@ export async function createUser(req, res) {
         gender,
     };
 
-    if (company)  userData.company = company;
-    if(role) userData.role = role;
+    if (company) userData.company = company;
+    if (role) userData.role = role;
     if (skills) {
         userData.skills = skills;
     }
@@ -62,7 +62,14 @@ export async function createUser(req, res) {
 
     //setting cookie options
     const options = {
-        expires: new Date(Date.now() + Number(process.env.ACCESS_TOKEN_EXPIRY_DAYS)*24* 60 * 60* 1000),
+        expires: new Date(
+            Date.now() +
+                Number(process.env.ACCESS_TOKEN_EXPIRY_DAYS) *
+                    24 *
+                    60 *
+                    60 *
+                    1000
+        ),
         httpOnly: true,
     };
 
