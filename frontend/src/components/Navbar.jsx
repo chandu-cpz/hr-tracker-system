@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 export function Navbar() {
     return (
         <>
-            <div className=" tw-z-5 tw-fixed-top tw-fixed tw-inset-x-0 tw-top-0 tw-flex tw-justify-between tw-bg-gray tw-p-2 tw-drop-shadow-2xl ">
+            <div className="tw-sticky tw-top-0 tw-z-50 tw-flex tw-justify-between tw-bg-gray tw-p-2 tw-drop-shadow-2xl ">
                 <Link to="/">
                     <h1 className="tw-ms-4">HRJ</h1>
                 </Link>
