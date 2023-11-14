@@ -2,7 +2,7 @@ export function LandingPage() {
     return (
         <div className="tw-flex tw-h-screen tw-flex-col tw-items-center tw-justify-center tw-bg-gray">
             <div>
-                <h1 className="tw-text-center tw-text-6xl tw-font-extrabold tw-text-black">
+                <h1 className="tw-text-center tw-text-6xl tw-font-extrabold tw-text-black tw-mt-12">
                     Streamline Recruiting Workflows
                 </h1>
                 <br />
@@ -19,7 +19,7 @@ export function LandingPage() {
                 <br />
                 <br />
             </div>
-            <div className="tw-w-4/6">
+            <div className="tw-w-5/6">
                 <p className="tw-text-center tw-text-3xl tw-font-medium tw-text-black tw-text-opacity-50">
                     Your all-in-one talent acquisition solution for a seamless
                     recruiting experience.
