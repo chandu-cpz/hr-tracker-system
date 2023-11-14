@@ -1,39 +1,67 @@
-export function JobFilter() {
-    return (
-        <div>
-            <button className="tw-hover:tw-bg-blue-800 tw-focus:tw-ring-4 tw-focus:tw-outline-none tw-focus:tw-ring-blue-300 tw-flex tw-items-center tw-rounded-lg tw-bg-blue-700 tw-px-5 tw-py-2.5 tw-text-center tw-text-white">
-                Dropdown
-                <svg
-                    className="tw-ms-3 tw-h-2.5 tw-w-2.5"
-                    fill="none"
-                    viewBox="0 0 10 6"
-                >
-                    <path
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        d="M1 1l4 4 4-4"
-                    />
-                </svg>
-            </button>
+import { Dropdown } from "./DropDown";
+import { Sidebar } from "./Sidebar";
+import { BsSearch, BsGeoAlt, BsBriefcase, BsClock } from "react-icons/bs";
+import { Card } from "./Card";
 
-            {
-                <div className="tw-divide-gray-100 tw-z-10 tw-hidden tw-w-44 tw-divide-y tw-rounded-lg tw-bg-white tw-shadow">
-                    <ul
-                        className="tw-text-gray-700 tw-py-2 tw-text-sm"
-                        aria-labelledby="dropdownHoverButton"
+export function JobFilter() {
+    const options = ["Web Developer", "Data Scientist"];
+
+    return (
+        <>
+            <div className=" tw-flex tw-justify-around tw-gap-3 tw-bg-slate-500 tw-p-4 tw-shadow-lg">
+                <Dropdown
+                    name="Job Title"
+                    options={options}
+                    icon={<BsSearch />}
+                />
+                <Dropdown
+                    name="Location"
+                    options={options}
+                    icon={<BsGeoAlt />}
+                />
+                <Dropdown
+                    name="Experience"
+                    options={options}
+                    icon={<BsBriefcase />}
+                />
+                <Dropdown
+                    name="Job Duration"
+                    options={options}
+                    icon={<BsClock />}
+                />
+                <div className="tw-flex">
+                    <label
+                        htmlFor="salary"
+                        className="tw-mr-3 tw-text-xl tw-text-white"
                     >
-                        <li>
-                            <a
-                                href="#"
-                                className="tw-hover:tw-bg-gray-100 tw-block tw-px-4 tw-py-2"
-                            >
-                                Dashboard
-                            </a>
-                        </li>
-                        {/* other links */}
-                    </ul>
+                        Salary
+                    </label>
+                    <input type="range" min="0" max="1000000" />
                 </div>
-            }
-        </div>
+            </div>
+            <div className="tw-m-4 tw-ms-72">
+                <h1>Recomended Jobs</h1>
+            </div>
+            <div className="tw-flex tw-flex-wrap tw-gap-10">
+                <Sidebar />
+                <Card />
+                <Card />
+                <Card />
+                <Card />
+                <Card />
+                <Card />
+                <Card />
+                <Card />
+                <Card />
+                <Card />
+                <Card />
+                <Card />
+                <Card />
+                <Card />
+                <Card />
+                <Card />
+                <Card />
+            </div>
+        </>
     );
 }

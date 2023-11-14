@@ -1,6 +1,6 @@
 export function LandingPage() {
     return (
-        <div className="tw-flex tw-h-screen tw-flex-col tw-items-center tw-justify-center tw-bg-gray">
+        <div className=" tw-flex tw-h-screen tw-flex-col tw-items-center tw-justify-center tw-bg-gray ">
             <div>
                 <h1 className="tw-text-center tw-text-6xl tw-font-extrabold tw-text-black">
                     Streamline Recruiting Workflows

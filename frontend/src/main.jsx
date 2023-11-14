@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap/dist/js/bootstrap.bundle.js";
 import { store } from "./redux/store.js";
 import { Provider } from "react-redux";
 import {
@@ -11,14 +12,15 @@ import {
     createBrowserRouter,
     Route,
 } from "react-router-dom";
-import { LandingPage, Signup, Login } from "./components/";
+import { LandingPage, Signup, Login, JobFilter } from "./components/";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path="/" element={<App />}>
-            <Route path="" element={<LandingPage />} />
+            <Route index element={<LandingPage />} />
             <Route path="register" element={<Signup />} />
             <Route path="login" element={<Login />} />
+            <Route path="jobs" element={<JobFilter />} />
         </Route>
     )
 );
