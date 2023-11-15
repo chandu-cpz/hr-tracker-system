@@ -1,7 +1,9 @@
 // Require role middleware
 import { User } from "../models/user.model.js";
 export async function requiredRole(req, res, next) {
-    const { _id } = req.body;
+    console.log("Checking if user got required role(requiredRole middleware)");
+    const { _id } = req.body.user;
+    console.log(_id);
 
     try {
         const user = await User.findOne({ _id: _id });

@@ -1,4 +1,4 @@
-// Currently no in use using role in user Model
+// Currently no in use using role in user Model consider this depricated. (Using role attribute in user model instead)
 
 import mongoose from "mongoose";
 

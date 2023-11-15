@@ -1,11 +1,12 @@
 import { User } from "../../models/user.model.js";
 
 export async function loginUser(req, res) {
+    console.log("Login user (loginUser controller)");
     const { email, password } = req.body;
 
     // validation of data
     if (!(email && password)) {
-        return res.status(400).send("Provide all necessary details");
+        return res.status(400).send("Either password or email are not provided");
     }
 
     // find user in db
@@ -13,7 +14,7 @@ export async function loginUser(req, res) {
 
     // if user not found
     if (!user) {
-        return res.status(401).send("Invalid user");
+        return res.status(401).send("User is not registered");
     }
 
     // match password
@@ -25,22 +26,22 @@ export async function loginUser(req, res) {
         const options = {
             expires: new Date(
                 Date.now() +
-                    Number(process.env.ACCESS_TOKEN_EXPIRY_DAYS) *
-                        24 *
-                        60 *
-                        60 *
-                        1000
+                Number(process.env.ACCESS_TOKEN_EXPIRY_DAYS) *
+                24 *
+                60 *
+                60 *
+                1000
             ),
             httpOnly: true,
         };
 
         //set the token in cookie's
-        res.status(200).cookie("token", token, options);
+        res.cookie("token", token, options);
 
         user.password = undefined;
 
         //send the user details
-        res.status(200).json(user);
+        res.json(user);
     } else {
         return res.status(401).send("Invalid credentials");
     }

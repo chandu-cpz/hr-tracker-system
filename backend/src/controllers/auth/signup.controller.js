@@ -1,6 +1,7 @@
 import { User } from "../../models/user.model.js";
 
 export async function createUser(req, res) {
+    console.log("createUser(createUser controller): ");
     const {
         fullName,
         email,
@@ -64,17 +65,17 @@ export async function createUser(req, res) {
     const options = {
         expires: new Date(
             Date.now() +
-                Number(process.env.ACCESS_TOKEN_EXPIRY_DAYS) *
-                    24 *
-                    60 *
-                    60 *
-                    1000
+            Number(process.env.ACCESS_TOKEN_EXPIRY_DAYS) *
+            24 *
+            60 *
+            60 *
+            1000
         ),
         httpOnly: true,
     };
 
     //set the token in cookie's
-    res.status(200).cookie("token", token, options);
+    res.cookie("token", token, options);
 
     //send the user details
     res.status(200).json(userData);
