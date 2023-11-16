@@ -2,9 +2,26 @@ import { Dropdown } from "./DropDown";
 import { Sidebar } from "./Sidebar";
 import { BsSearch, BsGeoAlt, BsBriefcase, BsClock } from "react-icons/bs";
 import { Card } from "./Card";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 export function JobFilter() {
     const options = ["Web Developer", "Data Scientist"];
+    const [jobs, setJobs] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get("/api/jobs");
+                const jobs = response.data;
+                setJobs(jobs);
+            } catch (error) {
+                console.log("ERROR HITTING /api/jobs", error.message);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     return (
         <>
@@ -44,23 +61,9 @@ export function JobFilter() {
             </div>
             <div className="tw-flex tw-flex-wrap tw-gap-10">
                 <Sidebar />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
+                {jobs.map((job) => {
+                    return <Card key={job._id} job={job} />;
+                })}
             </div>
         </>
     );

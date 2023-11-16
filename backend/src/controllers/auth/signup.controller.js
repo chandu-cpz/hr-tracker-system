@@ -58,25 +58,25 @@ export async function createUser(req, res) {
     //Not a existing user so create a new one
     const user = await User.create(userData);
 
-    //Generate a token for the user
-    const token = await user.generateAccessToken();
+    // //Generate a token for the user
+    // const token = await user.generateAccessToken();
 
-    //setting cookie options
-    const options = {
-        expires: new Date(
-            Date.now() +
-            Number(process.env.ACCESS_TOKEN_EXPIRY_DAYS) *
-            24 *
-            60 *
-            60 *
-            1000
-        ),
-        httpOnly: true,
-    };
+    // //setting cookie options
+    // const options = {
+    //     expires: new Date(
+    //         Date.now() +
+    //         Number(process.env.ACCESS_TOKEN_EXPIRY_DAYS) *
+    //         24 *
+    //         60 *
+    //         60 *
+    //         1000
+    //     ),
+    //     httpOnly: true,
+    // };
 
-    //set the token in cookie's
-    res.cookie("token", token, options);
+    // //set the token in cookie's
+    // res.cookie("token", token, options);
 
     //send the user details
-    res.status(200).json(userData);
+    res.status(200).send("Completed Creating user")
 }
