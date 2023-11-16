@@ -73,39 +73,42 @@ export function Dashboard() {
                         </div>
                     </div>
                 </div>
-                <div className="tw-bg-slate-950  tw-rounded-r-3xl">
-                    <div>
-                        <h1>DashBoard</h1>
-                        <div className="tw-flex tw-flex-row  tw-gap-10 tw-text-white ">
-                            <div className="tw-basis-1/2 tw-text-3xl tw-grow">
-                                <h1>Hello,Shindha</h1>
-                            </div>
+                <div className="tw-bg-slate-950 tw-flex-1 tw-rounded-r-3xl tw-flex tw-flex-col tw-text-white">
+                    <h1>Dashboard</h1>
 
-                            <div className="tw-basis-1/4 tw-bg-slate-900 tw-h-max tw-p-4 tw-grow">
-                                <div className="tw-flex-col">
-                                <span><MdGroupAdd size={35} /></span> 
-                                <h2>TotalJobs</h2>
-                                </div> 
-                            </div>
+                    <div className="tw-flex tw-flex-wrap tw-gap-4">
 
-                            <div className="tw-basis-1/4 tw-bg-slate-900 tw-h-max tw-p-4 tw-grow">
-                            <div className="tw-flex-col tw-text-white">
-                                <span><MdGroupAdd size={35}/></span> 
-                                <h2 clas>TotalJobs</h2>
-                                </div> 
-                            </div>
-
-                            <div className="tw-basis-1/4 tw-bg-slate-900  tw-h-max tw-p-4 tw-grow">
+                        <div className="tw-w-1/3 tw-bg-slate-900 tw-h-40 tw-p-4">
                             <div className="tw-flex-col">
-                                <span><MdGroupAdd size={35} /></span> 
-                                <h2>TotalJobs</h2>
-                                </div> 
+                                <span><MdGroupAdd size={35} /></span>
+                                <h2>Total Jobs</h2>
                             </div>
+                        </div>
 
+                        <div className="tw-w-1/3 tw-bg-slate-900 tw-h-40 tw-p-4">
+                            <div className="tw-flex-col tw-text-white">
+                                <span><MdGroupAdd size={35} /></span>
+                                <h2>Total Employees</h2>
+                            </div>
+                        </div>
+
+                        <div className="tw-w-1/3 tw-bg-slate-900 tw-h-40 tw-p-4">
+                            <div className="tw-flex-col">
+                                <span><MdGroupAdd size={35} /></span>
+                                <h2>Total Departments</h2>
+                            </div>
+                        </div>
+
+                        <div className="tw-w-1/3 tw-bg-slate-900 tw-h-40 tw-p-4">
+                            <div className="tw-flex-col">
+                                <span><MdGroupAdd size={35} /></span>
+                                <h2>This Month Sales</h2>
+                            </div>
                         </div>
                     </div>
                 </div>
+
             </div>
-        </>
-    );
+            </>
+            );
 }
