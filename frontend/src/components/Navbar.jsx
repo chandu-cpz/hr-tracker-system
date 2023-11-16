@@ -1,11 +1,18 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useState } from "react";
 
 export function Navbar() {
     const isLoggedIn = useSelector((state) => state.isLoggedIn);
+    const profileImg =
+        "https://qph.cf2.quoracdn.net/main-qimg-deffe0bd0e8c5cc04b4ba763afd2a686-lq";
+
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const username = "JohnDoe";
 
     return (
-        <div className=" tw-h-15 tw-flex tw-justify-between tw-bg-gray tw-p-2 tw-shadow-lg">
+        <div className=" tw-h-15 tw-flex tw-justify-evenly tw-bg-gray tw-p-2 tw-shadow-lg">
             <Link to="/">
                 <h1 className="tw-ms-4">HRJ</h1>
             </Link>
@@ -16,14 +23,58 @@ export function Navbar() {
                 </p>
             </Link>
             {isLoggedIn ? (
-                <Link
-                    to="/dashboard"
-                    className="tw-text-current tw-no-underline"
-                >
-                    <p className="tw-mt-2 tw-text-3xl tw-text-orange-500">
-                        Dashboard
-                    </p>
-                </Link>
+                <div className="tw-flex tw-gap-2">
+                    <div className="dropdown">
+                        <a
+                            className="dropdown-toggle"
+                            data-bs-toggle="dropdown"
+                        >
+                            <img
+                                src={profileImg}
+                                className="tw-mr-4 tw-h-14 tw-w-14 tw-rounded-full"
+                                alt="Profile"
+                                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                            />
+                        </a>
+                        <ul className="dropdown-menu">
+                            <li className="dropdown-item">
+                                <img
+                                    src={profileImg}
+                                    className="tw-mr-4 tw-h-10 tw-w-10 tw-rounded-full"
+                                    alt="Profile"
+                                    onClick={() => setIsMenuOpen(!isMenuOpen)}
+                                />{" "}
+                                {username}
+                                <div className="tw-mt-2  tw-flex tw-justify-center">
+                                    <Link
+                                        to="/profile"
+                                        className="tw-current-text tw-no-underline"
+                                    >
+                                        <button className="tw-rounded-full tw-border-solid tw-border-orange-500 tw-bg-white tw-px-3 tw-text-orange-500 hover:tw-bg-orange-500  hover:tw-text-white">
+                                            View Profile
+                                        </button>
+                                    </Link>
+                                </div>
+                            </li>
+                            <li>
+                                <hr className="dropdown-divider" />
+                            </li>
+                            <li className="dropdown-item">
+                                <button className="tw-rounded-full tw-border-none tw-bg-orange-500 tw-px-4 tw-text-2xl">
+                                    Log Out
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                    <Link
+                        to="/dashboard"
+                        className="tw-text-current tw-no-underline"
+                    >
+                        <p className="tw-mt-2 tw-text-3xl tw-text-orange-500">
+                            Dashboard
+                        </p>
+                    </Link>
+                </div>
             ) : (
                 <div>
                     <Link to="/login">
