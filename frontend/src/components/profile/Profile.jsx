@@ -53,21 +53,21 @@ export function Profile() {
 
                     <div className="tw-mb-2 tw-flex tw-items-center">
                         <p className="tw-mr-4 tw-font-medium">Gender:</p>
-                        <p className="tw-bg-primary tw-rounded-full tw-px-2 tw-py-1 tw-text-white">
+                        <p className="tw-bg-primary tw-rounded-full tw-px-2 tw-py-1">
                             {user.gender}
                         </p>
                     </div>
 
                     <div className="tw-mb-2 tw-flex tw-items-center">
                         <p className="tw-mr-4 tw-font-medium">Location:</p>
-                        <p className="tw-bg-primary tw-rounded-full tw-px-2 tw-py-1 tw-text-white">
+                        <p className="tw-bg-primary tw-rounded-full tw-px-2 tw-py-1 ">
                             {user.address}
                         </p>
                     </div>
 
                     <div className="tw-flex tw-items-center">
                         <p className="tw-mr-4 tw-font-medium">Education:</p>
-                        <p className="tw-bg-primary tw-rounded-full tw-px-2 tw-py-1 tw-text-white">
+                        <p className="tw-bg-primary tw-rounded-full tw-px-2 tw-py-1 ">
                             {user.education}
                         </p>
                     </div>
@@ -80,7 +80,7 @@ export function Profile() {
 
                     <div className="tw-mb-2 tw-flex tw-items-center">
                         <p className="tw-mr-4 tw-font-medium">Years:</p>
-                        <p className="tw-bg-primary tw-rounded-full tw-px-2 tw-py-1 tw-text-white">
+                        <p className="tw-bg-primary tw-rounded-full tw-px-2 tw-py-1 ">
                             {user.experience}
                         </p>
                     </div>
@@ -95,7 +95,7 @@ export function Profile() {
                         {user.skills.map((skill) => (
                             <p
                                 key={skill}
-                                className="tw-bg-primary tw-rounded-full tw-px-3 tw-py-1 tw-text-white"
+                                className="tw-bg-primary tw-rounded-full tw-px-3 tw-py-1 "
                             >
                                 {skill}
                             </p>
