@@ -17,6 +17,8 @@ import {
     Signup,
     Login,
     JobFilter,
+    Dashboard,
+    AddJob,
     Profile,
     AddProfile,
 } from "./components/";
@@ -28,6 +30,8 @@ const router = createBrowserRouter(
             <Route path="register" element={<Signup />} />
             <Route path="login" element={<Login />} />
             <Route path="jobs" element={<JobFilter />} />
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="addjob" element={<AddJob />} />
             <Route path="profile" element={<Profile />} />
             <Route path="editprofile" element={<AddProfile />} />
         </Route>
