@@ -6,7 +6,7 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 import { MdOutlinePersonPin } from "react-icons/md";
 import { FaGear } from "react-icons/fa6";
 
-export function userSidebar() {
+export function UserSidebar() {
     return (
         <div className="tw-bg-gray-100 tw-flex tw-h-screen tw-rounded-r-3xl tw-p-4">
             <div className="tw-mb-10 tw-rounded-3xl tw-bg-gray tw-p-9 tw-shadow-lg">

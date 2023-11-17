@@ -1,13 +1,13 @@
-import { Sidebar } from "./Sidebar";
+import { UserSidebar } from "./UserSidebar";
 import { BsBriefcase, BsPerson, BsPersonCheck } from "react-icons/bs";
-import { Card } from "./Card";
+import { UserCard } from "./UserCard";
 
-export function userDashboard() {
+export function UserDashboard() {
     const username = "chaitu";
     return (
         <>
             <div className="tw-flex">
-                <Sidebar />
+                <UserSidebar />
 
                 <div className="tw-w-full tw-p-4">
                     <div className="tw-mb-8 tw-flex tw-flex-wrap tw-items-center tw-justify-between tw-gap-5">
@@ -19,11 +19,19 @@ export function userDashboard() {
                                 {username.toUpperCase()}
                             </h2>
                         </div>
-                        <Card title="Jobs Open" icon={BsBriefcase} value={12} />
+                        <UserCard
+                            title="Jobs Open"
+                            icon={BsBriefcase}
+                            value={12}
+                        />
 
-                        <Card title="Applications" icon={BsPerson} value={24} />
+                        <UserCard
+                            title="Applications"
+                            icon={BsPerson}
+                            value={24}
+                        />
 
-                        <Card
+                        <UserCard
                             title="Employees"
                             icon={BsPersonCheck}
                             value={5}
