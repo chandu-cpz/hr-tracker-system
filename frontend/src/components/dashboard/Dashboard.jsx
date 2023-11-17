@@ -1,9 +1,20 @@
 import { Sidebar } from "./Sidebar";
 import { BsBriefcase, BsPerson, BsPersonCheck } from "react-icons/bs";
 import { Card } from "./Card";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export function Dashboard() {
     const username = "chandu";
+
+    const [jobsOpen,setJobsOpen]=useState(0);
+
+    useEffect(() => {
+        axios
+            .get("/api/jobs/open")
+            .then((response) => setJobsOpen(response.data.openJobsCount));
+    }, []);
+
     // const data = [
     //     { name: "John Doe", email: "john@email.com", phone: "123-456-7890" },
     //     { name: "Jane Doe", email: "jane@email.com", phone: "987-654-3210" },
@@ -23,7 +34,11 @@ export function Dashboard() {
                                 {username.toUpperCase()}
                             </h2>
                         </div>
-                        <Card title="Jobs Open" icon={BsBriefcase} value={12} />
+                        <Card
+                            title="Jobs Open"
+                            icon={BsBriefcase}
+                            value={jobsOpen}
+                        />
 
                         <Card title="Applications" icon={BsPerson} value={24} />
 

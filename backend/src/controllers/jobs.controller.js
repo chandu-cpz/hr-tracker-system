@@ -1,4 +1,5 @@
 import { Job } from "../models/jobs.model.js";
+
 export async function getJobs(req, res, next) {
     console.log("The getJobs controller is triggered")
     //Logic to get jobs if any filers on type of jobs then do so in query ;
@@ -10,6 +11,17 @@ export async function getJobs(req, res, next) {
 
     // do pagination;
 }
+
+export async function openJobsCount(req, res, next){
+    try {
+        const openJobsCount = await Job.countDocuments({ isOpen: true });
+        res.status(200).json({ openJobsCount });
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }      
+}
+
 
 export async function addJob(req, res, next) {
     console.log("The addJob controller is triggered");
