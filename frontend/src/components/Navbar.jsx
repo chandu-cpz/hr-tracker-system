@@ -17,10 +17,15 @@ export function Navbar() {
                 <h1 className="tw-ms-4">HRJ</h1>
             </NavLink>
 
-            <NavLink to="/jobs" className="tw-text-current tw-no-underline">
-                <p className="tw-mt-2 tw-text-3xl tw-text-orange-500">
-                    Find jobs
-                </p>
+            <NavLink
+                to="/jobs"
+                className={({ isActive }) =>
+                    `tw-mt-2 tw-text-3xl tw-text-current tw-no-underline tw-text-orange-500${
+                        isActive ? "tw-text-orange-500" : "tw-text-gray-500"
+                    }`
+                }
+            >
+                <p className="">Find jobs</p>
             </NavLink>
             {isLoggedIn ? (
                 <div className="tw-flex tw-gap-2">
@@ -68,11 +73,15 @@ export function Navbar() {
                     </div>
                     <NavLink
                         to="/dashboard"
-                        className="tw-text-current tw-no-underline"
+                        className={({ isActive }) =>
+                            `tw-mt-2 tw-text-3xl tw-text-current tw-no-underline tw-text-orange-500${
+                                isActive
+                                    ? "tw-text-orange-500"
+                                    : "tw-text-gray-500"
+                            }`
+                        }
                     >
-                        <p className="tw-mt-2 tw-text-3xl tw-text-orange-500">
-                            Dashboard
-                        </p>
+                        <p className="">Dashboard</p>
                     </NavLink>
                 </div>
             ) : (
