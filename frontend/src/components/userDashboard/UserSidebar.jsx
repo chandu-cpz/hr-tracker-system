@@ -14,7 +14,7 @@ export function UserSidebar() {
                     <h3 className="tw-mb-4 tw-pb-3 tw-text-2xl ">MAIN MENU</h3>
 
                     <NavLink
-                        to="/dashboard"
+                        to="/UserDashboard"
                         className={({ isActive }) =>
                             isActive
                                 ? "tw-text-orange-500 tw-no-underline"

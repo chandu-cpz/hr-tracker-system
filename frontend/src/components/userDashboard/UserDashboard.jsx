@@ -10,8 +10,11 @@ export function UserDashboard() {
                 <UserSidebar />
 
                 <div className="tw-w-full tw-p-4">
-                    <div className="tw-mb-8 tw-flex tw-flex-wrap tw-items-center tw-justify-between tw-gap-5">
-                        <div>
+                    <div>
+                        <h1>DashBoard</h1>
+                    </div>
+                    <div className="tw-my-20 tw-flex tw-flex-wrap tw-items-center tw-justify-between tw-gap-5 tw-p-8 tw-rounded-lg tw-bg-orange-200">
+                        <div className="tw-self-start">
                             <h1 className="tw-text-gray-800 tw-mb-5 tw-text-4xl">
                                 Welcome back,
                             </h1>
@@ -32,7 +35,7 @@ export function UserDashboard() {
                         />
 
                         <UserCard
-                            title="Employees"
+                            title="Feedbacks"
                             icon={BsPersonCheck}
                             value={5}
                         />
