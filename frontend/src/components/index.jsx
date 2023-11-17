@@ -7,11 +7,16 @@ import { Login } from "./Login";
 import { JobFilter } from "./jobs";
 import { Dashboard } from "./dashboard";
 import { AddJob } from "./dashboard";
+import { Profile } from "./profile";
+import { AddProfile } from "./profile";
+
 
 export { Navbar };
 export { LandingPage };
 export { Signup };
 export { Login };
-export { JobFilter };
 export { Dashboard };
 export { AddJob };
+export { AddProfile };
+export { JobFilter, Profile };
+>
