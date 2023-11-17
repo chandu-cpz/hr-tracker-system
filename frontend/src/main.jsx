@@ -12,7 +12,14 @@ import {
     createBrowserRouter,
     Route,
 } from "react-router-dom";
-import { LandingPage, Signup, Login, JobFilter } from "./components/";
+import {
+    LandingPage,
+    Signup,
+    Login,
+    JobFilter,
+    Profile,
+    AddProfile,
+} from "./components/";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -21,6 +28,8 @@ const router = createBrowserRouter(
             <Route path="register" element={<Signup />} />
             <Route path="login" element={<Login />} />
             <Route path="jobs" element={<JobFilter />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="editprofile" element={<AddProfile />} />
         </Route>
     )
 );
