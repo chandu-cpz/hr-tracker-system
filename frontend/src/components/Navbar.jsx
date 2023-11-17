@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 
@@ -13,15 +13,15 @@ export function Navbar() {
 
     return (
         <div className=" tw-h-15 tw-flex tw-justify-evenly tw-bg-gray tw-p-2 tw-shadow-lg">
-            <Link to="/">
+            <NavLink to="/" className="tw-text-current tw-no-underline">
                 <h1 className="tw-ms-4">HRJ</h1>
-            </Link>
+            </NavLink>
 
-            <Link to="/jobs" className="tw-text-current tw-no-underline">
+            <NavLink to="/jobs" className="tw-text-current tw-no-underline">
                 <p className="tw-mt-2 tw-text-3xl tw-text-orange-500">
                     Find jobs
                 </p>
-            </Link>
+            </NavLink>
             {isLoggedIn ? (
                 <div className="tw-flex tw-gap-2">
                     <div className="dropdown">
@@ -46,14 +46,14 @@ export function Navbar() {
                                 />{" "}
                                 {username}
                                 <div className="tw-mt-2  tw-flex tw-justify-center">
-                                    <Link
+                                    <NavLink
                                         to="/profile"
                                         className="tw-current-text tw-no-underline"
                                     >
                                         <button className="tw-rounded-full tw-border-solid tw-border-orange-500 tw-bg-white tw-px-3 tw-text-orange-500 hover:tw-bg-orange-500  hover:tw-text-white">
                                             View Profile
                                         </button>
-                                    </Link>
+                                    </NavLink>
                                 </div>
                             </li>
                             <li>
@@ -66,28 +66,28 @@ export function Navbar() {
                             </li>
                         </ul>
                     </div>
-                    <Link
+                    <NavLink
                         to="/dashboard"
                         className="tw-text-current tw-no-underline"
                     >
                         <p className="tw-mt-2 tw-text-3xl tw-text-orange-500">
                             Dashboard
                         </p>
-                    </Link>
+                    </NavLink>
                 </div>
             ) : (
                 <div>
-                    <Link to="/login">
+                    <NavLink to="/login">
                         <button className="tw-mx-1 tw-rounded-full tw-border-none tw-bg-orange-500 tw-px-5 tw-text-2xl lg:tw-mr-5 lg:tw-p-3 lg:tw-px-5">
                             Login
                         </button>
-                    </Link>
+                    </NavLink>
 
-                    <Link to="/register">
+                    <NavLink to="/register">
                         <button className="tw-rounded-full tw-border-none tw-bg-orange-500 tw-px-5 tw-text-2xl lg:tw-mr-5 lg:tw-p-3 lg:tw-px-5">
                             Sign Up
                         </button>
-                    </Link>
+                    </NavLink>
                 </div>
             )}
         </div>

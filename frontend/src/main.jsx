@@ -29,7 +29,7 @@ const router = createBrowserRouter(
             <Route path="login" element={<Login />} />
             <Route path="jobs" element={<JobFilter />} />
             <Route path="profile" element={<Profile />} />
-            <Route path="addprofile" element={<AddProfile />} />
+            <Route path="editprofile" element={<AddProfile />} />
         </Route>
     )
 );

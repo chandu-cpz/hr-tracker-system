@@ -29,17 +29,17 @@ export function Profile() {
                         {user.fullName}
                     </h1>
 
-                    <div className="tw-mt-2 tw-flex tw-items-center">
+                    <div className="tw-mt-5 tw-flex tw-items-center">
                         <FaPhoneAlt className="tw-mr-2 tw-text-orange-500" />
                         <span>{user.phoneNumber}</span>
                     </div>
 
-                    <div className="tw-flex tw-items-center">
+                    <div className="tw-mb-5  tw-flex tw-items-center">
                         <FaEnvelope className="tw-mr-2 tw-text-orange-500" />
                         <span>{user.email}</span>
                     </div>
-                    <Link to="/addprofile">
-                        <button className="tw-rounded-md tw-bg-orange-500 tw-px-4 tw-py-2 tw-text-white">
+                    <Link to="/editprofile">
+                        <button className="tw-my-2 tw-rounded-full tw-border-none tw-bg-orange-500 tw-px-4 tw-py-2 tw-text-white">
                             Edit Profile
                         </button>
                     </Link>
