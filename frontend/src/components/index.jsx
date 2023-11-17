@@ -10,7 +10,6 @@ import { AddJob } from "./dashboard";
 import { Profile } from "./profile";
 import { AddProfile } from "./profile";
 
-
 export { Navbar };
 export { LandingPage };
 export { Signup };
@@ -19,4 +18,3 @@ export { Dashboard };
 export { AddJob };
 export { AddProfile };
 export { JobFilter, Profile };
->

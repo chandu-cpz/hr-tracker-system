@@ -74,10 +74,11 @@ export function Navbar() {
                     <NavLink
                         to="/dashboard"
                         className={({ isActive }) =>
-                            `tw-mt-2 tw-text-3xl tw-text-current tw-no-underline tw-text-orange-500${
+                            `tw-mt-2 tw-text-3xl tw-text-current tw-no-underline
+                            ${
                                 isActive
                                     ? "tw-text-orange-500"
-                                    : "tw-text-gray-500"
+                                    : "tw-text-black"
                             }`
                         }
                     >
