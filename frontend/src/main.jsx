@@ -22,6 +22,7 @@ import {
     Profile,
     AddProfile,
     ApplyJob,
+    UserDashboard,
 } from "./components/";
 
 const router = createBrowserRouter(
@@ -36,6 +37,8 @@ const router = createBrowserRouter(
             <Route path="profile" element={<Profile />} />
             <Route path="editprofile" element={<AddProfile />} />
             <Route path="job/:jobId" element={<ApplyJob />} />
+            <Route path="userdashboard" element={<UserDashboard />} />
+
         </Route>
     )
 );

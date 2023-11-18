@@ -1,13 +1,17 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { MdCameraAlt } from "react-icons/md";
 import Multiselect from "multiselect-react-dropdown";
+import { skills } from "../../constants";
+import uploadFile from "../../utils/uploadFile";
+import axios from "axios";
+import { setUser } from "../../redux/slice/userSlice";
+import { useNavigate } from "react-router-dom";
 
 export function AddProfile() {
-    const skills = ["Option 1", "Option 2", "Option 3", "Option 4", "Option 5"];
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const user = useSelector((state) => state.user);
-
-    const [selectedSkills, setSelectedSkills] = useState([]);
 
     const [profile, setProfile] = useState({
         fullName: user.fullName,
@@ -18,7 +22,7 @@ export function AddProfile() {
         education: user.education,
         skills: user.skills,
         experience: user.experience,
-        image: null,
+        profileImage: user.profileImage,
     });
 
     const [preview, setPreview] = useState(user.profileImage);
@@ -30,12 +34,33 @@ export function AddProfile() {
         });
     };
 
-    const handleImageChange = (e) => {
+    const handleImageChange = async (e) => {
         setPreview(URL.createObjectURL(e.target.files[0]));
         setProfile({
             ...profile,
             image: e.target.files[0],
         });
+
+        console.log("We are uploading image");
+
+        try {
+            const image = await uploadFile(e.target.files[0], "profile");
+            setProfile({
+                ...profile,
+                profileImage: image.secure_url,
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    const editProfile = async (e) => {
+        e.preventDefault();
+        console.log(profile);
+        const user = await axios.patch("/api/updateuser", profile);
+        console.log(user.data);
+        dispatch(setUser(user.data));
+        navigate("/profile");
     };
 
     return (
@@ -184,10 +209,21 @@ export function AddProfile() {
                                         },
                                     }}
                                     isObject={false}
+                                    selectedValues={profile.skills}
                                     onKeyPressFn={function noRefCheck() {}}
-                                    onRemove={(e) => setSelectedSkills(e)}
+                                    onRemove={(e) => {
+                                        setProfile({
+                                            ...profile,
+                                            skills: e,
+                                        });
+                                    }}
                                     onSearch={function noRefCheck() {}}
-                                    onSelect={(e) => setSelectedSkills(e)}
+                                    onSelect={(e) => {
+                                        setProfile({
+                                            ...profile,
+                                            skills: e,
+                                        });
+                                    }}
                                     options={skills}
                                 />
                             </div>
@@ -195,7 +231,10 @@ export function AddProfile() {
                     </div>
                 </div>
 
-                <button className="tw-m-6 tw-rounded-full tw-border-none tw-bg-orange-500   tw-px-4 tw-py-3 tw-shadow-xl hover:tw-bg-orange-600">
+                <button
+                    className="tw-m-6 tw-rounded-full tw-border-none tw-bg-orange-500   tw-px-4 tw-py-3 tw-shadow-xl hover:tw-bg-orange-600"
+                    onClick={editProfile}
+                >
                     Save Profile
                 </button>
             </div>
