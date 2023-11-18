@@ -34,7 +34,6 @@ export async function createUser(req, res) {
         role,
         company,
     };
-
     Object.keys(userData).forEach(key => {
         if (userData[key] === null || userData[key] === undefined) {
             delete userData[key];
@@ -43,6 +42,7 @@ export async function createUser(req, res) {
 
     console.log("The user details are: ");
     console.log(userData);
+
 
     // check if user exists using email
     const existingUser = await User.findOne({ email });
