@@ -12,6 +12,13 @@ export async function getJobs(req, res, next) {
     // do pagination;
 }
 
+export async function getSingleJob(req, res) {
+    console.log("A request is made to get details of Job with jobId: "+req.params.jobId)
+    const { jobId } = req.params;
+    const job = await Job.findById(jobId);
+    console.log("Sending back data of "+job.jobTitle)
+    res.status(200).json(job);
+}
 export async function openJobsCount(req, res, next) {
     try {
         const openJobsCount = await Job.countDocuments({ isOpen: true });
@@ -21,8 +28,6 @@ export async function openJobsCount(req, res, next) {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 }
-
-
 export async function addJob(req, res, next) {
     console.log("addJob is triggered, ................");
     //Logic to add jobs and insert into database

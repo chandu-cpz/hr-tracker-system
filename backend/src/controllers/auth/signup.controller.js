@@ -23,31 +23,21 @@ export async function createUser(req, res) {
         email,
         password,
         gender,
+        skills,
+        phoneNumber,
+        address,
+        education,
+        experience,
+        profileImage,
+        jobsApplied,
+        role,
+        company
     };
-
-    if (company) userData.company = company;
-    if (role) userData.role = role;
-    if (skills) {
-        userData.skills = skills;
-    }
-    if (phoneNumber) {
-        userData.phoneNumber = phoneNumber;
-    }
-    if (address) {
-        userData.address = address;
-    }
-    if (education) {
-        userData.education = education;
-    }
-    if (experience) {
-        userData.experience = experience;
-    }
-    if (profileImage) {
-        userData.profileImage = profileImage;
-    }
-    if (jobsApplied) {
-        userData.jobsApplied = jobsApplied;
-    }
+    Object.keys(userData).forEach(key => {
+        if (userData[key] === null || userData[key] === undefined) {
+            delete userData[key];
+        }
+    });
 
     // check if user exists using email
     const existingUser = await User.findOne({ email });

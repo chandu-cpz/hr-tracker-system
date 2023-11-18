@@ -1,10 +1,12 @@
 import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
 import { useState } from "react";
 import PropTypes from "prop-types";
+import {useNavigate} from "react-router-dom";
 
 export function Card({ job }) {
     const { createdAt, companyName, jobTitle, skills, salary } = job;
     const [isBookmarked, setIsBookmarked] = useState(false);
+    const navigate = useNavigate();
 
     function formatDate(date) {
         const options = { day: "2-digit", month: "short", year: "numeric" };
@@ -80,7 +82,8 @@ export function Card({ job }) {
                     <span className="tw-text-sm">/month</span>
                 </div>
 
-                <button className="tw-rounded-full tw-border-none tw-bg-black tw-px-4 tw-py-2 tw-text-lg tw-font-medium tw-text-white">
+                <button className="tw-rounded-full tw-border-none tw-bg-black tw-px-4 tw-py-2 tw-text-lg tw-font-medium tw-text-white" 
+                   onClick={()=>navigate(`/job/${job._id}`)}>
                     Details
                 </button>
             </div>
@@ -90,6 +93,7 @@ export function Card({ job }) {
 
 Card.propTypes = {
     job: PropTypes.shape({
+        _id: PropTypes.string.isRequired,
         createdAt: PropTypes.string.isRequired,
         companyName: PropTypes.string.isRequired,
         jobTitle: PropTypes.string.isRequired,
