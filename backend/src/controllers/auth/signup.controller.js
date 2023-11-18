@@ -1,7 +1,8 @@
 import { User } from "../../models/user.model.js";
 
 export async function createUser(req, res) {
-    console.log("createUser(createUser controller): ");
+    console.log("================================================")
+    console.log(` (createUser controller): We are creating a user on ${new Date().toLocaleString()} `);
     const {
         fullName,
         email,
@@ -31,7 +32,7 @@ export async function createUser(req, res) {
         profileImage,
         jobsApplied,
         role,
-        company
+        company,
     };
     Object.keys(userData).forEach(key => {
         if (userData[key] === null || userData[key] === undefined) {
@@ -39,11 +40,18 @@ export async function createUser(req, res) {
         }
     });
 
+    console.log("The user details are: ");
+    console.log(userData);
+
+
     // check if user exists using email
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-        res.status(400).send("Already User exists");
+        console.log("The user already exists aborting ... ")
+        return res.status(400).send("Already User exists");
     }
+
+
 
     //Not a existing user so create a new one
     const user = await User.create(userData);
@@ -69,4 +77,5 @@ export async function createUser(req, res) {
 
     //send the user details
     res.status(200).send("Completed Creating user")
+    console.log("================================================")
 }
