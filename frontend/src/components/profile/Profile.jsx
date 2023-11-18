@@ -1,19 +1,9 @@
 import { FaPhoneAlt, FaEnvelope } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export function Profile() {
-    const user = {
-        fullName: "John Doe",
-        gender: "M",
-        email: "john@email.com",
-        phoneNumber: "123-456-7890",
-        address: "123 Main St",
-        education: "BS Computer Science",
-        skills: ["JavaScript", "React"],
-        experience: "5 years",
-        profileImage:
-            "https://qph.cf2.quoracdn.net/main-qimg-deffe0bd0e8c5cc04b4ba763afd2a686-lq",
-    };
+    const user = useSelector((state) => state.user);
 
     return (
         <div className="tw-bg-gray-100 tw-mx-auto tw-max-w-3xl tw-rounded-lg tw-p-8">
