@@ -24,7 +24,8 @@ export async function openJobsCount(req, res, next) {
 
 
 export async function addJob(req, res, next) {
-    console.log("addJob is triggered, ................");
+    console.log("================================================")
+    console.log(`(addJob Controller): a new job is being added on ${new Date().toLocaleString()}`);
     //Logic to add jobs and insert into database
     const {
         jobTitle,
@@ -74,9 +75,11 @@ export async function addJob(req, res, next) {
         // Send response
         res.status(201).json(job);
 
+        console.log("================================================")
+
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: 'Error creating job' });
+        return res.status(500).json({ error: 'Error creating job' });
     }
 
     //send back some response ;

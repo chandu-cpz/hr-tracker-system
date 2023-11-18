@@ -15,8 +15,10 @@ import { IoDocumentTextOutline } from "react-icons/io5";
 import { IoMdConstruct } from "react-icons/io";
 import { skills } from "../../constants";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export function AddJob() {
+    const navigate = useNavigate();
     const [job, setJob] = useState({
         jobTitle: "",
         jobDescription: "",
@@ -38,9 +40,26 @@ export function AddJob() {
         });
     };
 
-    const submitJob = async (job) => {
-        const addedJob = await axios.post("/api/jobs", job);
+    const submitJob = async () => {
+        const newJob = {
+            jobTitle: job.jobTitle,
+            jobDescription: job.jobDescription,
+            companyName: job.companyName,
+            responsibilities: job.responsibilities,
+            qualifications: job.qualifications,
+            location: job.location,
+            jobType: job.jobType,
+            noOfPosts: job.noOfPosts,
+            salary: job.salary,
+            skills: job.skills,
+            isOpen: job.isOpen,
+        };
+        console.log("we are creating a new job");
+        const addedJob = await axios
+            .post("/api/jobs", newJob)
+            .then((response) => response.data);
         console.log(addedJob);
+        navigate(`/job/${addedJob._id}`);
     };
 
     return (
@@ -80,7 +99,7 @@ export function AddJob() {
                                     </label>
                                     <input
                                         type="text"
-                                        name="JobDescription"
+                                        name="jobDescription"
                                         value={job.jobDescription}
                                         onChange={handleChange}
                                         className="tw-border-gray-300 tw-w-full tw-rounded-full tw-border tw-px-3 tw-py-2"

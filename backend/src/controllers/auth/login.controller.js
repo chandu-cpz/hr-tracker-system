@@ -1,7 +1,8 @@
 import { User } from "../../models/user.model.js";
 
 export async function loginUser(req, res) {
-    console.log("Login user (loginUser controller)");
+    console.log("================================================")
+    console.log(`(loginUser controller) a user is logging in: ${new Date().toLocaleString()}`);
     const { email, password } = req.body;
 
     // validation of data
@@ -39,10 +40,12 @@ export async function loginUser(req, res) {
         res.cookie("token", token, options);
 
         user.password = undefined;
-
+        console.log(`User: ${user.fullName} is logged in.`);
         //send the user details
         res.json(user);
+        console.log("================================================")
     } else {
         return res.status(401).send("Invalid credentials");
+        console.log("================================================")
     }
 }
