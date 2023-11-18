@@ -4,8 +4,7 @@ import { useState } from "react";
 
 export function Navbar() {
     const isLoggedIn = useSelector((state) => state.isLoggedIn);
-    const profileImg =
-        "https://qph.cf2.quoracdn.net/main-qimg-deffe0bd0e8c5cc04b4ba763afd2a686-lq";
+    const profileImg = useSelector((state) => state.user.profileImage);
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -20,7 +19,7 @@ export function Navbar() {
             <NavLink
                 to="/jobs"
                 className={({ isActive }) =>
-                    `tw-mt-2 tw-text-3xl tw-text-current tw-no-underline tw-text-orange-500${
+                    `tw-mt-2 tw-text-3xl tw-text-current tw-no-underline ${
                         isActive ? "tw-text-orange-500" : "tw-text-gray-500"
                     }`
                 }
