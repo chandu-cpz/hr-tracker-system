@@ -35,7 +35,7 @@ const router = createBrowserRouter(
             <Route path="addjob" element={<AddJob />} />
             <Route path="profile" element={<Profile />} />
             <Route path="editprofile" element={<AddProfile />} />
-            <Route path="applyjob" element={<ApplyJob />} />
+            <Route path="job/:jobId" element={<ApplyJob />} />
         </Route>
     )
 );

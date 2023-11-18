@@ -1,4 +1,5 @@
 import { Job } from "../models/jobs.model.js";
+
 export async function getJobs(req, res, next) {
     console.log("The getJobs controller is triggered")
     //Logic to get jobs if any filers on type of jobs then do so in query ;
@@ -9,6 +10,15 @@ export async function getJobs(req, res, next) {
     //also send only 10 jobs or so ..
 
     // do pagination;
+}
+
+
+export async function getSingleJob(req, res) {
+    console.log("A request is made to get details of Job with jobId: "+req.params.jobId)
+    const { jobId } = req.params;
+    const job = await Job.findById(jobId);
+    console.log("Sending back data of "+job.jobTitle)
+    res.status(200).json(job);
 }
 
 export async function addJob(req, res, next) {
