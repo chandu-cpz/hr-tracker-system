@@ -12,19 +12,19 @@ export async function getJobs(req, res, next) {
     // do pagination;
 }
 
-export async function openJobsCount(req, res, next){
+export async function openJobsCount(req, res, next) {
     try {
         const openJobsCount = await Job.countDocuments({ isOpen: true });
         res.status(200).json({ openJobsCount });
-      } catch (error) {
+    } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Internal Server Error' });
-    }      
+    }
 }
 
 
 export async function addJob(req, res, next) {
-    console.log("The addJob controller is triggered");
+    console.log("addJob is triggered, ................");
     //Logic to add jobs and insert into database
     const {
         jobTitle,
