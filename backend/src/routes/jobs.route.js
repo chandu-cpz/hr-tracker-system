@@ -7,8 +7,8 @@ import { addJob } from "../controllers/jobs.controller.js";
 
 jobsRouter.get("/", getJobs);
 
-jobsRouter.get("/:jobId", getSingleJob);
-
 jobsRouter.get("/open", openJobsCount);
 
-jobsRouter.post("/", checkAuth, requiredRole, addJob);
+jobsRouter.get("/details/:jobId", getSingleJob);
+
+jobsRouter.post("/", checkAuth, requiredRole("HR"), addJob);

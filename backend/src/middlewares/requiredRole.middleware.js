@@ -1,24 +1,12 @@
 // Require role middleware
 import { User } from "../models/user.model.js";
-export async function requiredRole(req, res, next) {
-    console.log("Checking if user got required role(requiredRole middleware)");
-    const { _id } = req.body.user;
-    console.log(_id);
+export const requiredRole = (role) => {
 
-    try {
-        const user = await User.findOne({ _id: _id });
+    return async (req, res, next) => {
 
-        if (!user || user.role !== "HR") {
-            return res
-                .status(403)
-                .json({
-                    error: "Unauthorized: Only HR can perform this action.",
-                });
-        }
+        console.log(`(requiredRole middleware): Checking if user got required role`);
 
-        next();
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Internal Server Error" });
+        if (role == req.body.user.role) next();
+        else return res.status(403).json({ error: "Unauthorized: You do not have enough permissions to do the actin" });
     }
 }

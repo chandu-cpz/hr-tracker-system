@@ -1,7 +1,7 @@
 import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
 import { useState } from "react";
 import PropTypes from "prop-types";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export function Card({ job }) {
     const { createdAt, companyName, jobTitle, skills, salary } = job;
@@ -82,8 +82,10 @@ export function Card({ job }) {
                     <span className="tw-text-sm">/month</span>
                 </div>
 
-                <button className="tw-rounded-full tw-border-none tw-bg-black tw-px-4 tw-py-2 tw-text-lg tw-font-medium tw-text-white" 
-                   onClick={()=>navigate(`/job/${job._id}`)}>
+                <button
+                    className="tw-rounded-full tw-border-none tw-bg-black tw-px-4 tw-py-2 tw-text-lg tw-font-medium tw-text-white"
+                    onClick={() => navigate(`/job/${job._id}`)}
+                >
                     Details
                 </button>
             </div>

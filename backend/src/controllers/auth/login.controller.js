@@ -3,6 +3,8 @@ import { User } from "../../models/user.model.js";
 export async function loginUser(req, res) {
     console.log("================================================")
     console.log(`(loginUser controller) a user is logging in: ${new Date().toLocaleString()}`);
+
+    //Get all user details from request
     const { email, password } = req.body;
 
     // validation of data
@@ -13,13 +15,14 @@ export async function loginUser(req, res) {
     // find user in db
     const user = await User.findOne({ email });
 
-    // if user not found
+    //Not registered so send that back
     if (!user) {
         return res.status(401).send("User is not registered");
     }
 
-    // match password
+    // Check if password is correct
     if (user.isPasswordCorrect(password)) {
+
         // Generate and send token
         const token = user.generateAccessToken();
 
@@ -33,15 +36,17 @@ export async function loginUser(req, res) {
                 60 *
                 1000
             ),
-            httpOnly: true,
+            httpOnly: true, //httpOnly so that user can't play around with token (security)
         };
 
-        //set the token in cookie's
+        //set the token in cookie
         res.cookie("token", token, options);
 
+        //delete password from user object
         user.password = undefined;
         console.log(`User: ${user.fullName} is logged in.`);
-        //send the user details
+
+        //send the user details to client
         res.json(user);
         console.log("================================================")
     } else {
