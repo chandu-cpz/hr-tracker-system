@@ -1,43 +1,39 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useSelector } from "react-redux";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { Card } from "./Card";
+import { UserSidebar } from "../userDashboard/UserSidebar";
 
-function JobList({ jobs }) {
-  return (
-    <ul>
-      {jobs.map(job => (
-        <li key={job.id}>
-          <h2>{job.title}</h2>
-          <p>{job.description}</p>
-        </li>
-      ))}
-    </ul>
-  );
-}
+export function SavedJobs() {
+    const { savedJobs } = useSelector((state) => state.user);
+    console.log(savedJobs);
+    const [jobs, setJobs] = useState([]);
+    useEffect(() => {
+        const fetchJobs = async () => {
+            const requests = savedJobs.map((jobId) => {
+                return axios.get(`/api/jobs/${jobId}`);
+            });
 
-export function SavedJobs({ savedJobs }) {
-  const [savedJobDetails, setSavedJobDetails] = useState([]);
+            const results = await axios.all(requests);
+            const jobs = results.map((res) => res.data);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (savedJobs && savedJobs.length > 0) {
-          const results = await Promise.all(savedJobs.map(jobId =>
-            axios.get(`/api/jobs/savejob/${jobId}`).then(response => response.data)
-          ));
-          setSavedJobDetails(results);
-        }
-      } catch (error) {
-        console.error('Error fetching saved job details:', error);
-      }
-    };
+            setJobs(jobs);
+        };
 
-    fetchData();
-  }, [savedJobs]);
+        fetchJobs();
+    }, []);
 
-  return (
-    <div>
-      <h2>Saved Job Details</h2>
-      <JobList jobs={savedJobDetails} />
-    </div>
-  );
+    return (
+        <div className="tw-flex tw-flex-wrap tw-gap-10">
+            <UserSidebar />
+            <div className="tw-mt-5 tw-w-3/4">
+                <h1>Saved Jobs</h1>
+                <div className="tw-flex tw-flex-wrap tw-gap-10">
+                    {jobs.map((job) => {
+                        return <Card key={job._id} job={job} />;
+                    })}
+                </div>
+            </div>
+        </div>
+    );
 }

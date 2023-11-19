@@ -41,5 +41,5 @@ export function Dropdown({ name, options, icon }) {
 Dropdown.propTypes = {
     name: PropTypes.string.isRequired,
     options: PropTypes.arrayOf(PropTypes.string).isRequired,
-    icon: PropTypes.elementType.isRequired,
+    icon: PropTypes.element.isRequired,
 };

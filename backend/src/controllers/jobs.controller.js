@@ -16,7 +16,7 @@ export async function getJobs(req, res, next) {
 export async function getSingleJob(req, res) {
     console.log(
         "A request is made to get details of Job with jobId: " +
-            req.params.jobId
+        req.params.jobId
     );
     const { jobId } = req.params;
     const job = await Job.findById(jobId);
@@ -26,10 +26,10 @@ export async function getSingleJob(req, res) {
 
 export async function saveJob(req, res) {
     const userId = req.body.user._id;
-    const  jobId  = req.body._id;
-    console.log("A request is made to save job with jobId: "+jobId);
+    const jobId = req.body._id;
+    console.log("A request is made to save job with jobId: " + jobId);
     try {
-    
+
         // Update the user's savedJob field with the new job ID
         const user = await User.findOneAndUpdate(
             { _id: userId },
@@ -42,6 +42,29 @@ export async function saveJob(req, res) {
         console.error(error);
         res.status(500).json({ error: "Internal Server Error" });
     }
+}
+
+export async function deleteSavedJob(req, res) {
+
+    const userId = req.body.user._id;
+    const jobId = req.body.jobId;
+
+    try {
+
+        // Find the user and pull the jobId from their savedJobs array
+        const user = await User.findOneAndUpdate(
+            { _id: userId },
+            { $pull: { savedJobs: jobId } },
+            { new: true }
+        );
+
+        res.status(200).json({ user });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+
 }
 
 export async function openJobsCount(req, res, next) {

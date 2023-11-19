@@ -5,6 +5,7 @@ import { useState } from "react";
 export function Navbar() {
     const isLoggedIn = useSelector((state) => state.isLoggedIn);
     const profileImg = useSelector((state) => state.user.profileImage);
+    const role = useSelector((state) => state.user.role);
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -71,7 +72,7 @@ export function Navbar() {
                         </ul>
                     </div>
                     <NavLink
-                        to="/dashboard"
+                        to={role === "HR" ? "/dashboard" : "/userDashboard"}
                         className={({ isActive }) =>
                             `tw-mt-2 tw-text-3xl tw-text-current tw-no-underline
                             ${
