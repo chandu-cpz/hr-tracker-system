@@ -4,7 +4,7 @@ import { Navbar } from "./Navbar";
 import { LandingPage } from "./LandingPage";
 import { Signup } from "./Signup";
 import { Login } from "./Login";
-import { JobFilter, ApplyJob } from "./jobs";
+import { JobFilter, ApplyJob,SavedJobs } from "./jobs";
 import { Dashboard } from "./dashboard";
 import { AddJob } from "./dashboard";
 import { Profile } from "./profile";
@@ -18,6 +18,6 @@ export { Login };
 export { Dashboard };
 export { AddJob };
 export { AddProfile };
-export { JobFilter, Profile, ApplyJob };
+export { JobFilter, Profile, ApplyJob, SavedJobs};
 export { UserDashboard };
 

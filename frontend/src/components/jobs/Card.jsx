@@ -2,6 +2,7 @@ import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
 import { useState } from "react";
 import PropTypes from "prop-types";
 import {useNavigate} from "react-router-dom";
+import axios from "axios";
 
 export function Card({ job }) {
     const { createdAt, companyName, jobTitle, skills, salary } = job;
@@ -25,7 +26,8 @@ export function Card({ job }) {
         return `${day} ${capitalizedMonth} ${year}`;
     }
 
-    const toggleBookmark = () => {
+    const toggleBookmark = async () => {
+        await axios.post('/api/jobs/savejob',job._id);
         setIsBookmarked((prev) => !prev);
     };
 
