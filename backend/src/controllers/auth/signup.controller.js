@@ -3,6 +3,8 @@ import { User } from "../../models/user.model.js";
 export async function createUser(req, res) {
     console.log("================================================")
     console.log(` (createUser controller): We are creating a user on ${new Date().toLocaleString()} `);
+
+    //Get all user details from request
     const {
         fullName,
         email,
@@ -19,6 +21,7 @@ export async function createUser(req, res) {
         company,
     } = req.body;
 
+    // Create object with user data
     let userData = {
         fullName,
         email,
@@ -34,6 +37,8 @@ export async function createUser(req, res) {
         role,
         company,
     };
+
+    //Delete all null and undefined values
     Object.keys(userData).forEach(key => {
         if (userData[key] === null || userData[key] === undefined) {
             delete userData[key];

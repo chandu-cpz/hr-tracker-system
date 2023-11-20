@@ -23,7 +23,7 @@ const uploadFile = async (file, folder) => {
         formData
     );
 
-    console.log(uploadRes)
+    console.log(uploadRes.data)
 
     console.log("Finished uploading")
 

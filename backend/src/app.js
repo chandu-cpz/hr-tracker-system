@@ -6,6 +6,7 @@ import { loginRouter } from "./routes/auth/login.route.js";
 import { jobsRouter } from "./routes/jobs.route.js";
 import { updateUserRouter } from "./routes/auth/editprofile.route.js";
 import cloudinaryRouter from "./routes/cloudinary.route.js";
+import { applicationRouter } from "./routes/application.route.js";
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use("/api/jobs", jobsRouter);
 
 app.use("/api/signed-upload", cloudinaryRouter);
 app.use("/api/updateuser", updateUserRouter);
+app.use("/api/application", applicationRouter);
 
 app.on("error", (error) => {
     console.log("ERRR: ", error);

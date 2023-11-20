@@ -1,8 +1,8 @@
 import { Job } from "../models/jobs.model.js";
 import { User } from "../models/user.model.js";
 
-export async function getJobs(req, res, next) {
-    console.log("The getJobs controller is triggered");
+export async function getJobs(req, res) {
+    console.log("The getJobs controller is triggered")
     //Logic to get jobs if any filers on type of jobs then do so in query ;
 
     const JobsPosted = await Job.find({ isOpen: true });
@@ -14,14 +14,13 @@ export async function getJobs(req, res, next) {
 }
 
 export async function getSingleJob(req, res) {
-    console.log(
-        "A request is made to get details of Job with jobId: " +
-        req.params.jobId
-    );
+    console.log("============================================================")
+    console.log("A request is made to get details of Job with jobId: " + req.params.jobId)
     const { jobId } = req.params;
     const job = await Job.findById(jobId);
-    console.log("Sending back data of " + job.jobTitle);
+    console.log("Sending back data of " + job.jobTitle)
     res.status(200).json(job);
+    console.log("============================================================")
 }
 
 export async function saveJob(req, res) {
@@ -67,20 +66,23 @@ export async function deleteSavedJob(req, res) {
 
 }
 
-export async function openJobsCount(req, res, next) {
+export async function openJobsCount(req, res,) {
+    console.log("================================================")
+    console.log(`(openJobsCount Controller)A request is made to get count of open jobs ${new Date().toLocaleString()}`)
     try {
         const openJobsCount = await Job.countDocuments({ isOpen: true });
         res.status(200).json({ openJobsCount });
+        console.log("================================================")
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Internal Server Error" });
     }
+    console.log("================================================")
 }
-export async function addJob(req, res, next) {
-    console.log("================================================");
-    console.log(
-        `(addJob Controller): a new job is being added on ${new Date().toLocaleString()}`
-    );
+
+export async function addJob(req, res) {
+    console.log("================================================")
+    console.log(`(addJob Controller): a new job is being added on ${new Date().toLocaleString()}`);
     //Logic to add jobs and insert into database
     const {
         jobTitle,
