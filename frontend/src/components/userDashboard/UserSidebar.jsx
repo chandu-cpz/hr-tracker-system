@@ -42,7 +42,7 @@ export function UserSidebar() {
                     </NavLink>
 
                     <NavLink
-                        to="/applied"
+                        to="/appliedJobs"
                         className={({ isActive }) =>
                             isActive
                                 ? " tw-text-orange-500 tw-no-underline"

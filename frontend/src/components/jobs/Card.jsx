@@ -2,11 +2,16 @@ import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
 import { useState } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { addSavedJob, removeSavedJob } from "../../redux/slice/userSlice";
 
 export function Card({ job }) {
+    console.log(job);
     const { createdAt, companyName, jobTitle, skills, salary } = job;
     const [isBookmarked, setIsBookmarked] = useState(false);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     function formatDate(date) {
         const options = { day: "2-digit", month: "short", year: "numeric" };
@@ -25,14 +30,24 @@ export function Card({ job }) {
         return `${day} ${capitalizedMonth} ${year}`;
     }
 
-    const toggleBookmark = () => {
+    const toggleBookmark = async () => {
+        if (isBookmarked) {
+            // Delete the saved job
+            await axios.delete("/api/jobs/savejob", job._id);
+            dispatch(removeSavedJob(job._id));
+        } else {
+            // Save the job
+            await axios.post("/api/jobs/savejob", job._id);
+            dispatch(addSavedJob(job._id));
+        }
+
         setIsBookmarked((prev) => !prev);
     };
 
     const bookmarkIcon = isBookmarked ? <BsBookmarkFill /> : <BsBookmark />;
 
     return (
-        <div className="tw-h-fit tw-w-2/12 tw-rounded-2xl tw-border tw-border-solid tw-p-2 tw-shadow-md">
+        <div className="tw-h-fit tw-w-1/5 tw-flex-shrink-0 tw-rounded-2xl tw-border tw-border-solid tw-p-2 tw-shadow-md">
             <div className="tw-rounded-2xl tw-bg-red-300 tw-p-4">
                 <div className="tw-mb-4 tw-flex tw-items-center tw-justify-between">
                     <div className="tw-bg-gray-200 tw-inline-flex tw-items-center tw-rounded-full tw-bg-white tw-px-2 tw-py-1 tw-font-medium">
@@ -55,7 +70,7 @@ export function Card({ job }) {
                 </div>
 
                 <div className="tw-mb-2 tw-flex tw-justify-between">
-                    <h3 className="tw-mb-2 tw-text-2xl tw-font-medium">
+                    <h3 className="tw-mb-2 tw-overflow-hidden tw-text-ellipsis tw-text-2xl tw-font-medium">
                         {jobTitle}
                     </h3>
                     <img
@@ -65,19 +80,20 @@ export function Card({ job }) {
                 </div>
 
                 <div className="tw-flex tw-flex-wrap">
-                    {skills.map((skill, index) => {
-                        <span
-                            key={index}
-                            className="tw-mb-2 tw-mr-2 tw-rounded-full tw-bg-white tw-px-3 tw-py-1 tw-font-medium "
-                        >
-                            {skill}
-                        </span>;
-                    })}
+                    {skills &&
+                        skills.map((skill, index) => (
+                            <span
+                                key={index}
+                                className="tw-mb-2 tw-mr-2 tw-rounded-full tw-bg-white tw-px-3 tw-py-1 tw-font-medium "
+                            >
+                                {skill}
+                            </span>
+                        ))}
                 </div>
             </div>
 
             <div className="tw-mt-4 tw-flex tw-items-center tw-justify-between">
-                <div className="tw-text-lg tw-font-medium">
+                <div className=" tw-ml-2 tw-text-lg tw-font-medium">
                     ${salary}
                     <span className="tw-text-sm">/month</span>
                 </div>

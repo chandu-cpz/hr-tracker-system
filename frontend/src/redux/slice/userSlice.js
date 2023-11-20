@@ -10,23 +10,43 @@ export const userSlice = createSlice({
     initialState,
     reducers: {
         setUser: (state, action) => {
-            console.log("setting user to", action.payload);
+            console.log("RTK: Setting user to", action.payload);
             return {
                 ...state,
                 user: action.payload,
             }
         },
         setIsLoggedIn: (state, action) => {
-            console.log("setting isLoggedIn to", action.payload);
+            console.log("RTK: Setting isLoggedIn to", action.payload);
             return {
                 ...state,
                 isLoggedIn: action.payload
+            }
+        },
+        addSavedJob(state, action) {
+            console.log(`RTK: Adding a saved Job ${action.payload}`);
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    savedJobs: [...state.user.savedJobs, action.payload]
+                }
+            }
+        },
+        removeSavedJob(state, action) {
+            console.log(`RTK: Removing a saved Job ${action.payload}`);
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    savedJobs: state.user.savedJobs.filter(id => id !== action.payload)
+                }
             }
         }
     },
 });
 
-export const { setUser, setIsLoggedIn } = userSlice.actions;
+export const { setUser, setIsLoggedIn, addSavedJob, removeSavedJob } = userSlice.actions;
 
 export const signUpUser = (userData) => {
     console.log("RTK: We started sign up ")

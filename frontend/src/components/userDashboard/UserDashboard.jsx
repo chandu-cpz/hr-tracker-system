@@ -13,7 +13,7 @@ export function UserDashboard() {
                     <div>
                         <h1>DashBoard</h1>
                     </div>
-                    <div className="tw-my-20 tw-flex tw-flex-wrap tw-items-center tw-justify-between tw-gap-5 tw-p-8 tw-rounded-lg tw-bg-orange-200">
+                    <div className="tw-my-20 tw-flex tw-flex-wrap tw-items-center tw-justify-between tw-gap-5 tw-rounded-lg tw-bg-orange-200 tw-p-8">
                         <div className="tw-self-start">
                             <h1 className="tw-text-gray-800 tw-mb-5 tw-text-4xl">
                                 Welcome back,
@@ -24,19 +24,34 @@ export function UserDashboard() {
                         </div>
                         <UserCard
                             title="Jobs Open"
-                            icon={BsBriefcase}
+                            icon={
+                                <BsBriefcase
+                                    size={52}
+                                    className="tw-text-orange-600"
+                                />
+                            }
                             value={12}
                         />
 
                         <UserCard
                             title="Applications"
-                            icon={BsPerson}
+                            icon={
+                                <BsPerson
+                                    size={52}
+                                    className="tw-text-orange-600"
+                                />
+                            }
                             value={24}
                         />
 
                         <UserCard
                             title="Feedbacks"
-                            icon={BsPersonCheck}
+                            icon={
+                                <BsPersonCheck
+                                    size={52}
+                                    className="tw-text-orange-600"
+                                />
+                            }
                             value={5}
                         />
                     </div>
