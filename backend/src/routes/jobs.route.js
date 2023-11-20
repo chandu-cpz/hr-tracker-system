@@ -7,12 +7,14 @@ import { addJob } from "../controllers/jobs.controller.js";
 
 jobsRouter.get("/", getJobs);
 
-jobsRouter.get("/:jobId", getSingleJob);
+
 
 jobsRouter.post("/savejob", checkAuth, saveJob);
 jobsRouter.delete("/savejob", checkAuth, deleteSavedJob)
 
 jobsRouter.get("/open", openJobsCount);
+
+jobsRouter.get("/:jobId", getSingleJob);
 
 jobsRouter.get("/details/:jobId", getSingleJob);
 

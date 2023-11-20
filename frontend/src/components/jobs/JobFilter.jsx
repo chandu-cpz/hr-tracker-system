@@ -56,14 +56,16 @@ export function JobFilter() {
                     <input type="range" min="0" max="1000000" />
                 </div>
             </div>
-            <div className="tw-m-4 tw-ms-72">
-                <h1>Recomended Jobs</h1>
-            </div>
             <div className="tw-flex tw-flex-wrap tw-gap-10">
                 <Sidebar />
-                {jobs.map((job) => {
-                    return <Card key={job._id} job={job} />;
-                })}
+                <div className="tw-m-5 tw-w-10/12">
+                    <h1>Recomended Jobs</h1>
+                    <div className="tw-flex tw-w-full tw-flex-wrap tw-gap-10">
+                        {jobs.map((job) => {
+                            return <Card key={job._id} job={job} />;
+                        })}
+                    </div>
+                </div>
             </div>
         </>
     );

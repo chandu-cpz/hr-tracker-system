@@ -42,6 +42,26 @@ export const userSlice = createSlice({
                     savedJobs: state.user.savedJobs.filter(id => id !== action.payload)
                 }
             }
+        },
+        addAppliedJob(state, action) {
+            console.log(`RTK: Adding a saved Job ${action.payload}`);
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    appliedJobs: [...state.user.appliedJobs, action.payload]
+                }
+            }
+        },
+        removeAppliedJob(state, action) {
+            console.log(`RTK: Removing a saved Job ${action.payload}`);
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    appliedJobs: state.user.appliedJobs.filter(id => id !== action.payload)
+                }
+            }
         }
     },
 });

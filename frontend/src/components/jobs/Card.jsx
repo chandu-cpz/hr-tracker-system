@@ -5,11 +5,15 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addSavedJob, removeSavedJob } from "../../redux/slice/userSlice";
+import { useSelector } from "react-redux";
 
 export function Card({ job }) {
     console.log(job);
+    const savedJobs = useSelector((state) => state.user.savedJobs);
     const { createdAt, companyName, jobTitle, skills, salary } = job;
-    const [isBookmarked, setIsBookmarked] = useState(false);
+    const [isBookmarked, setIsBookmarked] = useState(
+        savedJobs ? savedJobs.includes(job._id) : false
+    );
     const navigate = useNavigate();
     const dispatch = useDispatch();
 

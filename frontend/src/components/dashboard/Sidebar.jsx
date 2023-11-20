@@ -42,7 +42,7 @@ export function Sidebar() {
                     </NavLink>
 
                     <NavLink
-                        to="/schedule"
+                        to="/applicants"
                         className={({ isActive }) =>
                             isActive
                                 ? " tw-text-orange-500 tw-no-underline"
@@ -56,7 +56,7 @@ export function Sidebar() {
                     </NavLink>
 
                     <NavLink
-                        to="/employee"
+                        to="/employees"
                         className={({ isActive }) =>
                             isActive
                                 ? " tw-text-orange-500 tw-no-underline"
