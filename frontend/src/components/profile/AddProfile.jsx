@@ -7,6 +7,7 @@ import uploadFile from "../../utils/uploadFile";
 import axios from "axios";
 import { setUser } from "../../redux/slice/userSlice";
 import { useNavigate } from "react-router-dom";
+import validator from "validator";
 
 export function AddProfile() {
     const dispatch = useDispatch();
@@ -26,12 +27,14 @@ export function AddProfile() {
     });
 
     const [preview, setPreview] = useState(user.profileImage);
+    const [errors, setErrors] = useState({});
 
     const handleChange = (e) => {
         setProfile({
             ...profile,
             [e.target.name]: e.target.value,
         });
+        setErrors({ ...errors, [e.target.name]: "" });
     };
 
     const handleImageChange = async (e) => {
@@ -40,8 +43,6 @@ export function AddProfile() {
             ...profile,
             image: e.target.files[0],
         });
-
-        console.log("We are uploading image");
 
         try {
             const image = await uploadFile(e.target.files[0], "profile");
@@ -54,13 +55,36 @@ export function AddProfile() {
         }
     };
 
+    const validateFields = () => {
+        let isValid = true;
+        const newErrors = {};
+
+        // Validate each field
+        if (!validator.isEmail(profile.email)) {
+            newErrors.email = "Invalid email address";
+            isValid = false;
+        }
+        if (user.phoneNumber.length !== 10) {
+            newErrors.phoneNumber = "Phone number must be 10 characters long";
+            isValid = false;
+          } else {
+            newErrors.phoneNumber = "";
+          }
+
+        // Add more validation for other fields if needed
+
+        setErrors(newErrors);
+        return isValid;
+    };
+
     const editProfile = async (e) => {
         e.preventDefault();
-        console.log(profile);
-        const user = await axios.patch("/api/updateuser", profile);
-        console.log(user.data);
-        dispatch(setUser(user.data));
-        navigate("/profile");
+
+        if (validateFields()) {
+            const updatedUser = await axios.patch("/api/updateuser", profile);
+            dispatch(setUser(updatedUser.data));
+            navigate("/profile");
+        }
     };
 
     return (
@@ -106,6 +130,9 @@ export function AddProfile() {
                                     onChange={handleChange}
                                     className="tw-border-gray-300 tw-w-full tw-rounded-full tw-border tw-px-3 tw-py-2"
                                 />
+                                {errors.fullName && (
+                                    <span className="tw-text-red-500">{errors.fullName}</span>
+                                )}
                             </div>
 
                             <div className="tw-mb-6">
@@ -119,6 +146,9 @@ export function AddProfile() {
                                     onChange={handleChange}
                                     className="tw-border-gray-300 tw-w-full tw-rounded-full tw-border tw-px-3 tw-py-2"
                                 />
+                                {errors.email && (
+                                    <span className="tw-text-red-500">{errors.email}</span>
+                                )}
                             </div>
 
                             <div className="tw-mb-6">
@@ -148,6 +178,9 @@ export function AddProfile() {
                                     onChange={handleChange}
                                     className="tw-border-gray-300 tw-w-full tw-rounded-full tw-border tw-px-3 tw-py-2"
                                 />
+                                {errors.phoneNumber && (
+                                    <span className="tw-text-red-500">{errors.phoneNumber}</span>
+                                )}
                             </div>
                         </div>
                         <div className="tw-m-5">
