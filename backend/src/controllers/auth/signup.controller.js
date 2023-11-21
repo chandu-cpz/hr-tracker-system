@@ -23,6 +23,7 @@ export async function createUser(req, res) {
         jobsApplied,
         role,
         company,
+        companyImage,
     } = req.body;
 
     // Create object with user data
@@ -40,6 +41,7 @@ export async function createUser(req, res) {
         jobsApplied,
         role,
         company,
+        companyImage,
     };
 
     //Delete all null and undefined values
