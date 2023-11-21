@@ -1,9 +1,12 @@
 import { User } from "../../models/user.model.js";
 import { generateSignUpEmailTemplate } from "../../utils/emailGenerator.js";
+import sendMail from "../../utils/nodeMailer.js";
 
 export async function createUser(req, res) {
-    console.log("================================================")
-    console.log(` (createUser controller): We are creating a user on ${new Date().toLocaleString()} `);
+    console.log("================================================");
+    console.log(
+        ` (createUser controller): We are creating a user on ${new Date().toLocaleString()} `
+    );
 
     //Get all user details from request
     const {
@@ -40,7 +43,7 @@ export async function createUser(req, res) {
     };
 
     //Delete all null and undefined values
-    Object.keys(userData).forEach(key => {
+    Object.keys(userData).forEach((key) => {
         if (userData[key] === null || userData[key] === undefined) {
             delete userData[key];
         }
@@ -49,15 +52,12 @@ export async function createUser(req, res) {
     console.log("The user details are: ");
     console.log(userData);
 
-
     // check if user exists using email
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-        console.log("The user already exists aborting ... ")
+        console.log("The user already exists aborting ... ");
         return res.status(400).send("Already User exists");
     }
-
-
 
     //Not a existing user so create a new one
     const user = await User.create(userData);
@@ -84,6 +84,6 @@ export async function createUser(req, res) {
     // res.cookie("token", token, options);
 
     //send the user details
-    res.status(200).send("Completed Creating user")
-    console.log("================================================")
+    res.status(200).send("Completed Creating user");
+    console.log("================================================");
 }

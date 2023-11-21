@@ -1,24 +1,21 @@
 import nodemailer from "nodemailer";
 
-try {
-    const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-            user: process.env.NODEMAILER_EMAIL,
-            pass: process.env.NODEMAILER_EMAIL_PASSWORD,
-        }
-    });
-    console.log(`NODEMAILER HAS BEEN INITIALIZED SUCCESFULLY`);
-} catch (error) {
-    console.log(`ERROR INITIALISING NODEMAILER ERROR: ${error.message}`);
-}
-export const sendMail = async (to, subject, html) => {
+const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+        user: process.env.NODEMAILER_EMAIL,
+        pass: process.env.NODEMAILER_EMAIL_PASSWORD,
+    },
+});
+console.log(`NODEMAILER HAS BEEN INITIALIZED SUCCESFULLY`);
+
+const sendMail = async (to, subject, html) => {
     try {
         const mailOptions = {
             from: process.env.NODEMAILER_EMAIL,
             to,
             subject,
-            html
+            html,
         };
 
         await transporter.sendMail(mailOptions);
@@ -26,6 +23,6 @@ export const sendMail = async (to, subject, html) => {
     } catch (error) {
         console.log(error.message);
     }
-}
+};
 
-export default sendMail
+export default sendMail;
