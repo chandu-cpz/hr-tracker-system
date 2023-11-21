@@ -1,8 +1,11 @@
 import { Job } from "../models/jobs.model.js";
 import { User } from "../models/user.model.js";
+import express from "express";
+
+const router = express.Router();
 
 export async function getJobs(req, res) {
-    console.log("The getJobs controller is triggered")
+    console.log("The getJobs controller is triggered");
     //Logic to get jobs if any filers on type of jobs then do so in query ;
 
     const JobsPosted = await Job.find({ isOpen: true });
@@ -14,13 +17,16 @@ export async function getJobs(req, res) {
 }
 
 export async function getSingleJob(req, res) {
-    console.log("============================================================")
-    console.log("A request is made to get details of Job with jobId: " + req.params.jobId)
+    console.log("============================================================");
+    console.log(
+        "A request is made to get details of Job with jobId: " +
+            req.params.jobId
+    );
     const { jobId } = req.params;
     const job = await Job.findById(jobId);
-    console.log("Sending back data of " + job.jobTitle)
+    console.log("Sending back data of " + job.jobTitle);
     res.status(200).json(job);
-    console.log("============================================================")
+    console.log("============================================================");
 }
 
 export async function saveJob(req, res) {
@@ -28,7 +34,6 @@ export async function saveJob(req, res) {
     const jobId = req.body._id;
     console.log("A request is made to save job with jobId: " + jobId);
     try {
-
         // Update the user's savedJob field with the new job ID
         const user = await User.findOneAndUpdate(
             { _id: userId },
@@ -44,12 +49,10 @@ export async function saveJob(req, res) {
 }
 
 export async function deleteSavedJob(req, res) {
-
     const userId = req.body.user._id;
     const jobId = req.body.jobId;
 
     try {
-
         // Find the user and pull the jobId from their savedJobs array
         const user = await User.findOneAndUpdate(
             { _id: userId },
@@ -58,31 +61,93 @@ export async function deleteSavedJob(req, res) {
         );
 
         res.status(200).json({ user });
-
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Internal Server Error" });
     }
-
 }
 
-export async function openJobsCount(req, res,) {
-    console.log("================================================")
-    console.log(`(openJobsCount Controller)A request is made to get count of open jobs ${new Date().toLocaleString()}`)
+export async function filters(req, res) {
+    try {
+        let query = Job.find();
+
+        // Sorting
+        if (req.query.sort) {
+            const sortField = req.query.sort;
+            const sortOrder =
+                req.query.sortOrder &&
+                req.query.sortOrder.toLowerCase() === "desc"
+                    ? -1
+                    : 1;
+            query = query.sort({ [sortField]: sortOrder });
+        }
+
+        // Pagination
+        const page = req.query.page || 1;
+        const limit = 10;
+        const skip = (page - 1) * limit;
+        query = query.skip(skip).limit(limit);
+
+        if (req.query.page) {
+            const total = await Job.countDocuments();
+            if (skip >= total) {
+                return res.status(500).send("Internal Server Error");
+            }
+        }
+
+        // Filtering by job skills
+        if (req.query.skills) {
+            const skills = req.query.skills.split(",");
+            query = query.where("skills").in(skills);
+        }
+
+        // Additional filtering based on your requirements
+        if (req.query.jobTitle) {
+            query = query.where("jobTitle").equals(req.query.jobTitle);
+        }
+
+        if (req.query.location) {
+            query = query.where("location").equals(req.query.location);
+        }
+
+        if (req.query.experience) {
+            query = query.where("experience").equals(req.query.experience);
+        }
+
+        if (req.query.jobDuration) {
+            query = query.where("jobDuration").equals(req.query.jobDuration);
+        }
+
+        // Execute the query
+        const jobs = await query.exec();
+        res.json(jobs);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal Server Error");
+    }
+}
+
+export async function openJobsCount(req, res) {
+    console.log("================================================");
+    console.log(
+        `(openJobsCount Controller)A request is made to get count of open jobs ${new Date().toLocaleString()}`
+    );
     try {
         const openJobsCount = await Job.countDocuments({ isOpen: true });
         res.status(200).json({ openJobsCount });
-        console.log("================================================")
+        console.log("================================================");
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Internal Server Error" });
     }
-    console.log("================================================")
+    console.log("================================================");
 }
 
 export async function addJob(req, res) {
-    console.log("================================================")
-    console.log(`(addJob Controller): a new job is being added on ${new Date().toLocaleString()}`);
+    console.log("================================================");
+    console.log(
+        `(addJob Controller): a new job is being added on ${new Date().toLocaleString()}`
+    );
     //Logic to add jobs and insert into database
     const {
         jobTitle,
