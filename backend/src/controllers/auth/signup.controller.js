@@ -1,4 +1,5 @@
 import { User } from "../../models/user.model.js";
+import { generateSignUpEmailTemplate } from "../../utils/emailGenerator.js";
 
 export async function createUser(req, res) {
     console.log("================================================")
@@ -60,6 +61,8 @@ export async function createUser(req, res) {
 
     //Not a existing user so create a new one
     const user = await User.create(userData);
+
+    sendMail(user.email, "Welcome", generateSignUpEmailTemplate(user));
 
     // //Generate a token for the user
     // const token = await user.generateAccessToken();
