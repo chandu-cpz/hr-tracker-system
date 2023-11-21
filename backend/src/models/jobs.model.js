@@ -38,14 +38,16 @@ const jobSchema = new mongoose.Schema(
             required: true,
         },
         jobtype: {
+            type: String,
             enum: ["FULL_TIME", "PART_TIME", "INTERNSHIP"],
+            default: "FULL_TIME"
         },
         noOfPosts: {
-            type: String,
+            type: Number,
             default: "1",
         },
         salary: {
-            type: String,
+            type: Number,
             required: true,
         },
         isOpen: {
@@ -58,6 +60,9 @@ const jobSchema = new mongoose.Schema(
                 required: true,
             },
         ],
+        experience: {
+            type: String,
+        },
     },
     { timestamps: true }
 );
