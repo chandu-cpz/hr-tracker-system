@@ -14,7 +14,7 @@ export function Signup() {
         email: "",
         password: "",
         gender: "",
-        role: "",
+        role: "USER",
         company: "",
         companyImage: null, // Updated to handle file input
     });
@@ -24,16 +24,6 @@ export function Signup() {
             ...userData,
             [e.target.name]: e.target.value,
         });
-    };
-
-    const handleCheckboxChange = (e) => {
-        const { name, checked } = e.target;
-        setUserData((prevData) => ({
-            ...prevData,
-            [name]: checked ? "HR" : "",
-            company: "",
-            companyImage: null, // Reset file input when HR checkbox is unchecked
-        }));
     };
 
     const [preview, setPreview] = useState(userData.companyImage);
@@ -182,7 +172,7 @@ export function Signup() {
                                 className="form-checkbox"
                                 name="role"
                                 value="HR"
-                                onChange={handleCheckboxChange}
+                                onChange={handleChange}
                             />
                             <span className="text-gray-700 tw-mb-2 tw-block tw-text-sm tw-font-bold">
                                 HR

@@ -8,7 +8,6 @@ import { updateUserRouter } from "./routes/auth/editprofile.route.js";
 import cloudinaryRouter from "./routes/cloudinary.route.js";
 import { applicationRouter } from "./routes/application.route.js";
 import sendMail from "./utils/nodeMailer.js"
-
 const app = express();
 
 app.use(
