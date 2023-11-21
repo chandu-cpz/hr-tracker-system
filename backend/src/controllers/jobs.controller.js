@@ -138,10 +138,6 @@ export async function getJobs(req, res) {
             response.experience = experience;
         }
 
-        if (duration.length > 0) {
-            response.jobDuration = duration;
-        }
-
         const jobs = await query.exec();
         response.jobs = jobs;
         res.json(response);
@@ -184,9 +180,20 @@ export async function addJob(req, res) {
         skills,
         isOpen,
         experience,
-        duration
     } = req.body;
-
+    console.log( 
+        {
+        jobTitle,
+        jobDescription,
+        companyName,
+        responsibilities,
+        qualifications,
+        location,
+        salary,
+        skills,
+        isOpen,
+        experience,
+    })
     const postedBy = req.body.user._id;
 
     // Validate required fields
@@ -214,8 +221,7 @@ export async function addJob(req, res) {
         skills, // optional
         isOpen, // optional, defaults to true
         postedBy,
-        duration,
-        experience
+       experience
     };
     //Remove null value filleds from object
     Object.keys(jobData).forEach((key) => {
