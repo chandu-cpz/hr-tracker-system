@@ -1,23 +1,24 @@
 import { Dropdown } from "./DropDown";
 import { Sidebar } from "./Sidebar";
-import { BsSearch, BsGeoAlt, BsBriefcase, BsClock } from "react-icons/bs";
+import { BsSearch, BsGeoAlt, BsBriefcase } from "react-icons/bs";
 import { Card } from "./Card";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
 export function JobFilter() {
     const [jobs, setJobs] = useState([]);
+    const [totalPages, setTotalPages] = useState(1);
     const [filterData, setFilterData] = useState({
-        jobTitle: ["loading", "loading"],
-        location: ["loading", "loading"],
-        experience: ["loading", "loading"],
-        jobDuration: ["loading", "loading"],
+        jobTitle: ["loading"],
+        location: ["loading"],
+        experience: ["loading"],
+        jobDuration: ["loading"],
     });
     const [filters, setFilters] = useState({
         jobTitle: "",
         location: "",
         experience: "",
-        jobDuration: "",
+        jobType: [],
     });
     const [selectedSalary, setSelectedSalary] = useState(0);
 
@@ -26,29 +27,38 @@ export function JobFilter() {
     }, [filters]); // Refetch data when filters change
 
     const handleFilterChange = (field, value) => {
+        console.log("a filter has been changesd");
+        console.log(`We got ${field} with ${value}`);
         setFilters((prevFilters) => ({
             ...prevFilters,
             [field]: value,
         }));
+        console.log("The new filters are : ");
+        console.log(filters);
     };
 
-    const fetchData = async () => {
+    // Usage
+    const handlePageChange = (page) => {
+        fetchData(page);
+    };
+
+    const fetchData = async (page) => {
         try {
             const response = await axios.get("/api/jobs", {
-                params: { ...filters, sort: "salary" },
+                params: { ...filters, sort: "salary", page },
             });
-            console.log(response.data);
             const jobs = response.data.jobs;
             setFilterData({
                 jobTitle: response.data.jobTitle,
                 location: response.data.location,
                 experience: response.data.experience,
-                jobDuration: response.data.jobDuration,
             });
+            setTotalPages(response.data.totalPages);
+            console.log("The filter data is ");
+            console.log(filterData);
             setJobs(jobs);
         } catch (error) {
             console.error("Error fetching jobs:", error.message);
-            // You might want to set an error state or display a message to the user.
         }
     };
 
@@ -56,14 +66,13 @@ export function JobFilter() {
         const salary = event.target.value;
         try {
             const response = await axios.get(
-                `/api/jobs?sort=salary&minSalary=0&maxSalary=${salary}`
+                `/api/jobs?sort=salary&minSalary=${salary}&maxSalary=9999999999999`
             );
-            const jobs = response.data;
+            const jobs = response.data.jobs;
             setJobs(jobs);
             setSelectedSalary(salary);
         } catch (error) {
             console.error("Error fetching jobs:", error);
-            // You might want to set an error state or display a message to the user.
         }
     };
 
@@ -74,30 +83,27 @@ export function JobFilter() {
                     name="Job Title"
                     options={filterData.jobTitle}
                     icon={<BsSearch />}
-                    onSelect={(value) => handleFilterChange("jobTitle", value)}
+                    onSelect={(name, value) =>
+                        handleFilterChange("jobTitle", value)
+                    }
                 />
                 <Dropdown
                     name="Location"
                     options={filterData.location}
                     icon={<BsGeoAlt />}
-                    onSelect={(value) => handleFilterChange("location", value)}
+                    onSelect={(name, value) =>
+                        handleFilterChange("location", value)
+                    }
                 />
                 <Dropdown
                     name="Experience"
                     options={filterData.experience}
                     icon={<BsBriefcase />}
-                    onSelect={(value) =>
+                    onSelect={(name, value) =>
                         handleFilterChange("experience", value)
                     }
                 />
-                <Dropdown
-                    name="Job Duration"
-                    options={filterData.jobDuration}
-                    icon={<BsClock />}
-                    onSelect={(value) =>
-                        handleFilterChange("jobDuration", value)
-                    }
-                />
+
                 <div className="tw-flex">
                     <label
                         htmlFor="salary"
@@ -108,19 +114,47 @@ export function JobFilter() {
                     <input
                         type="range"
                         min="0"
-                        max="1000000"
+                        max="99999"
                         value={selectedSalary}
                         onChange={handleSalaryChange}
                     />
+                    <input
+                        type="number"
+                        value={selectedSalary}
+                        onChange={(e) => setSelectedSalary(e.target.value)}
+                        className="tw-ml-5 tw-rounded-full"
+                    />
+                </div>
+                <div>
+                    <button
+                        className=" tw-rounded-full tw-border-none tw-bg-gradient-to-b tw-from-orange-500 tw-to-orange-600 tw-px-2 tw-py-1  tw-text-white tw-shadow-2xl tw-transition-all  hover:tw-scale-105 hover:tw-shadow-xl"
+                        onClick={() => setFilters({})}
+                    >
+                        Clear
+                    </button>
                 </div>
             </div>
             <div className="tw-flex tw-flex-wrap tw-gap-10">
-                <Sidebar />
+                <Sidebar
+                    onSelect={(checked) =>
+                        setFilters((prev) => ({ ...prev, jobType: checked }))
+                    }
+                />
                 <div className="tw-m-5 tw-w-10/12">
                     <h1>Recommended Jobs</h1>
                     <div className="tw-flex tw-w-full tw-flex-wrap tw-gap-10">
-                        {jobs.map((job) => (
-                            <Card key={job._id} job={job} />
+                        {jobs &&
+                            jobs.map((job) => <Card key={job._id} job={job} />)}
+                    </div>
+                    <div>
+                        {Array.from({ length: totalPages }, (_, i) => (
+                            <button
+                                key={i}
+                                onClick={() => handlePageChange(i + 1)}
+                                className="btn btn-primary m-2"
+                            >
+                                {i + 1}
+                            </button>
                         ))}
                     </div>
                 </div>

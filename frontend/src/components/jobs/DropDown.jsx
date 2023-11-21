@@ -1,12 +1,8 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
 
 export function Dropdown({ name, options, icon, onSelect }) {
-    console.log(options);
-    const [dropDownName, setDropDownName] = useState(name);
-
     const handleSelection = (option) => {
-        setDropDownName(option);
+        console.log(`The option is ${option} and name is ${name}`);
         onSelect(name, option);
     };
 
@@ -19,22 +15,23 @@ export function Dropdown({ name, options, icon, onSelect }) {
                 <span className="tw-pt-0.25 tw-mr-2 tw-h-11 tw-w-11 tw-shrink-0 tw-grow-0 tw-rounded-full tw-border tw-border-solid  tw-px-1 tw-pb-1">
                     {icon}
                 </span>
-                {dropDownName}
+                {name}
             </a>
 
             <ul className="dropdown-menu !tw-bg-gray">
-                {options.map((option) => (
-                    <li key={option}>
-                        <a
-                            className="dropdown-item tw-text-lg"
-                            onClick={() => handleSelection(option)}
-                            href="#"
-                            value={option}
-                        >
-                            {option}
-                        </a>
-                    </li>
-                ))}
+                {options &&
+                    options.map((option) => (
+                        <li key={option}>
+                            <a
+                                className="dropdown-item tw-text-lg"
+                                onClick={() => handleSelection(option)}
+                                href="#"
+                                value={option}
+                            >
+                                {option}
+                            </a>
+                        </li>
+                    ))}
             </ul>
         </div>
     );

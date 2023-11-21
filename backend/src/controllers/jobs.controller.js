@@ -56,6 +56,7 @@ export async function deleteSavedJob(req, res) {
 }
 
 export async function getJobs(req, res) {
+    console.log(req.query)
     try {
         let query = Job.find();
 
@@ -72,7 +73,7 @@ export async function getJobs(req, res) {
 
         // Pagination
         const page = req.query.page || 1;
-        const limit = 10;
+        const limit = 8;
         const skip = (page - 1) * limit;
         query = query.skip(skip).limit(limit);
 
@@ -83,13 +84,6 @@ export async function getJobs(req, res) {
             }
         }
 
-        // Filtering by job skills
-        if (req.query.skills) {
-            const skills = req.query.skills.split(",");
-            query = query.where("skills").in(skills);
-        }
-
-        // Additional filtering based on your requirements
         if (req.query.jobTitle) {
             query = query.where("jobTitle").equals(req.query.jobTitle);
         }
@@ -102,23 +96,23 @@ export async function getJobs(req, res) {
             query = query.where("experience").equals(req.query.experience);
         }
 
-        if (req.query.jobDuration) {
-            query = query.where("jobDuration").equals(req.query.jobDuration);
+        if (req.query.jobTypes) {
+            query = query.where('jobType').in(req.query.jobTypes);
         }
 
+        if (req.query.minSalary && req.query.maxSalary) {
 
-        let locations, titles, experience, duration;
+            query = query.where('salary').gte(parseInt(req.query.minSalary))
+                .lte(parseInt(req.query.maxSalary));
+
+        }
+
+        let locations, titles, experience;
         try {
 
             locations = await Job.distinct("location");
-            console.log(locations);
             titles = await Job.distinct("jobTitle");
-            console.log(titles)
             experience = await Job.distinct("experience");
-            console.log(experience)
-            duration = await Job.distinct("duration");
-            console.log(duration)
-
         } catch (err) {
             console.log(err);
         }
@@ -131,7 +125,7 @@ export async function getJobs(req, res) {
         }
 
         if (titles.length > 0) {
-            response.jobTilte = titles;
+            response.jobTitle = titles;
         }
 
         if (experience.length > 0) {
@@ -139,7 +133,10 @@ export async function getJobs(req, res) {
         }
 
         const jobs = await query.exec();
+        console.log(jobs);
         response.jobs = jobs;
+        const totalJobs = await jobs.length;
+        response.totalPages = totalJobs / limit
         res.json(response);
     } catch (error) {
         console.error(error);
@@ -180,20 +177,21 @@ export async function addJob(req, res) {
         skills,
         isOpen,
         experience,
+        jobType
     } = req.body;
-    console.log( 
+    console.log(
         {
-        jobTitle,
-        jobDescription,
-        companyName,
-        responsibilities,
-        qualifications,
-        location,
-        salary,
-        skills,
-        isOpen,
-        experience,
-    })
+            jobTitle,
+            jobDescription,
+            companyName,
+            responsibilities,
+            qualifications,
+            location,
+            salary,
+            skills,
+            isOpen,
+            experience,
+        })
     const postedBy = req.body.user._id;
 
     // Validate required fields
@@ -221,7 +219,8 @@ export async function addJob(req, res) {
         skills, // optional
         isOpen, // optional, defaults to true
         postedBy,
-       experience
+        experience,
+        jobType, //
     };
     //Remove null value filleds from object
     Object.keys(jobData).forEach((key) => {

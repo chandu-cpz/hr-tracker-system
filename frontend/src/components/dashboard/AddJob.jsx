@@ -10,7 +10,6 @@ import {
 } from "react-icons/fa";
 import { FiHardDrive } from "react-icons/fi";
 import { GiOfficeChair } from "react-icons/gi";
-import { MdWork } from "react-icons/md";
 import { IoDocumentTextOutline } from "react-icons/io5";
 import { IoMdConstruct } from "react-icons/io";
 import { skills } from "../../constants";
@@ -178,17 +177,25 @@ export function AddJob() {
                                 </div>
 
                                 <div className="tw-mb-6">
-                                    <label className="tw-text-gray-700 tw-font-lg tw-mb-2 tw-block">
-                                        <MdWork className="tw-mr-2" />
+                                    <label className="tw-mb-2 tw-block tw-font-medium">
                                         Job Type
                                     </label>
-                                    <input
-                                        type="text"
+                                    <select
                                         name="jobType"
                                         value={job.jobType}
                                         onChange={handleChange}
-                                        className="tw-border-gray-300 tw-w-full tw-rounded-full tw-border tw-px-3 tw-py-2"
-                                    />
+                                        className="tw-w-full tw-rounded-full tw-border tw-px-3 tw-py-2"
+                                    >
+                                        <option value="FULL_TIME">
+                                            Full Time
+                                        </option>
+                                        <option value="PART_TIME">
+                                            Part Time
+                                        </option>
+                                        <option value="INTERNSHIP">
+                                            Internship
+                                        </option>
+                                    </select>
                                 </div>
 
                                 <div className="tw-mb-6">
