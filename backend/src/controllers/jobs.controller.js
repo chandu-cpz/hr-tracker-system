@@ -4,23 +4,11 @@ import express from "express";
 
 const router = express.Router();
 
-export async function getJobs(req, res) {
-    console.log("The getJobs controller is triggered");
-    //Logic to get jobs if any filers on type of jobs then do so in query ;
-
-    const JobsPosted = await Job.find({ isOpen: true });
-    res.status(200).json(JobsPosted);
-
-    //also send only 10 jobs or so ..
-
-    // do pagination;
-}
-
 export async function getSingleJob(req, res) {
     console.log("============================================================");
     console.log(
         "A request is made to get details of Job with jobId: " +
-            req.params.jobId
+        req.params.jobId
     );
     const { jobId } = req.params;
     const job = await Job.findById(jobId);
@@ -67,7 +55,7 @@ export async function deleteSavedJob(req, res) {
     }
 }
 
-export async function filters(req, res) {
+export async function getJobs(req, res) {
     try {
         let query = Job.find();
 
@@ -76,7 +64,7 @@ export async function filters(req, res) {
             const sortField = req.query.sort;
             const sortOrder =
                 req.query.sortOrder &&
-                req.query.sortOrder.toLowerCase() === "desc"
+                    req.query.sortOrder.toLowerCase() === "desc"
                     ? -1
                     : 1;
             query = query.sort({ [sortField]: sortOrder });
@@ -118,9 +106,45 @@ export async function filters(req, res) {
             query = query.where("jobDuration").equals(req.query.jobDuration);
         }
 
+
+        let locations, titles, experience, duration;
+        try {
+
+            locations = await Job.distinct("location");
+            console.log(locations);
+            titles = await Job.distinct("jobTitle");
+            console.log(titles)
+            experience = await Job.distinct("experience");
+            console.log(experience)
+            duration = await Job.distinct("duration");
+            console.log(duration)
+
+        } catch (err) {
+            console.log(err);
+        }
         // Execute the query
+
+        let response = {};
+
+        if (locations.length > 0) {
+            response.location = locations;
+        }
+
+        if (titles.length > 0) {
+            response.jobTilte = titles;
+        }
+
+        if (experience.length > 0) {
+            response.experience = experience;
+        }
+
+        if (duration.length > 0) {
+            response.jobDuration = duration;
+        }
+
         const jobs = await query.exec();
-        res.json(jobs);
+        response.jobs = jobs;
+        res.json(response);
     } catch (error) {
         console.error(error);
         res.status(500).send("Internal Server Error");
@@ -159,6 +183,8 @@ export async function addJob(req, res) {
         salary,
         skills,
         isOpen,
+        experience,
+        duration
     } = req.body;
 
     const postedBy = req.body.user._id;
@@ -188,6 +214,8 @@ export async function addJob(req, res) {
         skills, // optional
         isOpen, // optional, defaults to true
         postedBy,
+        duration,
+        experience
     };
     //Remove null value filleds from object
     Object.keys(jobData).forEach((key) => {

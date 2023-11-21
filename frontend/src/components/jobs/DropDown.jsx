@@ -1,11 +1,13 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
 
-export function Dropdown({ name, options, icon }) {
+export function Dropdown({ name, options, icon, onSelect }) {
+    console.log(options);
     const [dropDownName, setDropDownName] = useState(name);
 
     const handleSelection = (option) => {
         setDropDownName(option);
+        onSelect(name, option);
     };
 
     return (
@@ -41,5 +43,6 @@ export function Dropdown({ name, options, icon }) {
 Dropdown.propTypes = {
     name: PropTypes.string.isRequired,
     options: PropTypes.arrayOf(PropTypes.string).isRequired,
+    onSelect: PropTypes.func.isRequired,
     icon: PropTypes.element.isRequired,
 };

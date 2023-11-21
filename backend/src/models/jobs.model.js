@@ -58,6 +58,12 @@ const jobSchema = new mongoose.Schema(
                 required: true,
             },
         ],
+        experience: {
+            type: String,
+        },
+        duration: {
+            type: String,
+        }
     },
     { timestamps: true }
 );

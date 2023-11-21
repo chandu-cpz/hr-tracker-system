@@ -6,13 +6,18 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 export function JobFilter() {
-    const options = ["Web Developer", "Data Scientist"];
     const [jobs, setJobs] = useState([]);
+    const [filterData, setFilterData] = useState({
+        jobTitle: ["loading", "loading"],
+        location: ["loading", "loading"],
+        experience: ["loading", "loading"],
+        jobDuration: ["loading", "loading"],
+    });
     const [filters, setFilters] = useState({
         jobTitle: "",
         location: "",
         experience: "",
-        jobDuration: ""
+        jobDuration: "",
     });
     const [selectedSalary, setSelectedSalary] = useState(0);
 
@@ -20,10 +25,26 @@ export function JobFilter() {
         fetchData();
     }, [filters]); // Refetch data when filters change
 
+    const handleFilterChange = (field, value) => {
+        setFilters((prevFilters) => ({
+            ...prevFilters,
+            [field]: value,
+        }));
+    };
+
     const fetchData = async () => {
         try {
-            const response = await axios.get("/api/jobs", { params: { ...filters, sort: 'salary' } });
-            const jobs = response.data;
+            const response = await axios.get("/api/jobs", {
+                params: { ...filters, sort: "salary" },
+            });
+            console.log(response.data);
+            const jobs = response.data.jobs;
+            setFilterData({
+                jobTitle: response.data.jobTitle,
+                location: response.data.location,
+                experience: response.data.experience,
+                jobDuration: response.data.jobDuration,
+            });
             setJobs(jobs);
         } catch (error) {
             console.error("Error fetching jobs:", error.message);
@@ -34,7 +55,9 @@ export function JobFilter() {
     const handleSalaryChange = async (event) => {
         const salary = event.target.value;
         try {
-            const response = await axios.get(`/api/jobs?sort=salary&minSalary=0&maxSalary=${salary}`);
+            const response = await axios.get(
+                `/api/jobs?sort=salary&minSalary=0&maxSalary=${salary}`
+            );
             const jobs = response.data;
             setJobs(jobs);
             setSelectedSalary(salary);
@@ -44,39 +67,36 @@ export function JobFilter() {
         }
     };
 
-    const handleFilterChange = (field, value) => {
-        setFilters((prevFilters) => ({
-            ...prevFilters,
-            [field]: value
-        }));
-    };
-
     return (
         <>
             <div className=" tw-flex tw-justify-around tw-gap-3 tw-bg-slate-500 tw-p-4 tw-shadow-lg">
                 <Dropdown
                     name="Job Title"
-                    options={options}
+                    options={filterData.jobTitle}
                     icon={<BsSearch />}
                     onSelect={(value) => handleFilterChange("jobTitle", value)}
                 />
                 <Dropdown
                     name="Location"
-                    options={options}
+                    options={filterData.location}
                     icon={<BsGeoAlt />}
                     onSelect={(value) => handleFilterChange("location", value)}
                 />
                 <Dropdown
                     name="Experience"
-                    options={options}
+                    options={filterData.experience}
                     icon={<BsBriefcase />}
-                    onSelect={(value) => handleFilterChange("experience", value)}
+                    onSelect={(value) =>
+                        handleFilterChange("experience", value)
+                    }
                 />
                 <Dropdown
                     name="Job Duration"
-                    options={options}
+                    options={filterData.jobDuration}
                     icon={<BsClock />}
-                    onSelect={(value) => handleFilterChange("jobDuration", value)}
+                    onSelect={(value) =>
+                        handleFilterChange("jobDuration", value)
+                    }
                 />
                 <div className="tw-flex">
                     <label
