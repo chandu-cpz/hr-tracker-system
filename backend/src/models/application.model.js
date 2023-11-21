@@ -8,9 +8,9 @@ const applicationSchema = new mongoose.Schema(
             required: true,
         },
         accepted: {
-            type: Boolean,
-            default: false,
-            required: true,
+            type: String,
+            enum: ["PENDING", "ACCEPTED", "REJECTED"],
+            default: "PENDING",
         },
         jobId: {
             type: mongoose.Schema.Types.ObjectId,
