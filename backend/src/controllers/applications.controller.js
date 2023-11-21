@@ -1,6 +1,8 @@
 
 import { Job } from "../models/jobs.model.js";
 import { Application } from "../models/application.model.js"
+import sendMail from "../utils/nodeMailer.js";
+import { generateAcceptedEmail, generateApplicationEmail } from "../utils/emailGenerator.js";
 
 export async function createApplication(req, res) {
     console.log("================================")
@@ -23,6 +25,8 @@ export async function createApplication(req, res) {
     }
     const newApplication = await Application.create(application);
     console.log(newApplication);
+    const createdApplication = await Application.findById(newApplication._id).populate("jobId")
+    sendMail(req.body.user.email, "New Application Recieved", generateApplicationEmail(createdApplication));
     res.send(newApplication);
 }
 
@@ -58,6 +62,7 @@ export async function acceptApplication(req, res) {
     console.log("(acceptApplication Controller): Accepting application with Id", req.body);
     const { applicationId } = req.body
     const application = await Application.findByIdAndUpdate(applicationId, { accepted: true }, { new: true });
+    sendMail(req.body.user.email, "Hurray, Application Accepted", generateAcceptedEmail(application));
     res.json(application);
 }
 
@@ -66,5 +71,6 @@ export async function rejectApplication(req, res) {
     console.log("(rejectApplication Controller): Rejecting application with Id", req.body);
     const { applicationId } = req.body
     const application = await Application.findByIdAndUpdate(applicationId, { accepted: false }, { new: true });
+    sendMail(req.body.user.email, "Application Update", generateAcceptedEmail(application));
     res.json(application);
 }
