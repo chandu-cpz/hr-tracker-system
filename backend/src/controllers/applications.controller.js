@@ -19,7 +19,7 @@ export async function createApplication(req, res) {
     const application = {
         resume,
         jobId,
-        accepted: false,
+        accepted: "PENDING",
         appliedBy: req.body.user._id,
         postedBy: postedById,
     }
@@ -34,7 +34,7 @@ export async function getApplicants(req, res) {
     console.log("================================")
     console.log("(getApplicants Controller): getting applicants");
 
-    const applications = await Application.find({ accepted: false, postedBy: req.body.user._id }).populate('appliedBy');
+    const applications = await Application.find({ accepted: "PENDING", postedBy: req.body.user._id }).populate('appliedBy');
     console.log(applications);
     res.json(applications);
 }
@@ -52,7 +52,7 @@ export async function getSingleApplicationDetails(req, res) {
 export async function getEmployees(req, res) {
     console.log("================================")
     console.log("(getEmployees Controller): getting employees");
-    const applications = await Application.find({ accepted: true, postedBy: req.body.user._id }).populate('appliedBy');
+    const applications = await Application.find({ accepted: "ACCEPTED", postedBy: req.body.user._id }).populate('appliedBy');
     console.log(applications);
     res.json(applications);
 }
@@ -61,7 +61,7 @@ export async function acceptApplication(req, res) {
     console.log("================================")
     console.log("(acceptApplication Controller): Accepting application with Id", req.body);
     const { applicationId } = req.body
-    const application = await Application.findByIdAndUpdate(applicationId, { accepted: true }, { new: true });
+    const application = await Application.findByIdAndUpdate(applicationId, { accepted: "ACCEPTED" }, { new: true });
     sendMail(req.body.user.email, "Hurray, Application Accepted", generateAcceptedEmail(application));
     res.json(application);
 }
@@ -70,7 +70,7 @@ export async function rejectApplication(req, res) {
     console.log("================================")
     console.log("(rejectApplication Controller): Rejecting application with Id", req.body);
     const { applicationId } = req.body
-    const application = await Application.findByIdAndUpdate(applicationId, { accepted: false }, { new: true });
+    const application = await Application.findByIdAndUpdate(applicationId, { accepted: "REJECTED" }, { new: true });
     sendMail(req.body.user.email, "Application Update", generateAcceptedEmail(application));
     res.json(application);
 }
