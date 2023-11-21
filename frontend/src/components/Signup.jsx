@@ -2,6 +2,7 @@ import { useState } from "react";
 import { signUpUser } from "../redux/slice/userSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { MdCameraAlt } from "react-icons/md";
 
 export function Signup() {
     const dispatch = useDispatch();
@@ -12,6 +13,9 @@ export function Signup() {
         email: "",
         password: "",
         gender: "",
+        role: "",
+        company: "",
+        companyImage: null, // Updated to handle file input
     });
 
     const handleChange = (e) => {
@@ -21,10 +25,50 @@ export function Signup() {
         });
     };
 
+    const handleCheckboxChange = (e) => {
+        const { name, checked } = e.target;
+        setUserData((prevData) => ({
+            ...prevData,
+            [name]: checked ? "HR" : "",
+            company: "",
+            companyImage: null, // Reset file input when HR checkbox is unchecked
+        }));
+    };
+
+    // Handle file input change
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        setUserData((prevData) => ({
+            ...prevData,
+            companyImage: file,
+        }));
+    };
+
+    const [preview, setPreview] = useState(userData.companyImage);
+    const handleImageChange = async (e) => {
+        setPreview(URL.createObjectURL(e.target.files[0]));
+        setProfile({
+            ...company,
+            image: e.target.files[0],
+        });
+
+        console.log("We are uploading image");
+
+        try {
+            const image = await uploadFile(e.target.files[0], "company");
+            setProfile({
+                ...company,
+                companyImage: image.secure_url,
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
     const submitUser = async (e) => {
         e.preventDefault();
-        if (userData.gender == "male") userData.gender = "M";
-        else if (userData.gender == "female") userData.gender = "F";
+        if (userData.gender === "male") userData.gender = "M";
+        else if (userData.gender === "female") userData.gender = "F";
         else userData.gender = "O";
 
         console.log("From frontend", userData);
@@ -140,20 +184,64 @@ export function Signup() {
                         </label>
                     </div>
                     <div className="tw-mb-4">
-                        <span className="text-gray-700 tw-mb-2 tw-block tw-text-sm tw-font-bold">
-                            HR
-                        </span>
                         <label className="tw-mr-6 tw-inline-flex tw-items-center">
                             <input
-                                type="radio"
-                                className="form-radio"
+                                type="checkbox"
+                                className="form-checkbox"
                                 name="role"
                                 value="HR"
-                                onChange={handleChange}
+                                onChange={handleCheckboxChange}
                             />
-                            <span className="ml-2">HR</span>
+                            <span className="text-gray-700 tw-mb-2 tw-block tw-text-sm tw-font-bold">
+                                HR
+                            </span>
                         </label>
                     </div>
+
+                    {userData.role === "HR" && (
+                        <>
+                            <div className="tw-mb-4">
+                                <label
+                                    className="tw-text-gray-700 tw-mb-2 tw-block tw-text-sm tw-font-bold"
+                                    htmlFor="company"
+                                >
+                                    Company Name:
+                                </label>
+                                <input
+                                    type="text"
+                                    id="company"
+                                    name="company"
+                                    className="tw-text-gray-700 tw-focus:outline-none tw-focus:shadow-outline tw-w-full tw-appearance-none tw-rounded-full tw-border tw-px-3 tw-py-2 tw-leading-tight tw-shadow"
+                                    placeholder=""
+                                    value={userData.company}
+                                    onChange={handleChange}
+                                />
+                            </div>
+
+                            <div className="tw-mb-4">
+                                <label className="tw-text-gray-700 tw-mb-2 tw-block tw-text-sm tw-font-bold">
+                                    <MdCameraAlt
+                                        size={32}
+                                        className="tw-text-gray-500 tw-ml-4 tw-mt-16"
+                                    />
+                                    Company Image:
+                                </label>
+                                <img
+                                    src={preview}
+                                    alt="Profile"
+                                    className="tw-h-48 tw-w-48 tw-rounded-full tw-border-4 tw-border-orange-500 tw-object-cover"
+                                />
+                                <input
+                                    type="file"
+                                    id="companyImage"
+                                    name="companyImage"
+                                    accept="image/*" // Accept only image files
+                                    onChange={handleImageChange}
+                                />
+                            </div>
+                        </>
+                    )}
+
                     <button
                         type="submit"
                         className="tw-hover:bg-orange-700 tw-focus:outline-none tw-focus:shadow-outline tw-rounded-full tw-bg-orange-500 tw-px-4 tw-py-2 tw-font-bold tw-text-white"
