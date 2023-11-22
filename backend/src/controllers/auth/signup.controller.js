@@ -61,13 +61,6 @@ export async function createUser(req, res) {
         }
     }
 
-    
-
-    console.log(userData);
-
-    console.log("The user details are: ");
-    console.log(userData);
-
     // check if user exists using email
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -77,29 +70,16 @@ export async function createUser(req, res) {
     }
 
     //Not a existing user so create a new one
-    const user = await User.create(userData);
+    try {
+        const user = await User.create(userData);
+        console.log("The created user details are: ");
+        console.log(user);
+        await sendMail(user.email, "Welcome", generateSignUpEmailTemplate(user));
 
-    sendMail(user.email, "Welcome", generateSignUpEmailTemplate(user));
-
-    // //Generate a token for the user
-    // const token = await user.generateAccessToken();
-
-    // //setting cookie options
-    // const options = {
-    //     expires: new Date(
-    //         Date.now() +
-    //         Number(process.env.ACCESS_TOKEN_EXPIRY_DAYS) *
-    //         24 *
-    //         60 *
-    //         60 *
-    //         1000
-    //     ),
-    //     httpOnly: true,
-    // };
-
-    // //set the token in cookie's
-    // res.cookie("token", token, options);
-
+    }
+    catch (err) {
+        console.log(err.message);
+    }
     //send the user details
     res.status(200).send("Completed Creating user");
     console.log("================================================");
