@@ -1,5 +1,6 @@
 import { Job } from "../models/jobs.model.js";
 import { User } from "../models/user.model.js";
+import validator from "validator";
 
 export async function getJobs(req, res) {
     console.log("The getJobs controller is triggered")
@@ -130,6 +131,34 @@ export async function addJob(req, res) {
             delete jobData[key];
         }
     });
+
+    //validtors
+
+    if (!jobData?.jobTitle?.trim()) return res.send({ error: "jobTitle is required" });
+    else{
+
+        if(!validator.isLength(jobData.jobTitle, { min: 5, max: 50 }))
+         return res.send({ error: "Invalid job title" });
+    }
+
+    if (!jobData?.jobDescription?.trim()) return res.send({ error: "jobDescription is required" });
+    else{
+
+        if(!validator.isString(jobData.jobDescription))
+         return res.send({ error: "Enter a valid job description" });
+    }
+
+    if (!jobData?.companyName?.trim()) return res.send({ error: "companyName is required" });
+    else{
+
+        if(!validator.isLength(jobData.companyName, { min: 5, max: 50 }))
+         return res.send({ error: "Invalid company name" });
+    }
+
+    if (!jobData?.responsibilities?.trim()) return res.send({ error: "responsibilities is required" });
+    if (!jobData?.qualifications?.trim()) return res.send({ error: "qualifications is required" });
+    if (!jobData?.location?.trim()) return res.send({ error: "location is required" });
+    if (!jobData?.salary?.trim()) return res.send({ error: "salary is required" });
 
     // Insert job
     try {
