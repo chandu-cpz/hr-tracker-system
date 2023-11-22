@@ -6,7 +6,7 @@ export default defineConfig({
     server: {
         proxy: {
             "/api": {
-                target: "https://hr-tracker-system.onrender.com:10000",
+                target: "https://hr-tracker-system.onrender.com",
                 changeOrigin: true,
             },
         },
