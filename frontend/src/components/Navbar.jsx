@@ -1,15 +1,42 @@
 import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { setUser, setIsLoggedIn } from "../redux/slice/userSlice";
 
 export function Navbar() {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    useEffect(() => {
+        async function login() {
+            const response = await axios.get("/api/login/auto");
+            if (!response.data.error) {
+                dispatch(setUser(response.data));
+                dispatch(setIsLoggedIn(true));
+                if (response.data.role === "HR") {
+                    navigate("/dashboard");
+                } else {
+                    navigate("/userDashboard");
+                }
+            }
+        }
+        login();
+    }, []);
+
     const isLoggedIn = useSelector((state) => state.isLoggedIn);
     const profileImg = useSelector((state) => state.user.profileImage);
     const role = useSelector((state) => state.user.role);
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    const username = "JohnDoe";
+    const username = useSelector((state) => state.user.fullName);
+
+    const logOut = async () => {
+        await axios.get("/api/login/");
+        dispatch(setIsLoggedIn(false));
+        navigate("/");
+    };
 
     return (
         <div className=" tw-h-15 tw-flex tw-justify-evenly tw-bg-gray tw-p-2 tw-shadow-lg">
@@ -65,7 +92,10 @@ export function Navbar() {
                                 <hr className="dropdown-divider" />
                             </li>
                             <li className="dropdown-item">
-                                <button className="tw-rounded-full tw-border-none tw-bg-orange-500 tw-px-4 tw-text-2xl">
+                                <button
+                                    className="tw-rounded-full tw-border-none tw-bg-orange-500 tw-px-4 tw-text-2xl"
+                                    onClick={logOut}
+                                >
                                     Log Out
                                 </button>
                             </li>

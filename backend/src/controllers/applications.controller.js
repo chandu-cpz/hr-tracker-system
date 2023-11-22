@@ -114,16 +114,90 @@ export async function getApplicationCount(req, res) {
 	console.log("(applicationCount): getting application counts");
 	if (req.body.user.role === "HR") {
 		const hrId = req.body.user._id;
-		let pending, accepted;
+		let pending, accepted, rejected;
+		let maleCount = 0;
+		let femaleCount = 0;
+		let othersCount = 0;
 		try {
 			await Application.find({ postedBy: hrId })
 				.then(applications => {
 					pending = applications.filter(app => app.accepted === 'PENDING').length;
 					accepted = applications.filter(app => app.accepted === 'ACCEPTED').length;
+					rejected = applications.filter(app => app.accepted === 'REJECTED').length;
 				})
+			const result = await Application.aggregate([
+				{
+					$match: {
+						postedBy: hrId,
+						accepted: "ACCEPTED"
+					}
+				},
+				{
+					$lookup: {
+						from: "users",
+						localField: "appliedBy",
+						foreignField: "_id",
+						as: "applicant"
+					}
+				},
+				{
+					$unwind: "$applicant"
+				},
+				{
+					$group: {
+						_id: "$applicant.gender",
+						count: { $sum: 1 }
+					}
+				}
+			])
+
+			result.forEach(item => {
+				if (item._id === 'M') {
+					maleCount = item.count;
+				}
+				if (item._id === 'F') {
+					femaleCount = item.count;
+				}
+				if (item._id === 'O') {
+					othersCount = item.count;
+				}
+			})
+
+			const jobTitlesInfo = await Application.aggregate([
+				{
+					$match: {
+						postedBy: hrId,
+						accepted: "ACCEPTED"
+					}
+				},
+				{
+					$lookup: {
+						from: "jobs",
+						localField: "jobId",
+						foreignField: "_id",
+						as: "job"
+					}
+				},
+				{
+					$unwind: "$job"
+				},
+				{
+					$group: {
+						_id: "$job.jobTitle",
+						count: { $sum: 1 }
+					}
+				}
+			]);
+			console.log(jobTitlesInfo)
+
 			res.json({
 				applications: pending,
 				employees: accepted,
+				rejected: rejected,
+				male: maleCount,
+				female: femaleCount,
+				others: othersCount,
+				stats: jobTitlesInfo
 			});
 			console.log("================================")
 		}
@@ -133,16 +207,18 @@ export async function getApplicationCount(req, res) {
 	}
 	else {
 		const userId = req.body.user._id;
-		let pending, rejected;
+		let pending, rejected, accepted;
 		try {
 			await Application.find({ appliedBy: userId })
 				.then(applications => {
 					pending = applications.filter(app => app.accepted === 'PENDING').length;
+					accepted = applications.filter(app => app.accepted === 'ACCEPTED').length;
 					rejected = applications.filter(app => app.accepted === 'REJECTED').length;
 				})
 			res.json({
 				applications: pending,
-				employees: rejected,
+				accepted: accepted,
+				rejected: rejected,
 			});
 			console.log("================================")
 		}
