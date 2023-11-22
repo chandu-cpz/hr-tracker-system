@@ -30,8 +30,14 @@ export async function updateUser(req, res) {
         profileImage,
     };
 
+    // Delete all null and undefined values
+    Object.keys(userData).forEach(key => {
+        if (userData[key] === null || userData[key] === undefined) {
+            delete userData[key];
+        }
+    });
+
     // Validate the fields
-    
     if (!userData?.fullName?.trim())
         return res.send({ error: "fullName is required" });
     else {
@@ -41,7 +47,7 @@ export async function updateUser(req, res) {
 
     if (!validator.isString(userData.fullName))
         return res.send({ error: "Enter a valid a name" });
-    
+
     if (!userData?.email?.trim())
         return res.send({ error: "email is required" });
 
@@ -50,16 +56,8 @@ export async function updateUser(req, res) {
             return res.send({ error: "Invalid email" });
     }
 
-    if (!validator.isMobilePhone(userData.phoneNumber)) 
+    if (!validator.isMobilePhone(userData.phoneNumber))
         return res.send({ error: "Invalid phone number" });
-   
-
-    // Delete all null and undefined values
-    Object.keys(userData).forEach(key => {
-        if (userData[key] === null || userData[key] === undefined) {
-            delete userData[key];
-        }
-    });
 
     console.log("Updating user with email " + email + " with the following data");
     console.log(userData);
@@ -72,9 +70,11 @@ export async function updateUser(req, res) {
         console.log("Updated user details are:");
         console.log(user);
         res.status(200).json(user);
+        console.log("================================================");
     } catch (error) {
         console.error("Error updating user:", error);
-        res.status(500).json({ error: "Internal Server Error" });
+        res.status(200).json({ error: "Internal Server Error" });
+        console.log("================================================");
     }
 }
 

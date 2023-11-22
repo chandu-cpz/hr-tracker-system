@@ -26,13 +26,12 @@ export async function loginUser(req, res) {
         return res.send({ error: "User is not registered" });
     }
 
-    console.l
     // Check if password is correct
     const isPasswordCorrect = await user.isPasswordCorrect(userData.password)
     if (isPasswordCorrect) {
 
         // Generate and send token
-        const token = user.generateAccessToken();
+        const token = await user.generateAccessToken();
 
         //setting cookie options
         const options = {

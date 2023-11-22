@@ -14,6 +14,8 @@ export function AddProfile() {
     const navigate = useNavigate();
     const user = useSelector((state) => state.user);
 
+    const [profileUploaded, setProfileUploaded] = useState(false);
+
     const [profile, setProfile] = useState({
         fullName: user.fullName,
         email: user.email,
@@ -50,6 +52,7 @@ export function AddProfile() {
                 ...profile,
                 profileImage: image.secure_url,
             });
+            setProfileUploaded(true);
         } catch (err) {
             console.log(err);
         }
@@ -59,18 +62,25 @@ export function AddProfile() {
         let isValid = true;
         const newErrors = {};
 
+        if (!profile.fullName?.trim()) {
+            newErrors.fullName = "Please provide a full name";
+            isValid = false;
+        }
+
         // Validate each field
         if (!validator.isEmail(profile.email)) {
             newErrors.email = "Invalid email address";
             isValid = false;
         }
-        if (user.phoneNumber.length !== 10) {
-            newErrors.phoneNumber = "Phone number must be 10 characters long";
-            isValid = false;
-          } else {
-            newErrors.phoneNumber = "";
-          }
-
+        if (profile.phoneNumber) {
+            if (profile.phoneNumber.length !== 10) {
+                newErrors.phoneNumber =
+                    "Phone number must be 10 characters long";
+                isValid = false;
+            } else {
+                newErrors.phoneNumber = "";
+            }
+        }
         // Add more validation for other fields if needed
 
         setErrors(newErrors);
@@ -97,7 +107,7 @@ export function AddProfile() {
                         </h1>
                         <img
                             src={preview}
-                            alt="Profile"
+                            alt="Profile Image"
                             className="tw-h-48 tw-w-48 tw-rounded-full tw-border-4 tw-border-orange-500 tw-object-cover"
                         />
                     </div>
@@ -115,6 +125,11 @@ export function AddProfile() {
                         />
                     </label>
                 </div>
+                {profileUploaded && (
+                    <span className="tw-text-green-500">
+                        The profile is been uploaded
+                    </span>
+                )}
 
                 <div className="tw-rounded-lg tw-bg-white tw-p-8 tw-shadow">
                     <div className="tw-flex">
@@ -131,7 +146,9 @@ export function AddProfile() {
                                     className="tw-border-gray-300 tw-w-full tw-rounded-full tw-border tw-px-3 tw-py-2"
                                 />
                                 {errors.fullName && (
-                                    <span className="tw-text-red-500">{errors.fullName}</span>
+                                    <span className="tw-text-red-500">
+                                        {errors.fullName}
+                                    </span>
                                 )}
                             </div>
 
@@ -147,7 +164,9 @@ export function AddProfile() {
                                     className="tw-border-gray-300 tw-w-full tw-rounded-full tw-border tw-px-3 tw-py-2"
                                 />
                                 {errors.email && (
-                                    <span className="tw-text-red-500">{errors.email}</span>
+                                    <span className="tw-text-red-500">
+                                        {errors.email}
+                                    </span>
                                 )}
                             </div>
 
@@ -179,7 +198,9 @@ export function AddProfile() {
                                     className="tw-border-gray-300 tw-w-full tw-rounded-full tw-border tw-px-3 tw-py-2"
                                 />
                                 {errors.phoneNumber && (
-                                    <span className="tw-text-red-500">{errors.phoneNumber}</span>
+                                    <span className="tw-text-red-500">
+                                        {errors.phoneNumber}
+                                    </span>
                                 )}
                             </div>
                         </div>
