@@ -61,8 +61,19 @@ export async function acceptApplication(req, res) {
     console.log("================================")
     console.log("(acceptApplication Controller): Accepting application with Id", req.body);
     const { applicationId } = req.body
-    const application = await Application.findByIdAndUpdate(applicationId, { accepted: "ACCEPTED" }, { new: true });
-    sendMail(req.body.user.email, "Hurray, Application Accepted", generateAcceptedEmail(application));
+    const application = await Application.findByIdAndUpdate(
+        applicationId, 
+        { accepted: "ACCEPTED" }, 
+        { 
+          new: true,
+          populate: {
+            path: 'appliedBy',
+            select: 'fullName email' // select only name and email
+          }
+        }
+      );
+      console.log(application);
+    sendMail(application.appliedBy.email, "Hurray, Application Accepted", generateAcceptedEmail(application));
     res.json(application);
 }
 
@@ -70,7 +81,18 @@ export async function rejectApplication(req, res) {
     console.log("================================")
     console.log("(rejectApplication Controller): Rejecting application with Id", req.body);
     const { applicationId } = req.body
-    const application = await Application.findByIdAndUpdate(applicationId, { accepted: "REJECTED" }, { new: true });
-    sendMail(req.body.user.email, "Application Update", generateAcceptedEmail(application));
+    const application = await Application.findByIdAndUpdate(
+        applicationId, 
+        { accepted: "REJECTED"}, 
+        { 
+          new: true,
+          populate: {
+            path: 'appliedBy',
+            select: 'fullName email' // select only name and email
+          }
+        }
+      );
+      console.log(application);
+    sendMail(application.appliedBy.email, "Application Update", generateAcceptedEmail(application));
     res.json(application);
 }

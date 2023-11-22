@@ -28,6 +28,7 @@ export async function updateUser(req, res) {
         education,
         experience,
         profileImage,
+        email,
     };
 
     // Delete all null and undefined values
@@ -37,6 +38,8 @@ export async function updateUser(req, res) {
         }
     });
 
+    console.log(userData);
+
     // Validate the fields
     if (!userData?.fullName?.trim())
         return res.send({ error: "fullName is required" });
@@ -44,9 +47,6 @@ export async function updateUser(req, res) {
         if (!validator.isLength(userData.fullName, { min: 3, max: 50 }))
             return res.send({ error: "Invalid fullName" });
     }
-
-    if (!validator.isString(userData.fullName))
-        return res.send({ error: "Enter a valid a name" });
 
     if (!userData?.email?.trim())
         return res.send({ error: "email is required" });

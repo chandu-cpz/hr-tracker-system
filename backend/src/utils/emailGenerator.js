@@ -4,7 +4,7 @@ export function generateSignUpEmailTemplate(username) {
       <!DOCTYPE html>
       <html>
         <head>
-          <title>HR Tracker System</title>
+          <jobTitle>HR Tracker System</jobTitle>
           <style>
             body {
               font-family: Arial, sans-serif;
@@ -47,7 +47,7 @@ export function generateApplicationEmail(application) {
       <!DOCTYPE html>
       <html>
         <head>
-          <title>Application Update</title>
+          <jobTitle>Application Update</jobTitle>
           
           <style>
             body {
@@ -90,16 +90,16 @@ export function generateApplicationEmail(application) {
         </head>
   
         <body>
-          <h3>Hi <b>${application.appliedBy.name}</b>,</h3>
+          <h3>Hi <b>${application.appliedBy.fullName}</b>,</h3>
   
-          <p>Your application for the position of <b>${application.jobId.title}</b> has been received by our HR department.</p>
+          <p>Your application for the position of <b>${application.jobId.jobTitle}</b> has been received by our HR department.</p>
   
           <p>A member of our HR team will review your resume and be in touch if we would like to move forward with next steps. We will notify you if the status of your application changes.</p>
   
           <p>Application Details:</p>
           
           <ul>
-            <li>Position Title: ${application.jobId.title}</li>
+            <li>Position Title: ${application.jobId.jobTitle}</li>
             <li><a href="${application.resumeSrc}" download>Download Resume</a></li>
             <li>Application Status: <span class="${application.accepted ? "accepted" : "pending"}">${application.accepted ? "Accepted" : "Pending"}</span></li> 
           </ul>
@@ -118,7 +118,7 @@ export function generateRejectedEmail(application) {
       <!DOCTYPE html>
       <html>
         <head>
-          <title>Application Update</title>
+          <jobTitle>Application Update</jobTitle>
           
           <style>
             body {
@@ -144,9 +144,9 @@ export function generateRejectedEmail(application) {
         </head>
   
         <body>  
-          <h3>Hi <b>${application.appliedBy.name}</b>,</h3>
+          <h3>Hi <b>${application.appliedBy.fullName}</b>,</h3>
   
-          <p>Thank you for applying for the <b>${application.jobId.title}</b> position.</p>
+          <p>Thank you for applying for the <b>${application.jobId.jobTitle}</b> position.</p>
           
           <p>Unfortunately our HR team has decided not to move forward with your application at this time.</p>
           
@@ -167,7 +167,7 @@ export function generateAcceptedEmail(application) {
       <!DOCTYPE html>
       <html>
         <head>
-          <title>Application Accepted</title>
+          <jobTitle>Application Accepted</jobTitle>
           
           <style>
            body {
@@ -197,9 +197,9 @@ export function generateAcceptedEmail(application) {
         </head>
   
         <body>
-          <h3>Congratulations <b>${application.appliedBy.name}</b>!</h3>
+          <h3>Congratulations <b>${application.appliedBy.fullName}</b>!</h3>
   
-          <p>We are excited to inform you that your application for the position of <b>${application.jobId.title}</b> has been accepted by our HR department.</p>
+          <p>We are excited to inform you that your application for the position of <b>${application.jobId.jobTitle}</b> has been accepted by our HR department.</p>
   
           <p>Next steps:</p>
           

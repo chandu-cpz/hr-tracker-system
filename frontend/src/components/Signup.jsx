@@ -28,6 +28,7 @@ export function Signup() {
     };
 
     const [preview, setPreview] = useState(userData.companyImage);
+    
     const handleImageChange = async (e) => {
         setPreview(URL.createObjectURL(e.target.files[0]));
         setUserData({

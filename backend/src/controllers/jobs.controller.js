@@ -251,7 +251,6 @@ export async function addJob(req, res) {
     if (!jobData?.responsibilities?.trim()) return res.send({ error: "responsibilities is required" });
     if (!jobData?.qualifications?.trim()) return res.send({ error: "qualifications is required" });
     if (!jobData?.location?.trim()) return res.send({ error: "location is required" });
-    if (!jobData?.salary?.trim()) return res.send({ error: "salary is required" });
 
     // Insert job
     try {

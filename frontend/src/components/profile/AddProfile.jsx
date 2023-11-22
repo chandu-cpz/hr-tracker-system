@@ -68,10 +68,7 @@ export function AddProfile() {
         }
 
         // Validate each field
-        if (!validator.isEmail(profile.email)) {
-            newErrors.email = "Invalid email address";
-            isValid = false;
-        }
+    
         if (profile.phoneNumber) {
             if (profile.phoneNumber.length !== 10) {
                 newErrors.phoneNumber =
@@ -93,6 +90,8 @@ export function AddProfile() {
         if (validateFields()) {
             const updatedUser = await axios.patch("/api/updateuser", profile);
             dispatch(setUser(updatedUser.data));
+            console.log("Updated user");
+            console.log(updatedUser.data);
             navigate("/profile");
         }
     };
