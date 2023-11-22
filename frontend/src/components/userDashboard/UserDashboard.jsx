@@ -1,9 +1,30 @@
 import { UserSidebar } from "./UserSidebar";
 import { BsBriefcase, BsPerson, BsPersonCheck } from "react-icons/bs";
 import { UserCard } from "./UserCard";
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export function UserDashboard() {
-    const username = "chaitu";
+    const username = useSelector((state) => state.user.fullName);
+    const [jobsOpen, setJobsOpen] = useState(0);
+    const [applications, setApplications] = useState(0);
+    const [rejected, setRejected] = useState(0);
+
+    const fetchData = async () => {
+        await axios
+            .get("/api/jobs/open")
+            .then((response) => setJobsOpen(response.data.openJobsCount));
+        await axios.get("/api/application/count").then((response) => {
+            console.log(response.data);
+            setApplications(response.data.applications);
+            setRejected(response.data.rejected);
+        });
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
     return (
         <>
             <div className="tw-flex">
@@ -18,9 +39,11 @@ export function UserDashboard() {
                             <h1 className="tw-text-gray-800 tw-mb-5 tw-text-4xl">
                                 Welcome back,
                             </h1>
-                            <h2 className="tw-text-gray-600 tw-text-5xl tw-font-extrabold">
-                                {username.toUpperCase()}
-                            </h2>
+                            {username && (
+                                <h2 className="tw-text-gray-600 tw-text-5xl tw-font-extrabold">
+                                    {username.toUpperCase()}
+                                </h2>
+                            )}
                         </div>
                         <UserCard
                             title="Jobs Open"
@@ -30,7 +53,7 @@ export function UserDashboard() {
                                     className="tw-text-orange-600"
                                 />
                             }
-                            value={12}
+                            value={jobsOpen}
                         />
 
                         <UserCard
@@ -41,18 +64,18 @@ export function UserDashboard() {
                                     className="tw-text-orange-600"
                                 />
                             }
-                            value={24}
+                            value={applications}
                         />
 
                         <UserCard
-                            title="Feedbacks"
+                            title="Rejected"
                             icon={
                                 <BsPersonCheck
                                     size={52}
                                     className="tw-text-orange-600"
                                 />
                             }
-                            value={5}
+                            value={rejected}
                         />
                     </div>
                 </div>

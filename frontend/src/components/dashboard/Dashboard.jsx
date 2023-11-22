@@ -3,16 +3,27 @@ import { BsBriefcase, BsPerson, BsPersonCheck } from "react-icons/bs";
 import { Card } from "./Card";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 export function Dashboard() {
-    const username = "chandu";
-
-    //openjobs count
+    const username = useSelector((state) => state.user.fullName);
     const [jobsOpen, setJobsOpen] = useState(0);
-    useEffect(() => {
-        axios
+    const [applications, setApplications] = useState(0);
+    const [employees, setEmployees] = useState(0);
+
+    const fetchData = async () => {
+        await axios
             .get("/api/jobs/open")
             .then((response) => setJobsOpen(response.data.openJobsCount));
+        await axios.get("/api/application/count").then((response) => {
+            console.log(response.data);
+            setApplications(response.data.applications);
+            setEmployees(response.data.employees);
+        });
+    };
+
+    useEffect(() => {
+        fetchData();
     }, []);
 
     // const data = [
@@ -30,9 +41,11 @@ export function Dashboard() {
                             <h1 className="tw-text-gray-800 tw-mb-5 tw-text-4xl">
                                 Welcome back,
                             </h1>
-                            <h2 className="tw-text-gray-600 tw-text-5xl tw-font-extrabold">
-                                {username.toUpperCase()}
-                            </h2>
+                            {username && (
+                                <h2 className="tw-text-gray-600 tw-text-5xl tw-font-extrabold">
+                                    {username.toUpperCase()}
+                                </h2>
+                            )}
                         </div>
                         <Card
                             title="Jobs Open"
@@ -43,13 +56,13 @@ export function Dashboard() {
                         <Card
                             title="Applications"
                             icon={BsPerson}
-                            value={applicationCount}
+                            value={applications}
                         />
 
                         <Card
                             title="Employees"
                             icon={BsPersonCheck}
-                            value={5}
+                            value={employees}
                         />
                     </div>
                 </div>
