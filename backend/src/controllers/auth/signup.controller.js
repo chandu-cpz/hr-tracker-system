@@ -45,6 +45,21 @@ export async function createUser(req, res) {
     if (userData?.role == "HR") {
         if (!userData?.company?.trim()) return res.send({ error: "company is required" });
     }
+    if (!userData?.password?.trim()) return res.send({ error: "password is required" });
+    else {
+        const options = {
+            minLength: 8,
+            minLowercase: 1,
+            minUppercase: 1,
+            minNumbers: 1,
+            minSymbols: 1,
+        };
+
+        if (!validator.isStrongPassword(userData.password, options)) {
+            newErrors.password = "Password is not strong enough";
+            isValid = false;
+        }
+    }
 
     
 
@@ -57,6 +72,7 @@ export async function createUser(req, res) {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
         console.log("The user already exists aborting ... ");
+        console.log("================================================")
         return res.send({ error: 'User already exists' });
     }
 
