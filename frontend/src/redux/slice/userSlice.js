@@ -73,8 +73,10 @@ export const signUpUser = (userData) => {
     return async (dispatch) => {
         try {
             console.log("RTK: Making sign up request to server")
-            await axios.post("/api/signup", userData);
+            const response = await axios.post("/api/signup", userData);
+            console.log(response);
             dispatch(setIsLoggedIn(false));
+            return response;
         } catch (error) {
             console.error(error);
         }
