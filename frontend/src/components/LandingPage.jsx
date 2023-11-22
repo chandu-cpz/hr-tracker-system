@@ -33,7 +33,7 @@ export function LandingPage() {
                 <br />
             </div>
             <button
-                className=" lg: tw-scale-125 tw-transform tw-rounded-full tw-border-none  tw-bg-orange-500
+                className=" lg: tw-scale-125 tw-transform tw-rounded-full tw-border-none  tw-bg-blue-500
 tw-py-5 tw-text-3xl tw-drop-shadow-2xl lg:tw-mr-5 lg:tw-px-10"
             >
                 Sign Up

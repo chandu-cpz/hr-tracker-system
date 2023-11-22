@@ -25,12 +25,12 @@ export function Dashboard() {
                 <Sidebar />
 
                 <div className="tw-w-full tw-p-4">
-                    <div className="tw-mb-8 tw-flex tw-flex-wrap tw-items-center tw-justify-between tw-gap-5">
+                    <div className="tw-my-20 tw-flex tw-flex-wrap tw-items-center tw-justify-between tw-gap-5 tw-p-8 tw-rounded-lg tw-bg-blue-200">
                         <div>
-                            <h1 className="tw-text-gray-800 tw-mb-5 tw-text-4xl">
+                            <h1 className="tw-text-white-800 tw-mb-5 tw-text-4xl">
                                 Welcome back,
                             </h1>
-                            <h2 className="tw-text-gray-600 tw-text-5xl tw-font-extrabold">
+                            <h2 className="tw-text-white-600 tw-text-5xl tw-font-extrabold">
                                 {username.toUpperCase()}
                             </h2>
                         </div>

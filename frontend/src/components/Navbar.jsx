@@ -1,105 +1,92 @@
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useState } from "react";
-
+import logo from '../assets/logo.svg';
+import logo1 from '../assets/logo1.svg';
+import { FaSun, FaMoon } from 'react-icons/fa';
 export function Navbar() {
     const isLoggedIn = useSelector((state) => state.isLoggedIn);
     const profileImg = useSelector((state) => state.user.profileImage);
     const role = useSelector((state) => state.user.role);
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [darkMode, setDarkMode] = useState(false);
 
-    const username = "JohnDoe";
+    const toggleDarkMode = () => {
+        setDarkMode(!darkMode);
+    };
 
     return (
-        <div className=" tw-h-15 tw-flex tw-justify-evenly tw-bg-gray tw-p-2 tw-shadow-lg">
-            <NavLink to="/" className="tw-text-current tw-no-underline">
-                <h1 className="tw-ms-4">HRJ</h1>
-            </NavLink>
+        <div className={`tw-bg-${darkMode ? "black" : "blue-900"} tw-transition-colors`}>
 
-            <NavLink
-                to="/jobs"
-                className={({ isActive }) =>
-                    `tw-mt-2 tw-text-3xl tw-text-current tw-no-underline ${
-                        isActive ? "tw-text-orange-500" : "tw-text-gray-500"
-                    }`
-                }
-            >
-                <p className="">Find jobs</p>
-            </NavLink>
-            {isLoggedIn ? (
-                <div className="tw-flex tw-gap-2">
-                    <div className="dropdown">
-                        <a
-                            className="dropdown-toggle"
-                            data-bs-toggle="dropdown"
-                        >
-                            <img
-                                src={profileImg}
-                                className="tw-mr-4 tw-h-14 tw-w-14 tw-rounded-full"
-                                alt="Profile"
-                                onClick={() => setIsMenuOpen(!isMenuOpen)}
+            <div className="tw-flex tw-w-[100vw] ">
+                <div className="  tw-w-[25%] ">
+                    <NavLink to="/" className="tw-text-current tw-no-underline">
+                        <h1 className="tw-p-3"><img
+                            src={darkMode ? logo1 : logo}
+                            alt="Logo"
+                            className="tw-h-[4rem]"
                             />
-                        </a>
-                        <ul className="dropdown-menu">
-                            <li className="dropdown-item">
-                                <img
-                                    src={profileImg}
-                                    className="tw-mr-4 tw-h-10 tw-w-10 tw-rounded-full"
-                                    alt="Profile"
-                                    onClick={() => setIsMenuOpen(!isMenuOpen)}
-                                />{" "}
-                                {username}
-                                <div className="tw-mt-2  tw-flex tw-justify-center">
-                                    <NavLink
-                                        to="/profile"
-                                        className="tw-current-text tw-no-underline"
-                                    >
-                                        <button className="tw-rounded-full tw-border-solid tw-border-orange-500 tw-bg-white tw-px-3 tw-text-orange-500 hover:tw-bg-orange-500  hover:tw-text-white">
-                                            View Profile
-                                        </button>
-                                    </NavLink>
-                                </div>
-                            </li>
-                            <li>
-                                <hr className="dropdown-divider" />
-                            </li>
-                            <li className="dropdown-item">
-                                <button className="tw-rounded-full tw-border-none tw-bg-orange-500 tw-px-4 tw-text-2xl">
-                                    Log Out
-                                </button>
-                            </li>
-                        </ul>
-                    </div>
+                        </h1>
+                    </NavLink>
+                </div>
+                <div className="tw-w-[60%] tw-text-center ">
                     <NavLink
-                        to={role === "HR" ? "/dashboard" : "/userDashboard"}
+                        to="/jobs"
                         className={({ isActive }) =>
-                            `tw-mt-2 tw-text-3xl tw-text-current tw-no-underline
-                            ${
-                                isActive
-                                    ? "tw-text-orange-500"
-                                    : "tw-text-black"
+                            `tw-mt-2 tw-text-3xl tw-text-current tw-no-underline ${
+                                isActive ? "tw-text-blue-500" : "tw-text-gray"
                             }`
                         }
                     >
-                        <p className="">Dashboard</p>
+                        <p className="tw-pt-7 tw-font-bold">Find jobs</p>
                     </NavLink>
                 </div>
-            ) : (
-                <div>
-                    <NavLink to="/login">
-                        <button className="tw-mx-1 tw-rounded-full tw-border-none tw-bg-orange-500 tw-px-5 tw-text-2xl lg:tw-mr-5 lg:tw-p-3 lg:tw-px-5">
-                            Login
-                        </button>
-                    </NavLink>
+                <div className="tw-w-[35%] tw-text-end ">
+                    {isLoggedIn ? (
+                        <div className="tw-flex tw-gap-2">
+                            {/* ... (existing code) */}
+                            <NavLink
+                                to={role === "HR" ? "/dashboard" : "/userDashboard"}
+                                className={({ isActive }) =>
+                                    `tw-mt-2 tw-text-3xl tw-text-current tw-no-underline
+                                    ${
+                                        isActive
+                                            ? "tw-text-blue-500"
+                                            : "tw-text-black"
+                                    }`
+                                }
+                            >
+                                <p className="">Dashboard</p>
+                            </NavLink>
+                        </div>
+                    ) : (
+                        
+                        <div className="tw-px-6 tw-space-x-2 tw-align-center tw-my-5">
+                            <button
+                                onClick={toggleDarkMode}
+                                className={`tw-rounded-full tw-border-none tw-bg-${darkMode ? "white" : "gray-700"} tw-text-${darkMode ? "black" : "blue-900"} tw-px-1`}
+                            >
+                                {darkMode ? <FaSun /> : <FaMoon />}
+                            </button>
+                            <NavLink to="/login">
+                                <button className={`tw-rounded-full tw-border-none  tw-bg-${darkMode ? "blue-200" : "gray-900"} tw-text-${darkMode ? "gray-900" : "gray-900"} tw-px-5 tw-text-xl   lg:tw-py-2 lg:tw-px-[1rem]`}>
+                                    Login
+                                </button>
+                            </NavLink>
 
-                    <NavLink to="/register">
-                        <button className="tw-rounded-full tw-border-none tw-bg-orange-500 tw-px-5 tw-text-2xl lg:tw-mr-5 lg:tw-p-3 lg:tw-px-5">
-                            Sign Up
-                        </button>
-                    </NavLink>
+                            <NavLink to="/register">
+                                <button className={`tw-rounded-full tw-border-none  tw-bg-${darkMode ? "blue-200" : "gray-900"} tw-text-${darkMode ? "gray-900" : "gray-900"} tw-px-5 tw-text-xl  lg:tw-py-2 lg:tw-px-[1rem]`}>
+                                    Sign Up
+                                </button>
+                            </NavLink>
+                        </div>
+                    )}
+                    
+                    {/* Dark Mode Toggle Button */}
+                    
                 </div>
-            )}
+            </div>
         </div>
     );
 }

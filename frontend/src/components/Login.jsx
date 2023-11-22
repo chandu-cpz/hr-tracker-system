@@ -2,19 +2,12 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../redux/slice/userSlice";
-import validator from "validator";
-import { setUser, setIsLoggedIn } from "../redux/slice/userSlice";
 
 export function Login() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const [userData, setUserData] = useState({
-        email: "",
-        password: "",
-    });
-
-    const [errors, setErrors] = useState({
         email: "",
         password: "",
     });
@@ -26,49 +19,12 @@ export function Login() {
         });
     };
 
-    const validateForm = () => {
-        let isValid = true;
-        const newErrors = { ...errors };
-
-        // Validate email
-        if (!validator.isEmail(userData.email)) {
-            newErrors.email = "Please enter a valid email address";
-            isValid = false;
-        } else {
-            newErrors.email = "";
-        }
-        setErrors(newErrors);
-        return isValid;
-    };
-
-    const submitUser = async (e) => {
+    const submitUser = (e) => {
         e.preventDefault();
-
-        if (validateForm()) {
-            try {
-                console.log("From frontend", userData);
-                const response = await dispatch(loginUser(userData));
-                if (response.status === 200) {
-                    if (!response.data.error) {
-                        // No error in response
-                        dispatch(setUser(response.data));
-                        dispatch(setIsLoggedIn(true));
-                        console.log("Login successful!");
-                        navigate("/jobs");
-                    } else {
-                        // Error exists in response
-                        setErrors({
-                            ...errors,
-                            email: response.data.error,
-                        });
-                    }
-                }
-            } catch (error) {
-                console.log(error.message);
-            }
-        }
+        console.log("From frontend", userData);
+        dispatch(loginUser(userData));
+        navigate("/jobs");
     };
-
     return (
         <div className="tw-flex tw-h-screen tw-bg-gray">
             <div className="tw-mt-16 tw-flex tw-items-center">
@@ -109,9 +65,6 @@ export function Login() {
                                     value={userData.email}
                                     onChange={handleChange}
                                 />
-                                <span className="tw-text-red-500">
-                                    {errors.email}
-                                </span>
                             </div>
                             <div className="tw-mb-4 tw-flex tw-w-full tw-flex-col md:tw-mb-0 md:tw-mr-4">
                                 <label
@@ -129,13 +82,10 @@ export function Login() {
                                     value={userData.password}
                                     onChange={handleChange}
                                 />
-                                <span className="tw-text-red-500">
-                                    {errors.password}
-                                </span>
                             </div>
                             <button
                                 type="submit"
-                                className="tw-hover:bg-orange-700 tw-focus:outline-none tw-focus:shadow-outline tw-mt-2 tw-rounded-full tw-bg-orange-500 tw-px-6 tw-py-3 tw-font-bold tw-text-white"
+                                className="tw-hover:bg-blue-700 tw-focus:outline-none tw-focus:shadow-outline tw-mt-2 tw-rounded-full tw-bg-blue-500 tw-px-6 tw-py-3 tw-font-bold tw-text-white"
                                 onClick={submitUser}
                             >
                                 Login

@@ -47,7 +47,7 @@ export function Application() {
                     <div className="tw-flex">
                         <div>
                             <button
-                                className="tw-mx-4 tw-rounded-full tw-border-none tw-bg-gradient-to-b tw-from-orange-500 tw-to-orange-600 tw-px-4 tw-py-3 tw-text-3xl tw-text-white tw-shadow-2xl tw-transition-all  hover:tw-scale-105 hover:tw-shadow-xl"
+                                className="tw-mx-4 tw-rounded-full tw-border-none tw-bg-gradient-to-b tw-from-blue-500 tw-to-blue-600 tw-px-4 tw-py-3 tw-text-3xl tw-text-white tw-shadow-2xl tw-transition-all  hover:tw-scale-105 hover:tw-shadow-xl"
                                 onClick={() =>
                                     acceptApplication(application._id)
                                 }
@@ -63,7 +63,7 @@ export function Application() {
                         </div>
                         <div>
                             <button
-                                className="tw-mx-4 tw-rounded-full tw-border-none tw-bg-gradient-to-b tw-from-orange-500 tw-to-orange-600 tw-px-4 tw-py-3 tw-text-3xl tw-text-white tw-shadow-2xl tw-transition-all  hover:tw-scale-105 hover:tw-shadow-xl"
+                                className="tw-mx-4 tw-rounded-full tw-border-none tw-bg-gradient-to-b tw-from-blue-500 tw-to-blue-600 tw-px-4 tw-py-3 tw-text-3xl tw-text-white tw-shadow-2xl tw-transition-all  hover:tw-scale-105 hover:tw-shadow-xl"
                                 onClick={() =>
                                     rejectApplication(application._id)
                                 }
@@ -83,27 +83,27 @@ export function Application() {
                     {/* Applicant Profile */}
                     {application && (
                         <div className="tw-bg-gray-100 tw-mx-auto tw-max-w-3xl tw-rounded-lg tw-p-8">
-                            <div className="tw-flex tw-items-center tw-rounded-lg tw-bg-orange-200 tw-p-4 tw-shadow-md">
+                            <div className="tw-flex tw-items-center tw-rounded-lg tw-bg-blue-200 tw-p-4 tw-shadow-md">
                                 <img
-                                    className="tw-mr-8 tw-h-40 tw-w-40 tw-rounded-full tw-border-4 tw-border-orange-500"
+                                    className="tw-mr-8 tw-h-40 tw-w-40 tw-rounded-full tw-border-4 tw-border-blue-500"
                                     src={application.appliedBy.profileImage}
                                     alt={application.appliedBy.fullName}
                                 />
 
                                 <div>
-                                    <h1 className="tw-text-4xl tw-font-bold tw-text-orange-600">
+                                    <h1 className="tw-text-4xl tw-font-bold tw-text-blue-600">
                                         {application.appliedBy.fullName}
                                     </h1>
 
                                     <div className="tw-mt-5 tw-flex tw-items-center">
-                                        <FaPhoneAlt className="tw-mr-2 tw-text-orange-500" />
+                                        <FaPhoneAlt className="tw-mr-2 tw-text-blue-500" />
                                         <span>
                                             {application.appliedBy.phoneNumber}
                                         </span>
                                     </div>
 
                                     <div className="tw-mb-5  tw-flex tw-items-center">
-                                        <FaEnvelope className="tw-mr-2 tw-text-orange-500" />
+                                        <FaEnvelope className="tw-mr-2 tw-text-blue-500" />
                                         <span>
                                             {application.appliedBy.email}
                                         </span>
@@ -111,9 +111,9 @@ export function Application() {
                                 </div>
                             </div>
 
-                            <div className="tw-mt-8 tw-grid tw-grid-cols-1 tw-gap-4 tw-rounded-lg tw-bg-orange-100 tw-p-4 tw-shadow-md md:tw-grid-cols-2">
+                            <div className="tw-mt-8 tw-grid tw-grid-cols-1 tw-gap-4 tw-rounded-lg tw-bg-blue-100 tw-p-4 tw-shadow-md md:tw-grid-cols-2">
                                 <div>
-                                    <h3 className="tw-mb-4 tw-text-2xl tw-font-medium tw-text-orange-600">
+                                    <h3 className="tw-mb-4 tw-text-2xl tw-font-medium tw-text-blue-600">
                                         Info
                                     </h3>
 
@@ -121,7 +121,7 @@ export function Application() {
                                         <p className="tw-mr-4 tw-font-medium">
                                             Gender:
                                         </p>
-                                        <p className="tw-rounded-full tw-bg-orange-500 tw-px-2 tw-py-1 tw-text-white">
+                                        <p className="tw-rounded-full tw-bg-blue-500 tw-px-2 tw-py-1 tw-text-white">
                                             {application.appliedBy.gender}
                                         </p>
                                     </div>
@@ -130,7 +130,7 @@ export function Application() {
                                         <p className="tw-mr-4 tw-font-medium">
                                             Location:
                                         </p>
-                                        <p className="tw-rounded-full tw-bg-orange-500 tw-px-2 tw-py-1 tw-text-white">
+                                        <p className="tw-rounded-full tw-bg-blue-500 tw-px-2 tw-py-1 tw-text-white">
                                             {application.appliedBy.address}
                                         </p>
                                     </div>
@@ -139,14 +139,14 @@ export function Application() {
                                         <p className="tw-mr-4 tw-font-medium">
                                             Education:
                                         </p>
-                                        <p className="tw-rounded-full tw-bg-orange-500 tw-px-2 tw-py-1 tw-text-white">
+                                        <p className="tw-rounded-full tw-bg-blue-500 tw-px-2 tw-py-1 tw-text-white">
                                             {application.appliedBy.education}
                                         </p>
                                     </div>
                                 </div>
 
                                 <div>
-                                    <h3 className="tw-mb-4 tw-text-2xl tw-font-medium tw-text-orange-600">
+                                    <h3 className="tw-mb-4 tw-text-2xl tw-font-medium tw-text-blue-600">
                                         Experience
                                     </h3>
 
@@ -154,14 +154,14 @@ export function Application() {
                                         <p className="tw-mr-4 tw-font-medium">
                                             Years:
                                         </p>
-                                        <p className="tw-rounded-full tw-bg-orange-500 tw-px-2 tw-py-1 tw-text-white">
+                                        <p className="tw-rounded-full tw-bg-blue-500 tw-px-2 tw-py-1 tw-text-white">
                                             {application.appliedBy.experience}
                                         </p>
                                     </div>
                                 </div>
 
                                 <div className="tw-col-span-2">
-                                    <h3 className="tw-mb-4 tw-text-2xl tw-font-medium tw-text-orange-600">
+                                    <h3 className="tw-mb-4 tw-text-2xl tw-font-medium tw-text-blue-600">
                                         Skills
                                     </h3>
 
@@ -170,7 +170,7 @@ export function Application() {
                                             (skill) => (
                                                 <p
                                                     key={skill}
-                                                    className="tw-rounded-full tw-bg-orange-500 tw-px-3 tw-py-1 tw-text-white"
+                                                    className="tw-rounded-full tw-bg-blue-500 tw-px-3 tw-py-1 tw-text-white"
                                                 >
                                                     {skill}
                                                 </p>
@@ -189,7 +189,7 @@ export function Application() {
                                 target="_blank"
                                 rel="noreferrer"
                             >
-                                <button className="tw-mx-4 tw-rounded-full tw-border-none tw-bg-gradient-to-b tw-from-orange-500 tw-to-orange-600 tw-px-4 tw-py-3 tw-text-3xl tw-text-white tw-shadow-2xl tw-transition-all  hover:tw-scale-105 hover:tw-shadow-xl">
+                                <button className="tw-mx-4 tw-rounded-full tw-border-none tw-bg-gradient-to-b tw-from-blue-500 tw-to-blue-600 tw-px-4 tw-py-3 tw-text-3xl tw-text-white tw-shadow-2xl tw-transition-all  hover:tw-scale-105 hover:tw-shadow-xl">
                                     Download Resume
                                 </button>
                             </a>

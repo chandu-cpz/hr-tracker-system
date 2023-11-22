@@ -30,6 +30,7 @@ import {
     Employees,
 } from "./components/";
 
+
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path="/" element={<App />}>

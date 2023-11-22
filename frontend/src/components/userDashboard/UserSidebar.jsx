@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-
+import { useState } from "react";
 import { MdDashboard } from "react-icons/md";
 import { MdGroupAdd } from "react-icons/md";
 import { FaRegCalendarAlt } from "react-icons/fa";
@@ -7,23 +7,29 @@ import { MdOutlinePersonPin } from "react-icons/md";
 import { FaGear } from "react-icons/fa6";
 
 export function UserSidebar() {
+    const [darkMode, setDarkMode] = useState(false);
+
+    const toggleDarkMode = () => {
+        setDarkMode(!darkMode);
+    };
+
     return (
-        <div className="tw-bg-gray-100 tw-flex tw-h-screen tw-rounded-r-3xl tw-p-4">
-            <div className="tw-mb-10 tw-rounded-3xl tw-bg-gray tw-p-9 tw-shadow-lg">
+        <div className={`tw-bg-${darkMode ? "black" : "blue-900"} tw-flex tw-h-screen tw-p-4`}>
+            <div className={`tw-mb-10 tw-bg-${darkMode ? "black" : "blue"} tw-p-9 tw-shadow-lg`}>
                 <div>
-                    <h3 className="tw-mb-4 tw-pb-3 tw-text-2xl ">MAIN MENU</h3>
+                    <h3 className={`tw-mb-4 tw-pb-3 tw-text-2xl tw-text-${darkMode ? "white" : "black"}`}>MAIN MENU</h3>
 
                     <NavLink
                         to="/UserDashboard"
                         className={({ isActive }) =>
                             isActive
-                                ? "tw-text-orange-500 tw-no-underline"
-                                : " tw-p-5 tw-text-current tw-no-underline"
+                                ? `tw-text-blue-500 tw-no-underline tw-bg-${darkMode ? "black" : "blue-800"}`
+                                : `tw-p-5 tw-text-${darkMode ? "white" : "black"} tw-no-underline`
                         }
                     >
                         <div className="tw-flex tw-gap-4">
                             <MdDashboard size={35} />
-                            <p className="tw-text-3xl">Dashboard</p>
+                            <p className="tw-text-3xl ">Dashboard</p>
                         </div>
                     </NavLink>
 
@@ -31,8 +37,8 @@ export function UserSidebar() {
                         to="/jobs"
                         className={({ isActive }) =>
                             isActive
-                                ? " tw-text-orange-500 tw-no-underline"
-                                : " tw-p-5 tw-text-current tw-no-underline"
+                                ? `tw-text-blue-500 tw-no-underline tw-bg-${darkMode ? "black" : "blue-800"}`
+                                : `tw-p-5 tw-text-${darkMode ? "white" : "black"} tw-no-underline`
                         }
                     >
                         <div className="tw-flex tw-gap-4">
@@ -42,16 +48,16 @@ export function UserSidebar() {
                     </NavLink>
 
                     <NavLink
-                        to="/appliedJobs"
+                        to="/appliedjobs"
                         className={({ isActive }) =>
                             isActive
-                                ? " tw-text-orange-500 tw-no-underline"
-                                : " tw-p-5 tw-text-current tw-no-underline"
+                                ? `tw-text-blue-500 tw-no-underline tw-bg-${darkMode ? "black" : "blue-800"}`
+                                : `tw-p-5 tw-text-${darkMode ? "white" : "black"} tw-no-underline`
                         }
                     >
                         <div className="tw-flex tw-gap-4">
                             <FaRegCalendarAlt size={35} />
-                            <p className="tw-text-3xl">Applied Jobs</p>
+                            <p className="tw-text-3xl ">Applied Jobs</p>
                         </div>
                     </NavLink>
 
@@ -59,31 +65,31 @@ export function UserSidebar() {
                         to="/savedJobs"
                         className={({ isActive }) =>
                             isActive
-                                ? " tw-text-orange-500 tw-no-underline"
-                                : " tw-p-5 tw-text-current tw-no-underline"
+                                ? `tw-text-blue-500 tw-no-underline tw-bg-${darkMode ? "black" : "blue-800"}`
+                                : `tw-p-5 tw-text-${darkMode ? "white" : "black"} tw-no-underline`
                         }
                     >
                         <div className="tw-flex tw-gap-4">
                             <MdOutlinePersonPin size={35} />
-                            <p className="tw-text-3xl">Saved Jobs</p>
+                            <p className="tw-text-3xl ">Saved Jobs</p>
                         </div>
                     </NavLink>
                 </div>
 
                 <div>
-                    <h3 className="tw-mb-4 tw-pb-3 tw-text-2xl ">OTHERS</h3>
+                    <h3 className={`tw-mb-4 tw-pb-3 tw-text-2xl tw-text-${darkMode ? "white" : "black"}`}>OTHERS</h3>
 
                     <NavLink
                         to="/profile"
                         className={({ isActive }) =>
                             isActive
-                                ? " tw-text-orange-500 tw-no-underline"
-                                : " tw-p-5 tw-text-current tw-no-underline"
+                                ? `tw-text-blue-500 tw-no-underline tw-bg-${darkMode ? "black" : "blue-800"}`
+                                : `tw-p-5 tw-text-${darkMode ? "white" : "black"} tw-no-underline`
                         }
                     >
                         <div className="tw-flex tw-gap-4">
                             <FaGear size={35} />
-                            <p className="tw-text-3xl"> Profile</p>
+                            <p className="tw-text-3xl "> Profile</p>
                         </div>
                     </NavLink>
                 </div>

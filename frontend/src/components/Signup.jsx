@@ -2,9 +2,6 @@ import { useState } from "react";
 import { signUpUser } from "../redux/slice/userSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { MdCameraAlt } from "react-icons/md";
-import uploadFile from "../utils/uploadFile";
-import validator from "validator";
 
 export function Signup() {
     const dispatch = useDispatch();
@@ -15,9 +12,6 @@ export function Signup() {
         email: "",
         password: "",
         gender: "",
-        role: "USER",
-        company: "",
-        companyImage: null, // Updated to handle file input
     });
 
     const handleChange = (e) => {
@@ -27,94 +21,16 @@ export function Signup() {
         });
     };
 
-    const [preview, setPreview] = useState(userData.companyImage);
-    const handleImageChange = async (e) => {
-        setPreview(URL.createObjectURL(e.target.files[0]));
-        setUserData({
-            ...userData,
-            companyImage: e.target.files[0],
-        });
-
-        console.log("We are uploading image");
-
-        try {
-            const image = await uploadFile(e.target.files[0], "company");
-            setUserData({
-                ...userData,
-                companyImage: image.secure_url,
-            });
-        } catch (err) {
-            console.log(err);
-        }
-    };
-    const [errors, setErrors] = useState({});
-
-    const validateInput = () => {
-        let isValid = true;
-        const newErrors = {};
-
-        // Name
-        if (userData.fullName == "") {
-            isValid = false;
-            newErrors.fullName = "Please enter your name";
-        }
-
-        // Email
-        if (!validator.isEmail(userData.email)) {
-            isValid = false;
-            newErrors.email = "Please enter a valid email";
-        }
-
-        const options = {
-            minLength: 8,
-            minLowercase: 1,
-            minUppercase: 1,
-        };
-
-        if (!validator.isStrongPassword(userData.password, options)) {
-            newErrors.password =
-                "Password should contain lowercase, uppercase, and 8 chars long ";
-            isValid = false;
-        }
-
-        if (userData.role === "HR") {
-            if (!userData.company) {
-                newErrors.company = "Company name is required ";
-                isValid = false;
-            }
-        }
-
-        setErrors(newErrors);
-        return isValid;
-    };
-
     const submitUser = async (e) => {
         e.preventDefault();
-        if (userData.gender === "male") userData.gender = "M";
-        else if (userData.gender === "female") userData.gender = "F";
+        if (userData.gender == "male") userData.gender = "M";
+        else if (userData.gender == "female") userData.gender = "F";
         else userData.gender = "O";
 
-        if (validateInput()) {
-            console.log("From frontend", userData);
-            const response = await dispatch(signUpUser(userData));
-            console.log(response);
-            if (response.status === 200) {
-                if (!response.data.error) {
-                    // No error in response
-                    console.log("Signup successful!");
-                    navigate("/login");
-                } else {
-                    // Error exists in response
-                    setErrors({
-                        ...errors,
-                        email: response.data.error,
-                    });
-                }
-            } else {
-                // Handle other response codes
-                console.log("Error signing up");
-            }
-        }
+        console.log("From frontend", userData);
+        await dispatch(signUpUser(userData));
+        console.log("Finished Signing Up");
+        navigate("/login");
     };
 
     return (
@@ -153,11 +69,6 @@ export function Signup() {
                             value={userData.fullName}
                             onChange={handleChange}
                         />
-                        {errors.fullName && (
-                            <span className="tw-text-red-500">
-                                {errors.fullName}
-                            </span>
-                        )}
                     </div>
                     <div className="tw-mb-4">
                         <label
@@ -175,11 +86,6 @@ export function Signup() {
                             value={userData.email}
                             onChange={handleChange}
                         />
-                        {errors.email && (
-                            <span className="tw-text-red-500">
-                                {errors.email}
-                            </span>
-                        )}
                     </div>
                     <div className="tw-mb-4">
                         <label
@@ -197,11 +103,6 @@ export function Signup() {
                             value={userData.password}
                             onChange={handleChange}
                         />
-                        {errors.password && (
-                            <span className="tw-text-red-500">
-                                {errors.password}
-                            </span>
-                        )}
                     </div>
                     <div className="tw-mb-4">
                         <span className="text-gray-700 tw-mb-2 tw-block tw-text-sm tw-font-bold">
@@ -239,72 +140,23 @@ export function Signup() {
                         </label>
                     </div>
                     <div className="tw-mb-4">
+                        <span className="text-gray-700 tw-mb-2 tw-block tw-text-sm tw-font-bold">
+                            HR
+                        </span>
                         <label className="tw-mr-6 tw-inline-flex tw-items-center">
                             <input
-                                type="checkbox"
-                                className="form-checkbox"
+                                type="radio"
+                                className="form-radio"
                                 name="role"
                                 value="HR"
                                 onChange={handleChange}
                             />
-                            <span className="text-gray-700 tw-mb-2 tw-block tw-text-sm tw-font-bold">
-                                HR
-                            </span>
+                            <span className="ml-2">HR</span>
                         </label>
                     </div>
-
-                    {userData.role === "HR" && (
-                        <>
-                            <div className="tw-mb-4">
-                                <label
-                                    className="tw-text-gray-700 tw-mb-2 tw-block tw-text-sm tw-font-bold"
-                                    htmlFor="company"
-                                >
-                                    Company Name:
-                                </label>
-                                <input
-                                    type="text"
-                                    id="company"
-                                    name="company"
-                                    className="tw-text-gray-700 tw-focus:outline-none tw-focus:shadow-outline tw-w-full tw-appearance-none tw-rounded-full tw-border tw-px-3 tw-py-2 tw-leading-tight tw-shadow"
-                                    placeholder=""
-                                    value={userData.company}
-                                    onChange={handleChange}
-                                />
-                                <span className="tw-text-red-500">
-                                    {errors.company}
-                                </span>
-                            </div>
-
-                            <div className="tw-mb-4">
-                                <label className="tw-text-gray-700 tw-mb-2 tw-block tw-text-sm tw-font-bold">
-                                    Company Image:
-                                    <MdCameraAlt
-                                        size={32}
-                                        className="tw-text-gray-500 tw-ml-4 tw-mt-16"
-                                    />
-                                </label>
-                                {userData.companyImage && (
-                                    <img
-                                        src={preview}
-                                        alt="Profile"
-                                        className="tw-m-5 tw-h-48 tw-w-48 tw-rounded-full tw-border-4 tw-border-orange-500 tw-object-cover"
-                                    />
-                                )}
-                                <input
-                                    type="file"
-                                    id="companyImage"
-                                    name="companyImage"
-                                    accept="image/*" // Accept only image files
-                                    onChange={handleImageChange}
-                                />
-                            </div>
-                        </>
-                    )}
-
                     <button
                         type="submit"
-                        className="tw-hover:bg-orange-700 tw-focus:outline-none tw-focus:shadow-outline tw-rounded-full tw-bg-orange-500 tw-px-4 tw-py-2 tw-font-bold tw-text-white"
+                        className="tw-hover:bg-blue-700 tw-focus:outline-none tw-focus:shadow-outline tw-rounded-full tw-bg-blue-500 tw-px-4 tw-py-2 tw-font-bold tw-text-white"
                         onClick={submitUser}
                     >
                         Sign Up

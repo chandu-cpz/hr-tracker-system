@@ -8,17 +8,17 @@ import { FaGear } from "react-icons/fa6";
 
 export function Sidebar() {
     return (
-        <div className="tw-bg-gray-100 tw-flex tw-h-screen tw-rounded-r-3xl tw-p-4">
-            <div className="tw-mb-10 tw-rounded-3xl tw-bg-gray tw-p-9 tw-shadow-lg">
+        <div className="tw-bg-blue-900 tw-flex tw-h-screen tw-p-4">
+            <div className="tw-mb-10  tw-bg-blue tw-p-9 ">
                 <div>
-                    <h3 className="tw-mb-4 tw-pb-3 tw-text-2xl ">MAIN MENU</h3>
+                    <h3 className="tw-mb-4 tw-pb-3 tw-text-white tw-text-2xl ">MAIN MENU</h3>
 
                     <NavLink
                         to="/dashboard"
                         className={({ isActive }) =>
                             isActive
-                                ? "tw-text-orange-500 tw-no-underline"
-                                : " tw-p-5 tw-text-current tw-no-underline"
+                                ? "tw-text-blue-500 tw-no-underline"
+                                : " tw-p-5 tw-text-white tw-no-underline"
                         }
                     >
                         <div className="tw-flex tw-gap-4">
@@ -31,8 +31,8 @@ export function Sidebar() {
                         to="/addjob"
                         className={({ isActive }) =>
                             isActive
-                                ? " tw-text-orange-500 tw-no-underline"
-                                : " tw-p-5 tw-text-current tw-no-underline"
+                                ? " tw-text-blue-500 tw-no-underline"
+                                : " tw-p-5 tw-text-white tw-no-underline"
                         }
                     >
                         <div className="tw-flex tw-gap-4">
@@ -45,8 +45,8 @@ export function Sidebar() {
                         to="/applicants"
                         className={({ isActive }) =>
                             isActive
-                                ? " tw-text-orange-500 tw-no-underline"
-                                : " tw-p-5 tw-text-current tw-no-underline"
+                                ? " tw-text-blue-500 tw-no-underline"
+                                : " tw-p-5 tw-text-white tw-no-underline"
                         }
                     >
                         <div className="tw-flex tw-gap-4">
@@ -59,8 +59,8 @@ export function Sidebar() {
                         to="/employees"
                         className={({ isActive }) =>
                             isActive
-                                ? " tw-text-orange-500 tw-no-underline"
-                                : " tw-p-5 tw-text-current tw-no-underline"
+                                ? " tw-text-blue-500 tw-no-underline"
+                                : " tw-p-5 tw-text-white tw-no-underline"
                         }
                     >
                         <div className="tw-flex tw-gap-4">
@@ -71,14 +71,14 @@ export function Sidebar() {
                 </div>
 
                 <div>
-                    <h3 className="tw-mb-4 tw-pb-3 tw-text-2xl ">OTHERS</h3>
+                    <h3 className="tw-mb-4 tw-pb-3 tw-text-white tw-text-2xl">OTHERS</h3>
 
                     <NavLink
                         to="/profile"
                         className={({ isActive }) =>
                             isActive
-                                ? " tw-text-orange-500 tw-no-underline"
-                                : " tw-p-5 tw-text-current tw-no-underline"
+                                ? " tw-text-blue-500 tw-no-underline"
+                                : " tw-p-5 tw-text-white tw-no-underline"
                         }
                     >
                         <div className="tw-flex tw-gap-4">
