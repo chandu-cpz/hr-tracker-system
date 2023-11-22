@@ -31,10 +31,28 @@ export async function updateUser(req, res) {
     };
 
     // Validate the fields
-    const { errors, isValid } = validateForm(userData, email);
-    if (!isValid) {
-        return res.status(400).json({ errors });
+    
+    if (!userData?.fullName?.trim())
+        return res.send({ error: "fullName is required" });
+    else {
+        if (!validator.isLength(userData.fullName, { min: 3, max: 50 }))
+            return res.send({ error: "Invalid fullName" });
     }
+
+    if (!validator.isString(userData.fullName))
+        return res.send({ error: "Enter a valid a name" });
+    
+    if (!userData?.email?.trim())
+        return res.send({ error: "email is required" });
+
+    if (userData?.email?.trim()) {
+        if (!validator.isEmail(userData.email))
+            return res.send({ error: "Invalid email" });
+    }
+
+    if (!validator.isMobilePhone(userData.phoneNumber)) 
+        return res.send({ error: "Invalid phone number" });
+   
 
     // Delete all null and undefined values
     Object.keys(userData).forEach(key => {
@@ -60,49 +78,3 @@ export async function updateUser(req, res) {
     }
 }
 
-function validateForm(userData, email) {
-    let isValid = true;
-    const errors = {};
-
-    if (!validator.isEmail(email)) {
-        errors.email = "Invalid email";
-        isValid = false;
-    } else {
-        errors.email = "";
-    }
-
-    if (!validator.isMobilePhone(userData.phoneNumber)) {
-        errors.phoneNumber = "Invalid phone number";
-        isValid = false;
-    } else {
-        errors.phoneNumber = "";
-    }
-
-    
-    if (!validator.isStrongPassword(userData.password, options)) {
-        errors.password = "Password is not strong enough";
-        isValid = false;
-    } else {
-        errors.password = "";
-    }
-
-    if (!validator.isString(userData.fullName)) {
-        errors.fullName = "Full name must be a string";
-        isValid = false;
-    } else {
-        errors.fullName = "";
-    }
-
-    function isAddress(input) {
-        const addressRegex = /^[\w\s\d,-]+$/; 
-         return addressRegex.test(input);
-    }
-
-    if (isAddress(userData.address)) {
-        console.log('Valid address!');
-    } else {
-        console.log('Not a valid address!');
-    }
-
-    return { errors, isValid };
-}
