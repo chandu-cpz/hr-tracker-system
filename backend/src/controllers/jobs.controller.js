@@ -1,5 +1,6 @@
 import { Job } from "../models/jobs.model.js";
 import { User } from "../models/user.model.js";
+import validator from "validator";
 import express from "express";
 
 const router = express.Router();
@@ -229,6 +230,29 @@ export async function addJob(req, res) {
         }
     });
 
+    //validtors
+
+    if (!jobData?.jobTitle?.trim()) return res.send({ error: "jobTitle is required" });
+    else {
+
+        if (!validator.isLength(jobData.jobTitle, { min: 5, max: 50 }))
+            return res.send({ error: "Invalid job title" });
+    }
+
+    if (!jobData?.jobDescription?.trim()) return res.send({ error: "jobDescription is required" });
+
+    if (!jobData?.companyName?.trim()) return res.send({ error: "companyName is required" });
+    else {
+
+        if (!validator.isLength(jobData.companyName, { min: 3, max: 50 }))
+            return res.send({ error: "Invalid company name" });
+    }
+
+    if (!jobData?.responsibilities?.trim()) return res.send({ error: "responsibilities is required" });
+    if (!jobData?.qualifications?.trim()) return res.send({ error: "qualifications is required" });
+    if (!jobData?.location?.trim()) return res.send({ error: "location is required" });
+    if (!jobData?.salary?.trim()) return res.send({ error: "salary is required" });
+
     // Insert job
     try {
         const job = await Job.create(jobData);
@@ -237,7 +261,6 @@ export async function addJob(req, res) {
 
         // Send response
         res.status(201).json(job);
-
         console.log("================================================");
     } catch (err) {
         console.error(err);
