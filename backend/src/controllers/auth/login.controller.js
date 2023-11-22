@@ -1,4 +1,5 @@
 import { User } from "../../models/user.model.js";
+import validator from "validator";
 
 export async function loginUser(req, res) {
     console.log("================================================")
@@ -7,9 +8,14 @@ export async function loginUser(req, res) {
     //Get all user details from request
     const { email, password } = req.body;
 
-    // validation of data
-    if (!(email && password)) {
-        return res.status(400).send("Either password or email are not provided");
+    const userData = {
+        email: email,
+        password: password
+    }
+
+    if (!userData?.email?.trim()) return res.send({ error: "email is required" });
+    else {
+        if (!validator.isEmail(userData.email)) return res.send({ error: "email is required" });
     }
 
     // find user in db
@@ -17,14 +23,15 @@ export async function loginUser(req, res) {
 
     //Not registered so send that back
     if (!user) {
-        return res.status(401).send("User is not registered");
+        return res.send({ error: "User is not registered" });
     }
 
     // Check if password is correct
-    if (user.isPasswordCorrect(password)) {
+    const isPasswordCorrect = await user.isPasswordCorrect(userData.password)
+    if (isPasswordCorrect) {
 
         // Generate and send token
-        const token = user.generateAccessToken();
+        const token = await user.generateAccessToken();
 
         //setting cookie options
         const options = {
@@ -50,7 +57,8 @@ export async function loginUser(req, res) {
         res.json(user);
         console.log("================================================")
     } else {
-        return res.status(401).send("Invalid credentials");
+        return res.send({ error: "Invalid credentials" });
         console.log("================================================")
     }
 }
+
