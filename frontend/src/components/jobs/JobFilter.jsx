@@ -23,6 +23,8 @@ export function JobFilter() {
     const [selectedSalary, setSelectedSalary] = useState(0);
 
     useEffect(() => {
+        console.log("refeteching data");
+        console.log(filters);
         fetchData();
     }, [filters]); // Refetch data when filters change
 
@@ -57,6 +59,7 @@ export function JobFilter() {
             console.log("The filter data is ");
             console.log(filterData);
             setJobs(jobs);
+            console.log(jobs);
         } catch (error) {
             console.error("Error fetching jobs:", error.message);
         }

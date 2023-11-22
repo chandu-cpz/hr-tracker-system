@@ -57,6 +57,8 @@ export async function deleteSavedJob(req, res) {
 }
 
 export async function getJobs(req, res) {
+    console.log("================================");
+    console.log("(getJobs) : getting jobs");
     console.log(req.query)
     try {
         let query = Job.find();
@@ -71,6 +73,8 @@ export async function getJobs(req, res) {
                     : 1;
             query = query.sort({ [sortField]: sortOrder });
         }
+
+        console.log(req.query.jobType)
 
         // Pagination
         const page = req.query.page || 1;
@@ -97,8 +101,8 @@ export async function getJobs(req, res) {
             query = query.where("experience").equals(req.query.experience);
         }
 
-        if (req.query.jobTypes) {
-            query = query.where('jobType').in(req.query.jobTypes);
+        if (req.query.jobType) {
+            query = query.where('jobtype').in(req.query.jobType);
         }
 
         if (req.query.minSalary && req.query.maxSalary) {
@@ -137,7 +141,8 @@ export async function getJobs(req, res) {
         console.log(jobs);
         response.jobs = jobs;
         const totalJobs = await jobs.length;
-        response.totalPages = totalJobs / limit
+        const totalDocs = await Job.countDocuments(query.getQuery());
+        response.totalPages = Math.ceil(totalDocs / limit);
         res.json(response);
     } catch (error) {
         console.error(error);
