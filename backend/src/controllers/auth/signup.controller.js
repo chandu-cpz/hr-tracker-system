@@ -1,7 +1,6 @@
 import { User } from "../../models/user.model.js";
 import { generateSignUpEmailTemplate } from "../../utils/emailGenerator.js";
 import sendMail from "../../utils/nodeMailer.js";
-import validator from "validator";
 
 export async function createUser(req, res) {
     console.log("================================================");
@@ -15,6 +14,13 @@ export async function createUser(req, res) {
         email,
         password,
         gender,
+        skills,
+        phoneNumber,
+        address,
+        education,
+        experience,
+        profileImage,
+        jobsApplied,
         role,
         company,
         companyImage,
@@ -26,44 +32,24 @@ export async function createUser(req, res) {
         email,
         password,
         gender,
+        skills,
+        phoneNumber,
+        address,
+        education,
+        experience,
+        profileImage,
+        jobsApplied,
         role,
         company,
         companyImage,
     };
+
+    //Delete all null and undefined values
     Object.keys(userData).forEach((key) => {
         if (userData[key] === null || userData[key] === undefined) {
             delete userData[key];
         }
     });
-
-    if (!userData?.fullName?.trim()) return res.send({ error: "fullName is required" });
-    if (!userData?.email?.trim()) return res.send({ error: "email is required" });
-    if (userData?.email?.trim()) {
-        if (!validator.isEmail(userData.email)) return res.send({ error: "email is required" });
-    }
-    if (!userData?.gender?.trim()) return res.send({ error: "gender is required" });
-    if (userData?.role == "HR") {
-        if (!userData?.company?.trim()) return res.send({ error: "company is required" });
-    }
-    if (!userData?.password?.trim()) return res.send({ error: "password is required" });
-    else {
-        const options = {
-            minLength: 8,
-            minLowercase: 1,
-            minUppercase: 1,
-            minNumbers: 1,
-            minSymbols: 1,
-        };
-
-        if (!validator.isStrongPassword(userData.password, options)) {
-            newErrors.password = "Password is not strong enough";
-            isValid = false;
-        }
-    }
-
-    
-
-    console.log(userData);
 
     console.log("The user details are: ");
     console.log(userData);
@@ -72,8 +58,7 @@ export async function createUser(req, res) {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
         console.log("The user already exists aborting ... ");
-        console.log("================================================")
-        return res.send({ error: 'User already exists' });
+        return res.status(400).send("Already User exists");
     }
 
     //Not a existing user so create a new one
@@ -104,4 +89,3 @@ export async function createUser(req, res) {
     res.status(200).send("Completed Creating user");
     console.log("================================================");
 }
-

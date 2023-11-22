@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { MdCameraAlt } from "react-icons/md";
 import uploadFile from "../utils/uploadFile";
-import validator from "validator";
 
 export function Signup() {
     const dispatch = useDispatch();
@@ -47,47 +46,6 @@ export function Signup() {
             console.log(err);
         }
     };
-    const [errors, setErrors] = useState({});
-
-    const validateInput = () => {
-        let isValid = true;
-        const newErrors = {};
-
-        // Name
-        if (userData.fullName == "") {
-            isValid = false;
-            newErrors.fullName = "Please enter your name";
-        }
-
-        // Email
-        if (!validator.isEmail(userData.email)) {
-            isValid = false;
-            newErrors.email = "Please enter a valid email";
-        }
-
-        const options = {
-            minLength: 8,
-            minLowercase: 1,
-            minUppercase: 1,
-            minNumbers: 1,
-            minSymbols: 1,
-        };
-
-        if (!validator.isStrongPassword(userData.password, options)) {
-            newErrors.password = "Password is not strong enough";
-            isValid = false;
-        }
-
-        if (userData.role === "HR") {
-            if (!userData.company) {
-                newErrors.company = "Company name is required ";
-                isValid = false;
-            }
-        }
-
-        setErrors(newErrors);
-        return isValid;
-    };
 
     const submitUser = async (e) => {
         e.preventDefault();
@@ -95,27 +53,10 @@ export function Signup() {
         else if (userData.gender === "female") userData.gender = "F";
         else userData.gender = "O";
 
-        if (validateInput()) {
-            console.log("From frontend", userData);
-            const response = await dispatch(signUpUser(userData));
-            console.log(response);
-            if (response.status === 200) {
-                if (!response.data.error) {
-                    // No error in response
-                    console.log("Signup successful!");
-                    navigate("/login");
-                } else {
-                    // Error exists in response
-                    setErrors({
-                        ...errors,
-                        email: response.data.error,
-                    });
-                }
-            } else {
-                // Handle other response codes
-                console.log("Error signing up");
-            }
-        }
+        console.log("From frontend", userData);
+        await dispatch(signUpUser(userData));
+        console.log("Finished Signing Up");
+        navigate("/login");
     };
 
     return (
@@ -154,11 +95,6 @@ export function Signup() {
                             value={userData.fullName}
                             onChange={handleChange}
                         />
-                        {errors.fullName && (
-                            <span className="tw-text-red-500">
-                                {errors.fullName}
-                            </span>
-                        )}
                     </div>
                     <div className="tw-mb-4">
                         <label
@@ -176,11 +112,6 @@ export function Signup() {
                             value={userData.email}
                             onChange={handleChange}
                         />
-                        {errors.email && (
-                            <span className="tw-text-red-500">
-                                {errors.email}
-                            </span>
-                        )}
                     </div>
                     <div className="tw-mb-4">
                         <label
@@ -198,11 +129,6 @@ export function Signup() {
                             value={userData.password}
                             onChange={handleChange}
                         />
-                        {errors.password && (
-                            <span className="tw-text-red-500">
-                                {errors.password}
-                            </span>
-                        )}
                     </div>
                     <div className="tw-mb-4">
                         <span className="text-gray-700 tw-mb-2 tw-block tw-text-sm tw-font-bold">
@@ -272,9 +198,6 @@ export function Signup() {
                                     value={userData.company}
                                     onChange={handleChange}
                                 />
-                                <span className="tw-text-red-500">
-                                    {errors.company}
-                                </span>
                             </div>
 
                             <div className="tw-mb-4">
