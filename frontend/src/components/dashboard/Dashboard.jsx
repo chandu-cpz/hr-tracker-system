@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 
 export function Dashboard() {
     const username = useSelector((state) => state.user.fullName);
-
     const [jobsOpen, setJobsOpen] = useState(0);
     const [applications, setApplications] = useState(0);
     const [employees, setEmployees] = useState(0);

@@ -14,6 +14,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../redux/slice/userSlice";
 
 export function ApplyJob() {
+    const [isApplyed, setIsApplied] = useState();
+
     const user = useSelector((state) => state.user);
     const { jobId } = useParams();
     const [jobDetails, setJobDetails] = useState({});
@@ -41,9 +43,12 @@ export function ApplyJob() {
                     jobId: jobId,
                     resume: resume,
                 })
-                .then();
+                .then(response => {
+                    setIsApplied(true);
+                  });
         } catch (err) {
             console.log(err);
+            setIsApplied(false);
         }
         dispatch(
             setUser({
@@ -241,6 +246,8 @@ export function ApplyJob() {
                             Apply for Job
                         </button>
                     </div>
+                    {isApplyed === true && <p className="tw-text-green-500 tw-text-center">Applied Successfully</p>}
+                    {isApplyed === false && <p className="tw-text-red-500 tw-text-center">Failed to Apply</p>}
                     {resume && <img src={resume.replace(/\.pdf$/, ".png")} />}
                 </div>
             </div>
