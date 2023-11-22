@@ -27,16 +27,6 @@ export function Signup() {
         });
     };
 
-    const handleCheckboxChange = (e) => {
-        const { name, checked } = e.target;
-        setUserData((prevData) => ({
-            ...prevData,
-            [name]: checked ? "HR" : "",
-            company: "",
-            companyImage: null, // Reset file input when HR checkbox is unchecked
-        }));
-    };
-
     const [preview, setPreview] = useState(userData.companyImage);
     const handleImageChange = async (e) => {
         setPreview(URL.createObjectURL(e.target.files[0]));
@@ -256,7 +246,7 @@ export function Signup() {
                                 className="form-checkbox"
                                 name="role"
                                 value="HR"
-                                onChange={handleCheckboxChange}
+                                onChange={handleChange}
                             />
                             <span className="text-gray-700 tw-mb-2 tw-block tw-text-sm tw-font-bold">
                                 HR
