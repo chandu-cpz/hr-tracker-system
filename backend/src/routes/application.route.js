@@ -1,7 +1,7 @@
 import express from "express";
 import { checkAuth } from "../middlewares/checkAuth.middleware.js";
 import { requiredRole } from "../middlewares/requiredRole.middleware.js";
-import { createApplication, getApplicants, getSingleApplicationDetails, getEmployees, acceptApplication, rejectApplication } from "../controllers/applications.controller.js";
+import { createApplication, getApplicants, getSingleApplicationDetails, getEmployees, acceptApplication, rejectApplication, getApplicationCount } from "../controllers/applications.controller.js";
 
 
 const router = express.Router();
@@ -17,5 +17,7 @@ router.get("/employees", checkAuth, requiredRole("HR"), getEmployees);
 router.post("/accept", checkAuth, requiredRole("HR"), acceptApplication);
 
 router.post("/reject", checkAuth, requiredRole("HR"), rejectApplication);
+
+router.get("/count", checkAuth, getApplicationCount)
 
 export const applicationRouter = router;

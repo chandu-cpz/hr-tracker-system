@@ -108,3 +108,47 @@ export async function rejectApplication(req, res) {
 	sendMail(application.appliedBy.email, "Application Update", generateRejectedEmail(application));
 	res.json(application);
 }
+
+export async function getApplicationCount(req, res) {
+	console.log("================================")
+	console.log("(applicationCount): getting application counts");
+	if (req.body.user.role === "HR") {
+		const hrId = req.body.user._id;
+		let pending, accepted;
+		try {
+			await Application.find({ postedBy: hrId })
+				.then(applications => {
+					pending = applications.filter(app => app.accepted === 'PENDING').length;
+					accepted = applications.filter(app => app.accepted === 'ACCEPTED').length;
+				})
+			res.json({
+				applications: pending,
+				employees: accepted,
+			});
+			console.log("================================")
+		}
+		catch (err) {
+			console.log(err.message);
+		}
+	}
+	else {
+		const userId = req.body.user._id;
+		let pending, rejected;
+		try {
+			await Application.find({ appliedBy: userId })
+				.then(applications => {
+					pending = applications.filter(app => app.accepted === 'PENDING').length;
+					rejected = applications.filter(app => app.accepted === 'REJECTED').length;
+				})
+			res.json({
+				applications: pending,
+				employees: rejected,
+			});
+			console.log("================================")
+		}
+		catch (err) {
+			console.log(err.message);
+		}
+	}
+
+}
