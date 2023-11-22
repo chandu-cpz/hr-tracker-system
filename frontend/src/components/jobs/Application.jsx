@@ -33,7 +33,9 @@ export function Application() {
     };
 
     const rejectApplication = async (applicationId) => {
-        await axios.post("/api/application/reject", applicationId);
+        await axios.post("/api/application/reject", {
+            applicationId: applicationId,
+        });
         setRejected(false);
     };
 
