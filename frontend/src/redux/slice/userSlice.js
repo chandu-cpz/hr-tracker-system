@@ -90,8 +90,8 @@ export const loginUser = (userData) => {
         try {
             console.log("RTK: Making log in request to server")
             const response = await axios.post("/api/login", userData);
-            dispatch(setUser(response.data));
-            dispatch(setIsLoggedIn(true));
+            dispatch(setIsLoggedIn(false));
+            return response
         } catch (error) {
             console.error(error);
         }
