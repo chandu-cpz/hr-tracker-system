@@ -46,6 +46,8 @@ export async function createUser(req, res) {
         if (!userData?.company?.trim()) return res.send({ error: "company is required" });
     }
 
+    
+
     console.log(userData);
 
     console.log("The user details are: ");

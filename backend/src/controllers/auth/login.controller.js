@@ -20,9 +20,21 @@ export async function loginUser(req, res) {
         return res.status(401).send("User is not registered");
     }
 
-    const { errors, isValid } = validateForm(userData, email);
-    if (!isValid) {
-        return res.status(400).json({ errors });
+    if (!userData?.email?.trim()) return res.send({ error: "email is required" });
+    else{
+        if (!validator.isEmail(userData.email)) return res.send({ error: "email is required" });
+    }
+    
+    if(!userData?.password?.trim()) return res.send({ error: "password is required" });
+    else{
+        const options = {
+            minLength: 8, 
+            minLowercase: 1,
+            minUppercase: 1,
+            minNumbers: 1,
+            minSymbols: 1,
+        };
+        if (!validator.isStrongPassword(userData.password, options)) return res.send({ error: "password is not strong enough" });
     }
 
     // Check if password is correct
@@ -59,30 +71,4 @@ export async function loginUser(req, res) {
         console.log("================================================")
     }
 }
-
-function validateForm(userData, email) {
-    let isValid = true;
-    const errors = {};
-
-    if (!validator.isEmail(email)) {
-        errors.email = "Invalid email";
-        isValid = false;
-    } else {
-        errors.email = "";
-    }
-
-    const options = {
-        minLength: 8, 
-        minLowercase: 1,
-        minUppercase: 1,
-        minNumbers: 1,
-        minSymbols: 1,
-    };
-
-    if (!validator.isStrongPassword(userData.password, options)) {
-        errors.password = "Password is not strong enough";
-        isValid = false;
-    } else {
-        errors.password = "";
-    }
-}    
+    
