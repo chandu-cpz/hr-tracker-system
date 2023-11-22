@@ -37,22 +37,6 @@ export function Login() {
         } else {
             newErrors.email = "";
         }
-
-        // Validate password
-        const options = {
-            minLength: 8,
-            minLowercase: 1,
-            minUppercase: 1,
-            minNumbers: 1,
-            minSymbols: 1,
-        };
-
-        if (!validator.isStrongPassword(userData.password, options)) {
-            errors.password = "Password is not strong enough";
-            isValid = false;
-        } else {
-            errors.password = "";
-        }
         setErrors(newErrors);
         return isValid;
     };
