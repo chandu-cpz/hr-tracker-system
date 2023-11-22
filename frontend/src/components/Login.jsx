@@ -4,10 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { loginUser } from "../redux/slice/userSlice";
 import validator from "validator";
 import { setUser, setIsLoggedIn } from "../redux/slice/userSlice";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export function Login() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [showPassword, setShowPassword] = useState(false);
 
     const [userData, setUserData] = useState({
         email: "",
@@ -113,25 +115,37 @@ export function Login() {
                                     {errors.email}
                                 </span>
                             </div>
-                            <div className="tw-mb-4 tw-flex tw-w-full tw-flex-col md:tw-mb-0 md:tw-mr-4">
+                            <div className="tw-relative tw-w-full">
                                 <label
-                                    className="text-gray-700 tw-mb-2 tw-block tw-text-sm tw-font-bold"
+                                    className="tw-text-gray-700 tw-mb-2 tw-block tw-text-sm tw-font-bold"
                                     htmlFor="password"
                                 >
                                     Password:
                                 </label>
                                 <input
-                                    type="password"
+                                    className="tw-text-gray-700 tw-focus:tw-outline-none tw-focus:tw-shadow-outline tw-w-full tw-appearance-none tw-rounded-full tw-border tw-py-2 tw-pr-10 tw-leading-tight tw-shadow"
+                                    type={showPassword ? "text" : "password"}
                                     id="password"
                                     name="password"
-                                    className="ma:tw-w-3/4 tw-text-gray-700 tw-focus:outline-none tw-focus:shadow-outline tw-placeholder-gray-500 tw-focus:border-blue-500 tw-focus:ring tw-w-full tw-appearance-none tw-rounded-full tw-border tw-bg-white tw-px-3 tw-py-2 tw-leading-tight tw-shadow"
-                                    placeholder=""
                                     value={userData.password}
                                     onChange={handleChange}
                                 />
-                                <span className="tw-text-red-500">
-                                    {errors.password}
-                                </span>
+
+                                <button
+                                    type="button"
+                                    onClick={() =>
+                                        setShowPassword(!showPassword)
+                                    }
+                                    className=" tw-absolute tw-bottom-0 tw-right-0 tw-m-2 tw-border-none tw-bg-white"
+                                    style={{ zIndex: "10" }}
+                                >
+                                    {showPassword ? <FaEye /> : <FaEyeSlash />}
+                                </button>
+                                {errors.password && (
+                                    <span className="tw-text-red-500">
+                                        {errors.password}
+                                    </span>
+                                )}
                             </div>
                             <button
                                 type="submit"
