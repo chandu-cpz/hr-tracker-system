@@ -1,3 +1,4 @@
+import { response } from "express";
 import { User } from "../../models/user.model.js";
 import validator from "validator";
 
@@ -62,3 +63,19 @@ export async function loginUser(req, res) {
     }
 }
 
+export async function logOut(req, res) {
+    console.log("================================================");
+    console.log("(logOut): Logging out user");
+    res.clearCookie('token');
+    res.send({ message: "user had been logged out" })
+    console.log("================================================");
+}
+
+export async function autoLoginUser(req, res) {
+    const email = req.body.user.email
+    if (!email) return res.json({ error: "user does not have token" })
+    const user = await User.findOne({ email });
+    user.password = undefined;
+    return res.json(user);
+    console.log("================================")
+}

@@ -75,7 +75,7 @@ export function Card({ job }) {
 
                 <div className="tw-mb-2 tw-flex tw-justify-between">
                     <h3 className="tw-mb-2 tw-overflow-hidden tw-text-ellipsis tw-text-2xl tw-font-medium">
-                        {jobTitle}
+                        {jobTitle.toUpperCase()}
                     </h3>
                     <img
                         src="logo.png"
