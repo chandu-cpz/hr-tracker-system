@@ -2,12 +2,19 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../redux/slice/userSlice";
+import validator from "validator";
+import { setUser, setIsLoggedIn } from "../redux/slice/userSlice";
 
 export function Login() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const [userData, setUserData] = useState({
+        email: "",
+        password: "",
+    });
+
+    const [errors, setErrors] = useState({
         email: "",
         password: "",
     });
@@ -19,12 +26,49 @@ export function Login() {
         });
     };
 
-    const submitUser = (e) => {
-        e.preventDefault();
-        console.log("From frontend", userData);
-        dispatch(loginUser(userData));
-        navigate("/jobs");
+    const validateForm = () => {
+        let isValid = true;
+        const newErrors = { ...errors };
+
+        // Validate email
+        if (!validator.isEmail(userData.email)) {
+            newErrors.email = "Please enter a valid email address";
+            isValid = false;
+        } else {
+            newErrors.email = "";
+        }
+        setErrors(newErrors);
+        return isValid;
     };
+
+    const submitUser = async (e) => {
+        e.preventDefault();
+
+        if (validateForm()) {
+            try {
+                console.log("From frontend", userData);
+                const response = await dispatch(loginUser(userData));
+                if (response.status === 200) {
+                    if (!response.data.error) {
+                        // No error in response
+                        dispatch(setUser(response.data));
+                        dispatch(setIsLoggedIn(true));
+                        console.log("Login successful!");
+                        navigate("/jobs");
+                    } else {
+                        // Error exists in response
+                        setErrors({
+                            ...errors,
+                            email: response.data.error,
+                        });
+                    }
+                }
+            } catch (error) {
+                console.log(error.message);
+            }
+        }
+    };
+
     return (
         <div className="tw-flex tw-h-screen tw-bg-gray">
             <div className="tw-mt-16 tw-flex tw-items-center">
@@ -65,6 +109,9 @@ export function Login() {
                                     value={userData.email}
                                     onChange={handleChange}
                                 />
+                                <span className="tw-text-red-500">
+                                    {errors.email}
+                                </span>
                             </div>
                             <div className="tw-mb-4 tw-flex tw-w-full tw-flex-col md:tw-mb-0 md:tw-mr-4">
                                 <label
@@ -82,6 +129,9 @@ export function Login() {
                                     value={userData.password}
                                     onChange={handleChange}
                                 />
+                                <span className="tw-text-red-500">
+                                    {errors.password}
+                                </span>
                             </div>
                             <button
                                 type="submit"
