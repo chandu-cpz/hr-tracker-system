@@ -69,12 +69,11 @@ export function Signup() {
             minLength: 8,
             minLowercase: 1,
             minUppercase: 1,
-            minNumbers: 1,
-            minSymbols: 1,
         };
 
         if (!validator.isStrongPassword(userData.password, options)) {
-            newErrors.password = "Password is not strong enough";
+            newErrors.password =
+                "Password should contain lowercase, uppercase, and 8 chars long ";
             isValid = false;
         }
 
