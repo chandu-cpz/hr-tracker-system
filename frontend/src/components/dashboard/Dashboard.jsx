@@ -7,8 +7,8 @@ import axios from "axios";
 export function Dashboard() {
     const username = "chandu";
 
-    const [jobsOpen,setJobsOpen]=useState(0);
-
+    //openjobs count
+    const [jobsOpen, setJobsOpen] = useState(0);
     useEffect(() => {
         axios
             .get("/api/jobs/open")
@@ -40,7 +40,11 @@ export function Dashboard() {
                             value={jobsOpen}
                         />
 
-                        <Card title="Applications" icon={BsPerson} value={24} />
+                        <Card
+                            title="Applications"
+                            icon={BsPerson}
+                            value={applicationCount}
+                        />
 
                         <Card
                             title="Employees"
