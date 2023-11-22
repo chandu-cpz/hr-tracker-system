@@ -135,24 +135,19 @@ export async function addJob(req, res) {
     //validtors
 
     if (!jobData?.jobTitle?.trim()) return res.send({ error: "jobTitle is required" });
-    else{
+    else {
 
-        if(!validator.isLength(jobData.jobTitle, { min: 5, max: 50 }))
-         return res.send({ error: "Invalid job title" });
+        if (!validator.isLength(jobData.jobTitle, { min: 5, max: 50 }))
+            return res.send({ error: "Invalid job title" });
     }
 
     if (!jobData?.jobDescription?.trim()) return res.send({ error: "jobDescription is required" });
-    else{
-
-        if(!validator.isString(jobData.jobDescription))
-         return res.send({ error: "Enter a valid job description" });
-    }
 
     if (!jobData?.companyName?.trim()) return res.send({ error: "companyName is required" });
-    else{
+    else {
 
-        if(!validator.isLength(jobData.companyName, { min: 5, max: 50 }))
-         return res.send({ error: "Invalid company name" });
+        if (!validator.isLength(jobData.companyName, { min: 3, max: 50 }))
+            return res.send({ error: "Invalid company name" });
     }
 
     if (!jobData?.responsibilities?.trim()) return res.send({ error: "responsibilities is required" });
@@ -168,7 +163,6 @@ export async function addJob(req, res) {
 
         // Send response
         res.status(201).json(job);
-
         console.log("================================================");
     } catch (err) {
         console.error(err);
