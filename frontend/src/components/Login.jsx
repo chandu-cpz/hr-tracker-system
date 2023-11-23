@@ -146,7 +146,7 @@ export function Login() {
                                     )}
                                 </button>
                                 {errors.password && (
-                                    <span className="tw-text-red-500">
+                                    <span className="tw-text-red-500 dark:tw-text-white">
                                         {errors.password}
                                     </span>
                                 )}
