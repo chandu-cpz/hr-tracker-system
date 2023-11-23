@@ -72,28 +72,28 @@ export function Login() {
     };
 
     return (
-        <div className="tw-flex tw-h-screen ">
-            <div className=" tw-mt-16 tw-flex tw-items-center">
+        <div className="tw-flex tw-h-screen dark:tw-bg-stone-900">
+            <div className=" tw-mt-16 tw-flex tw-items-center ">
                 <div className="tw-ml-4 tw-w-1/6  tw-text-right">
                     <div className="tw-flex tw-flex-col">
-                        <h1 className=" tw-m-12 tw-whitespace-nowrap tw-text-5xl tw-font-extrabold tw-text-black">
+                        <h1 className=" tw-m-12 tw-whitespace-nowrap tw-text-5xl tw-font-extrabold tw-text-black dark:tw-text-gray-300">
                             Streamline Recruiting Workflows
                         </h1>
-                        <h1 className="tw-m-12 tw-whitespace-nowrap tw-text-5xl tw-font-extrabold tw-text-stone-700 tw-text-opacity-90">
+                        <h1 className="tw-m-12 tw-whitespace-nowrap tw-text-5xl tw-font-extrabold tw-text-stone-700 tw-text-opacity-90 dark:tw-text-gray-200">
                             Centralize Application Tracking
                         </h1>
-                        <h1 className="tw-m-12 tw-whitespace-nowrap tw-text-5xl tw-font-extrabold tw-text-black tw-text-opacity-60">
+                        <h1 className="tw-m-12 tw-whitespace-nowrap tw-text-5xl tw-font-extrabold tw-text-black tw-text-opacity-60 dark:tw-text-gray-100">
                             Optimize Hiring Outcomes
                         </h1>
                     </div>
                 </div>
             </div>
             <div className="tw-flex tw-flex-1 tw-items-center tw-justify-center ">
-                <div className="tw-mx-auto tw-ml-0 tw-w-full  tw-translate-x-full tw-transform  tw-rounded-xl tw-bg-white tw-p-12 tw-shadow-lg tw-transition-transform tw-duration-300 tw-ease-in-out md:tw-max-w-md">
-                    <h2 className="tw-mb-10 tw-mt-4 tw-text-center tw-text-4xl tw-font-bold">
+                <div className="tw-mx-auto tw-ml-0 tw-w-full  tw-translate-x-full tw-transform tw-rounded-xl tw-bg-white tw-p-12 tw-shadow-lg tw-transition-transform tw-duration-300 tw-ease-in-out dark:tw-bg-stone-800 md:tw-max-w-md">
+                    <h2 className="tw-mb-10 tw-mt-4 tw-text-center tw-text-4xl tw-font-bold dark:tw-text-white">
                         Login
                     </h2>
-                    <form className="tw-text-left">
+                    <form className="tw-text-left dark:tw-text-white">
                         <div className="tw-flex tw-flex-col tw-items-start tw-gap-10 md:tw-flex-col">
                             <div className="tw-mb-4md:tw-mb-0 tw-flex tw-w-full tw-flex-col md:tw-mr-4">
                                 <label
@@ -117,7 +117,7 @@ export function Login() {
                             </div>
                             <div className="tw-relative tw-w-full">
                                 <label
-                                    className="tw-mb-3 tw-block tw-text-sm tw-font-bold tw-text-gray-700"
+                                    className="tw-mb-3 tw-block tw-text-sm tw-font-bold tw-text-gray-700 dark:tw-text-white"
                                     htmlFor="password"
                                 >
                                     Password:

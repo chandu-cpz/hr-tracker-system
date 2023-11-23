@@ -121,30 +121,30 @@ export function Signup() {
     };
 
     return (
-        <div className="tw-flex tw-h-screen tw-items-center tw-justify-center ">
+        <div className="tw-flex tw-h-screen tw-items-center tw-justify-center dark:tw-bg-stone-900">
             <div className="tw-mt-16 tw-flex tw-items-center">
                 <div className="tw-ml-4 tw-w-1/6  tw-text-right">
                     <div className="tw-flex tw-flex-col">
-                        <h1 className="tw-m-12 tw-whitespace-nowrap tw-text-4xl tw-font-extrabold tw-text-black ">
+                        <h1 className="tw-m-12 tw-whitespace-nowrap tw-text-4xl tw-font-extrabold tw-text-black dark:tw-text-gray-400">
                             Streamline Recruiting Workflows
                         </h1>
-                        <h1 className="tw-m-12 tw-whitespace-nowrap tw-text-4xl tw-font-extrabold tw-text-stone-700 tw-text-opacity-90">
+                        <h1 className="tw-m-12 tw-whitespace-nowrap tw-text-4xl tw-font-extrabold tw-text-stone-700 tw-text-opacity-90 dark:tw-text-gray-300">
                             Centralize Application Tracking
                         </h1>
-                        <h1 className="tw-m-12 tw-whitespace-nowrap tw-text-3xl tw-font-extrabold tw-text-black tw-text-opacity-60">
+                        <h1 className="tw-m-12 tw-whitespace-nowrap tw-text-3xl tw-font-extrabold tw-text-black tw-text-opacity-60 dark:tw-text-gray-200">
                             Optimize Hiring Outcomes
                         </h1>
                     </div>
                 </div>
             </div>
-            <div className="tw-mx-auto tw-ml-4 tw-w-full tw-max-w-md tw-translate-x-full tw-transform tw-rounded-xl tw-bg-white tw-p-6 tw-shadow-lg tw-backdrop-blur-3xl tw-transition-transform tw-duration-300 tw-ease-in-out">
+            <div className="tw-mx-auto tw-ml-4 tw-w-full tw-max-w-md tw-translate-x-full  tw-rounded-xl tw-bg-white tw-p-6 tw-shadow-lg dark:tw-bg-stone-600 dark:tw-text-white">
                 <h2 className="tw-my-5 tw-text-center tw-text-4xl tw-font-bold">
                     Sign Up
                 </h2>
                 <form>
                     <div className="tw-mb-4 md:tw-mb-0 md:tw-mr-4">
                         <label
-                            className="tw-mb-2 tw-block tw-text-sm tw-font-bold tw-text-gray-700"
+                            className="tw-mb-2 tw-block tw-text-sm tw-font-bold tw-text-gray-700 dark:tw-text-white"
                             htmlFor="name"
                         >
                             Name:
@@ -166,7 +166,7 @@ export function Signup() {
                     </div>
                     <div className="tw-mb-4">
                         <label
-                            className="tw-mb-2 tw-block tw-text-sm tw-font-bold tw-text-gray-700"
+                            className="tw-mb-2 tw-block tw-text-sm tw-font-bold tw-text-gray-700 dark:tw-text-white"
                             htmlFor="email"
                         >
                             Email:
@@ -188,7 +188,7 @@ export function Signup() {
                     </div>
                     <div className="tw-relative">
                         <label
-                            className="tw-mb-2 tw-block tw-text-sm tw-font-bold tw-text-gray-700"
+                            className="tw-mb-2 tw-block tw-text-sm tw-font-bold tw-text-gray-700 dark:tw-text-white"
                             htmlFor="password"
                         >
                             Password:
@@ -221,7 +221,7 @@ export function Signup() {
                         <span className="text-gray-700 tw-mb-2 tw-block tw-text-sm tw-font-bold">
                             Gender
                         </span>
-                        <label className="tw-mr-6 tw-inline-flex tw-items-center">
+                        <label className="tw-mr-6 tw-inline-flex tw-items-center dark:tw-text-white">
                             <input
                                 type="radio"
                                 className="form-radio"
@@ -231,7 +231,7 @@ export function Signup() {
                             />
                             <span className="tw-ml-2">Male</span>
                         </label>
-                        <label className="tw-mr-6 tw-inline-flex tw-items-center">
+                        <label className="tw-mr-6 tw-inline-flex tw-items-center dark:tw-text-white">
                             <input
                                 type="radio"
                                 className="form-radio"
@@ -253,7 +253,7 @@ export function Signup() {
                         </label>
                     </div>
                     <div className="tw-mb-4">
-                        <label className="tw-mr-6 tw-inline-flex tw-items-center">
+                        <label className="tw-mr-6 tw-inline-flex tw-items-center dark:tw-text-white">
                             <input
                                 type="checkbox"
                                 className="form-checkbox"
@@ -271,7 +271,7 @@ export function Signup() {
                         <>
                             <div className="tw-mb-4">
                                 <label
-                                    className="tw-mb-2 tw-block tw-text-sm tw-font-bold tw-text-gray-700"
+                                    className="tw-mb-2 tw-block tw-text-sm tw-font-bold tw-text-gray-700 dark:tw-text-white"
                                     htmlFor="company"
                                 >
                                     Company Name:
@@ -291,7 +291,7 @@ export function Signup() {
                             </div>
 
                             <div className="tw-mb-4">
-                                <label className="tw-mb-2 tw-block tw-text-sm tw-font-bold tw-text-gray-700">
+                                <label className="tw-mb-2 tw-block tw-text-sm tw-font-bold tw-text-gray-700 dark:tw-text-white">
                                     Company Image:
                                     <MdCameraAlt
                                         size={32}
