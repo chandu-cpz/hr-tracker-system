@@ -49,7 +49,7 @@ export const userSlice = createSlice({
                 ...state,
                 user: {
                     ...state.user,
-                    appliedJobs: [...state.user.appliedJobs, action.payload]
+                    jobsApplied: [...state.user.jobsApplied, action.payload]
                 }
             }
         },
@@ -59,7 +59,7 @@ export const userSlice = createSlice({
                 ...state,
                 user: {
                     ...state.user,
-                    appliedJobs: state.user.appliedJobs.filter(id => id !== action.payload)
+                    jobsApplied: state.user.jobsApplied.filter(id => id !== action.payload)
                 }
             }
         }
