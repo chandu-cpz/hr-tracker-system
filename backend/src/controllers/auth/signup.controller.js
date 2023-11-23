@@ -72,7 +72,7 @@ export async function createUser(req, res) {
         const user = await User.create(userData);
         console.log("The created user details are: ");
         console.log(user);
-        await sendMail(user.email, "Welcome", generateSignUpEmailTemplate(user));
+        await sendMail(user.email, "Welcome", generateSignUpEmailTemplate(user.fullName));
 
     }
     catch (err) {

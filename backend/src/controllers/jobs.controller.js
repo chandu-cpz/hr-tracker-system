@@ -137,7 +137,10 @@ export async function getJobs(req, res) {
             response.experience = experience;
         }
 
-        const jobs = await query.exec();
+        const jobs = await query.populate({
+            path: 'postedBy',
+            select: 'companyImage',
+        }).exec();
         console.log(jobs);
         response.jobs = jobs;
         const totalJobs = await jobs.length;
