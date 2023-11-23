@@ -38,7 +38,7 @@ export function Profile() {
     };
 
     return (
-        <div className="tw-mx-auto tw-mt-12 tw-max-w-3xl  tw-rounded-lg tw-p-8">
+        <div className="tw-mx-auto tw-mt-12 tw-max-w-3xl  tw-rounded-lg tw-p-8 ">
             <div className="tw-flex tw-items-center tw-rounded-lg tw-bg-orange-100 tw-p-4 tw-shadow-md">
                 <img
                     className="tw-mr-8 tw-h-40 tw-w-40 tw-rounded-full tw-border-4 tw-border-orange-500"

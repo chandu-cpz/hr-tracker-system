@@ -41,7 +41,7 @@ export function Dashboard() {
 
     return (
         <>
-            <div className="tw-flex">
+            <div className="tw-flex dark:tw-bg-gray-700 dark:tw-text-white">
                 <Sidebar />
 
                 <div className="tw-w-full tw-p-4">

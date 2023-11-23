@@ -96,7 +96,7 @@ export function AddProfile() {
     };
 
     return (
-        <div className="tw-mx-auto tw-max-w-3xl tw-rounded-lg  tw-p-8">
+        <div className="tw-mx-auto tw-max-w-3xl tw-rounded-lg  tw-p-8 tw-bg-black">
             <div className="tw-flex tw-flex-col tw-items-center  tw-rounded-lg tw-p-4 tw-shadow-2xl">
                 <div className="tw-mb-5 tw-flex tw-justify-center">
                     <div className="">

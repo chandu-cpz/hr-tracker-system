@@ -8,7 +8,7 @@ import { FaGear } from "react-icons/fa6";
 
 export function Sidebar() {
     return (
-        <div className=" tw-flex tw-h-screen tw-rounded-r-3xl tw-p-4 dark:tw-bg-neutral-800">
+        <div className=" tw-flex tw-h-screen tw-rounded-r-3xl tw-p-4 dark:tw-bg-neutral-900 tw-mt-1">
             <div className="tw-mb-10 tw-rounded-3xl  tw-p-9 tw-shadow-lg">
                 <div>
                     <h3 className="tw-mb-4 tw-pb-3 tw-text-2xl dark:tw-text-white ">
