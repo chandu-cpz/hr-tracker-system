@@ -8,7 +8,7 @@ export function JobStats({ accepted, pending, rejected }) {
         { name: "Rejected", value: rejected },
     ];
 
-    const COLORS = ["#0088FE", "#00C49F", "#FF8042"];
+    const COLORS = ["#4470e1", "#1e3a8a", "#867ca3"];
 
     const RADIAN = Math.PI / 180;
     const renderCustomizedLabel = ({
@@ -39,11 +39,11 @@ export function JobStats({ accepted, pending, rejected }) {
     return (
         <>
             <ResponsiveContainer
-                width={400}
-                height={400}
+                width={320}
+                height={320}
                 className="text-center"
             >
-                <PieChart width={400} height={400}>
+                <PieChart width={320} height={320}>
                     <Legend layout="vertical" verticalAlign="top" align="top" />
                     <Pie
                         data={data}
@@ -51,7 +51,7 @@ export function JobStats({ accepted, pending, rejected }) {
                         cy="50%"
                         labelLine={false}
                         label={renderCustomizedLabel}
-                        outerRadius={150}
+                        outerRadius={110}
                         fill="#8884d8"
                         dataKey="value"
                     >

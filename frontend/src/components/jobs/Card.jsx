@@ -52,7 +52,7 @@ export function Card({ job }) {
 
     return (
         <div className="tw-h-fit tw-w-1/5 tw-flex-shrink-0 tw-rounded-2xl tw-border tw-border-solid tw-p-2 tw-shadow-md">
-            <div className="tw-rounded-2xl tw-bg-red-300 tw-p-4">
+            <div className="tw-rounded-2xl tw-bg-blue-900 tw-p-4">
                 <div className="tw-mb-4 tw-flex tw-items-center tw-justify-between">
                     <div className="tw-bg-gray-200 tw-inline-flex tw-items-center tw-rounded-full tw-bg-white tw-px-2 tw-py-1 tw-font-medium">
                         {formatDate(createdAt)}
@@ -69,12 +69,12 @@ export function Card({ job }) {
                     </div>
                 </div>
 
-                <div className="tw-text-gray-600 tw-mb-2 tw-text-sm">
+                <div className="tw-text-white tw-mb-2 tw-text-sm">
                     {companyName}
                 </div>
 
                 <div className="tw-mb-2 tw-flex tw-justify-between">
-                    <h3 className="tw-mb-2 tw-overflow-hidden tw-text-ellipsis tw-text-2xl tw-font-medium">
+                    <h3 className="tw-mb-2 tw-overflow-hidden tw-text-white tw-text-2xl tw-font-medium">
                         {jobTitle.toUpperCase()}
                     </h3>
                     <img

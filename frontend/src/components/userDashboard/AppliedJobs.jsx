@@ -24,7 +24,7 @@ export function AppliedJobs() {
     }, []);
 
     return (
-        <div className="tw-flex tw-flex-wrap tw-gap-10">
+        <div className="tw-flex tw-flex-wrap tw-gap-12">
             <UserSidebar />
             <div className="tw-mt-5 tw-w-3/4">
                 <h1>Applied Jobs</h1>

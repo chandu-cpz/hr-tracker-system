@@ -8,7 +8,7 @@ export function GenderDiversity({ male, female, others }) {
         { name: "Others", value: others },
     ];
 
-    const COLORS = ["#0088FE", "#00C49F", "#FF8042"];
+    const COLORS = ["#4470e1", "#1e3a8a", "#867ca3"];
 
     const RADIAN = Math.PI / 180;
     const renderCustomizedLabel = ({

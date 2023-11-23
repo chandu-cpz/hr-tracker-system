@@ -300,7 +300,7 @@ export function Signup() {
                                     <img
                                         src={preview}
                                         alt="Profile"
-                                        className="tw-m-5 tw-h-48 tw-w-48 tw-rounded-full tw-border-4 tw-border-orange-500 tw-object-cover"
+                                        className="tw-m-5 tw-h-48 tw-w-48 tw-rounded-full tw-border-4 tw-border-blue-500 tw-object-cover"
                                     />
                                 )}
                                 <input
@@ -316,7 +316,7 @@ export function Signup() {
 
                     <button
                         type="submit"
-                        className="tw-hover:bg-orange-700 tw-focus:outline-none tw-focus:shadow-outline tw-rounded-full tw-bg-orange-500 tw-px-4 tw-py-2 tw-font-bold tw-text-white"
+                        className="tw-hover:bg-blue-700 tw-focus:outline-none tw-focus:shadow-outline tw-rounded-full tw-bg-blue-500 tw-px-4 tw-py-2 tw-font-bold tw-text-white"
                         onClick={submitUser}
                     >
                         Sign Up

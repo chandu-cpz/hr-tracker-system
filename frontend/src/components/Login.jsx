@@ -149,7 +149,7 @@ export function Login() {
                             </div>
                             <button
                                 type="submit"
-                                className="tw-hover:bg-orange-700 tw-focus:outline-none tw-focus:shadow-outline tw-mt-2 tw-rounded-full tw-bg-orange-500 tw-px-6 tw-py-3 tw-font-bold tw-text-white"
+                                className="tw-hover:bg-blue-700 tw-focus:outline-none tw-focus:shadow-outline tw-mt-2 tw-rounded-full tw-bg-blue-500 tw-px-6 tw-py-3 tw-font-bold tw-text-white"
                                 onClick={submitUser}
                             >
                                 Login

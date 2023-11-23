@@ -33,27 +33,28 @@ export function UserDashboard() {
             <div className="tw-flex">
                 <UserSidebar />
 
-                <div className="tw-w-full tw-p-4">
+                <div className="tw-w-full tw-p-9">
                     <div>
-                        <h1>DashBoard</h1>
+                        <h1>DASHBOARD</h1>
                     </div>
-                    <div className=" tw-flex tw-flex-wrap tw-items-center tw-justify-between tw-gap-5 tw-rounded-lg tw-bg-orange-200 tw-p-8">
-                        <div className="tw-self-start">
-                            <h1 className="tw-text-gray-800 tw-mb-5 tw-text-4xl">
-                                Welcome back,
-                            </h1>
-                            {username && (
-                                <h2 className="tw-text-gray-600 tw-text-5xl tw-font-extrabold">
-                                    {username.toUpperCase()}
-                                </h2>
-                            )}
-                        </div>
+                    <div className="tw-self-start">
+                        <h1 className="tw-text-gray-800 tw-mb-5 tw-text-4xl">
+                            Welcome back,
+                        </h1>
+                        {username && (
+                            <h2 className="tw-text-gray-600  tw-text-2xl tw-font-extrabold">
+                                {username.toUpperCase()}
+                            </h2>
+                        )}
+                    </div>
+                    <div className=" tw-flex tw-flex-wrap tw-items-center tw-gap-2 tw-rounded-lg tw-bg-blue-200 tw-p-4">
+                        
                         <UserCard
                             title="Jobs Open"
                             icon={
                                 <BsBriefcase
-                                    size={52}
-                                    className="tw-text-orange-600"
+                                    size={45}
+                                    className="tw-text-blue-600"
                                 />
                             }
                             value={jobsOpen}
@@ -63,8 +64,8 @@ export function UserDashboard() {
                             title="Applications"
                             icon={
                                 <BsPerson
-                                    size={52}
-                                    className="tw-text-orange-600"
+                                    size={45}
+                                    className="tw-text-blue-600"
                                 />
                             }
                             value={applications}
@@ -74,14 +75,13 @@ export function UserDashboard() {
                             title="Rejected"
                             icon={
                                 <BsPersonCheck
-                                    size={52}
-                                    className="tw-text-orange-600"
+                                    size={45}
+                                    className="tw-text-blue-600"
                                 />
                             }
                             value={rejected}
                         />
-                    </div>
-                    <div className="tw-flex tw-justify-center">
+
                         <JobStats
                             accepted={accepted}
                             rejected={rejected}

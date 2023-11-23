@@ -81,7 +81,7 @@ export function JobFilter() {
 
     return (
         <>
-            <div className=" tw-flex tw-justify-around tw-gap-3 tw-bg-slate-500 tw-p-4 tw-shadow-lg">
+            <div className=" tw-flex tw-justify-around tw-gap-3 tw-bg-black tw-p-4 tw-shadow-lg">
                 <Dropdown
                     name="Job Title"
                     options={filterData.jobTitle}
@@ -130,7 +130,7 @@ export function JobFilter() {
                 </div>
                 <div>
                     <button
-                        className=" tw-rounded-full tw-border-none tw-bg-gradient-to-b tw-from-orange-500 tw-to-orange-600 tw-px-2 tw-py-1  tw-text-white tw-shadow-2xl tw-transition-all  hover:tw-scale-105 hover:tw-shadow-xl"
+                        className=" tw-rounded-full tw-border-none tw-bg-gradient-to-b tw-from-blue-500 tw-to-blue-600 tw-px-2 tw-py-1  tw-text-white tw-shadow-2xl tw-transition-all  hover:tw-scale-105 hover:tw-shadow-xl"
                         onClick={() => setFilters({})}
                     >
                         Clear
@@ -143,9 +143,9 @@ export function JobFilter() {
                         setFilters((prev) => ({ ...prev, jobType: checked }))
                     }
                 />
-                <div className="tw-m-5 tw-w-10/12">
+                <div className="tw-m-1 tw-w-10/12">
                     <h1>Recommended Jobs</h1>
-                    <div className="tw-flex tw-w-full tw-flex-wrap tw-gap-10">
+                    <div className="tw-flex tw-w-full tw-flex-wrap tw-gap-12">
                         {jobs &&
                             jobs.map((job) => <Card key={job._id} job={job} />)}
                     </div>

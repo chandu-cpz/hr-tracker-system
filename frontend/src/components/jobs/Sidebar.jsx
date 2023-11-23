@@ -18,16 +18,16 @@ export function Sidebar({ onSelect }) {
         onSelect(checked);
     }, [checked]);
     return (
-        <div className="tw-bg-gray-100  tw-inline-block  tw-w-60 tw-rounded-r-3xl tw-p-4">
-            <div className="tw-mb-8 tw-rounded-2xl tw-bg-gray tw-p-4 tw-shadow-lg">
-                <div className="tw-mb-4 tw-rounded-lg tw-bg-white tw-p-4 tw-shadow-lg">
-                    <p className="tw-text-gray-700 tw-text-xl tw-font-thin">
+        <div className="tw-bg-white  tw-inline-block  tw-w-60  tw-p-1">
+            <div className="tw-mb-8 tw-rounded-2xl tw-bg-black tw-p-4 ">
+                <div className="tw-mb-4 tw-rounded-lg tw-bg-blue-200 tw-p-4 tw-shadow-lg">
+                    <p className="tw-text-black tw-text-xl tw-font-thin">
                         Use filters for best results
                     </p>
                 </div>
 
                 <div>
-                    <h3 className="tw-mb-2 tw-text-lg tw-font-bold">
+                    <h3 className="tw-mb-2 tw-text-white tw-font-bold">
                         Working Schedule
                     </h3>
 
@@ -40,7 +40,7 @@ export function Sidebar({ onSelect }) {
                                 checked={checked.includes("FULL_TIME")}
                                 onChange={() => handleToggle("FULL_TIME")}
                             />
-                            <label htmlFor="fulltime" className="tw-text-xl">
+                            <label htmlFor="fulltime" className="tw-text-xl tw-text-white">
                                 Full Time
                             </label>
                         </div>
@@ -53,7 +53,7 @@ export function Sidebar({ onSelect }) {
                                 checked={checked.includes("PART_TIME")}
                                 onChange={() => handleToggle("PART_TIME")}
                             />
-                            <label htmlFor="parttime" className="tw-text-xl">
+                            <label htmlFor="parttime" className="tw-text-xl tw-text-white">
                                 Part Time
                             </label>
                         </div>
@@ -66,7 +66,7 @@ export function Sidebar({ onSelect }) {
                                 checked={checked.includes("INTERNSHIP")}
                                 onChange={() => handleToggle("INTERNSHIP")}
                             />
-                            <label htmlFor="internship" className="tw-text-xl">
+                            <label htmlFor="internship" className="tw-text-xl tw-text-white">
                                 Internship
                             </label>
                         </div>

@@ -111,7 +111,7 @@ export function ApplyJob() {
                             </h1>
                         )}
                         {/* Save Button */}
-                        <button className="tw-mx-4 tw-rounded-full tw-border-none tw-bg-gradient-to-b tw-from-orange-500 tw-to-orange-600 tw-px-4 tw-py-3 tw-text-white tw-shadow-2xl tw-transition-all  hover:tw-scale-105 hover:tw-shadow-xl">
+                        <button className="tw-mx-4 tw-rounded-full tw-border-none tw-bg-gradient-to-b tw-from-blue-500 tw-to-blue-600 tw-px-4 tw-py-3 tw-text-white tw-shadow-2xl tw-transition-all  hover:tw-scale-105 hover:tw-shadow-xl">
                             Save Job for later
                         </button>
                     </div>
@@ -120,7 +120,7 @@ export function ApplyJob() {
                         {/* Company */}
                         {jobDetails.companyName && (
                             <div className="tw-mb-4 tw-flex tw-items-center">
-                                <FaBuilding className="tw-mr-3 tw-text-4xl tw-text-orange-500" />
+                                <FaBuilding className="tw-mr-3 tw-text-4xl tw-text-blue-500" />
                                 <span className="">
                                     {jobDetails.companyName}
                                 </span>
@@ -130,7 +130,7 @@ export function ApplyJob() {
                         {/* Location */}
                         {jobDetails.location && (
                             <div className="tw-mb-4 tw-flex tw-items-center">
-                                <FaMapMarkerAlt className="tw-mr-3 tw-text-4xl tw-text-orange-500" />
+                                <FaMapMarkerAlt className="tw-mr-3 tw-text-4xl tw-text-blue-500" />
                                 <span className="">{jobDetails.location}</span>
                             </div>
                         )}
@@ -138,7 +138,7 @@ export function ApplyJob() {
                         {/* Posted Date */}
                         {jobDetails.createdAt && (
                             <div className="tw-mb-4 tw-flex tw-items-center">
-                                <FaCalendarAlt className="tw-mr-3 tw-text-4xl tw-text-orange-500" />
+                                <FaCalendarAlt className="tw-mr-3 tw-text-4xl tw-text-blue-500" />
                                 <span className="">
                                     Posted{" "}
                                     {timeSincePosted(jobDetails.createdAt)} ago
@@ -149,7 +149,7 @@ export function ApplyJob() {
                         {/* Salary */}
                         {jobDetails.salary && (
                             <div className="tw-mb-4 tw-flex tw-items-center">
-                                <FaDollarSign className="tw-mr-3 tw-text-4xl tw-text-orange-500" />
+                                <FaDollarSign className="tw-mr-3 tw-text-4xl tw-text-blue-500" />
                                 <span className="">{jobDetails.salary}</span>
                             </div>
                         )}
@@ -197,7 +197,7 @@ export function ApplyJob() {
                             <div className="tw-flex tw-flex-wrap tw-gap-2">
                                 {jobDetails.skills.map((skill) => (
                                     <span
-                                        className="tw-rounded-full tw-bg-orange-500 tw-px-3 tw-py-1 tw-text-white"
+                                        className="tw-rounded-full tw-bg-blue-500 tw-px-3 tw-py-1 tw-text-white"
                                         key={skill}
                                     >
                                         {skill}
@@ -240,7 +240,7 @@ export function ApplyJob() {
                     <div className="tw-m-6 tw-flex tw-justify-center">
                         {/* Apply Button */}
                         <button
-                            className="tw-mx-4 tw-rounded-full tw-border-none tw-bg-gradient-to-b tw-from-orange-500 tw-to-orange-600 tw-px-4 tw-py-3 tw-text-3xl tw-text-white tw-shadow-2xl tw-transition-all  hover:tw-scale-105 hover:tw-shadow-xl"
+                            className="tw-mx-4 tw-rounded-full tw-border-none tw-bg-gradient-to-b tw-from-blue-500 tw-to-blue-600 tw-px-4 tw-py-3 tw-text-3xl tw-text-white tw-shadow-2xl tw-transition-all  hover:tw-scale-105 hover:tw-shadow-xl"
                             onClick={submitApplication}
                         >
                             Apply for Job

@@ -18,7 +18,7 @@ export function Dropdown({ name, options, icon, onSelect }) {
                 {name}
             </a>
 
-            <ul className="dropdown-menu !tw-bg-gray">
+            <ul className="dropdown-menu !tw-bg-blue-200">
                 {options &&
                     options.map((option) => (
                         <li key={option}>

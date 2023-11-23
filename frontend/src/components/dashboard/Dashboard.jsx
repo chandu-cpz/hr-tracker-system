@@ -45,18 +45,19 @@ export function Dashboard() {
                 <Sidebar />
 
                 <div className="tw-w-full tw-p-4">
+                <div>
+                    <h1 className="tw-text-gray-800 tw-mb-5 tw-text-4xl">
+                        Welcome back,
+                    </h1>
+                    {username && (
+                        <h2 className="tw-text-gray-600 tw-text-5xl tw-font-extrabold">
+                            {username.toUpperCase()}
+                        </h2>
+                    )}
+                </div>
                     <div className="">
-                        <div className="tw-mb-8 tw-flex tw-flex-wrap tw-items-center tw-justify-between tw-gap-5">
-                            <div>
-                                <h1 className="tw-text-gray-800 tw-mb-5 tw-text-4xl">
-                                    Welcome back,
-                                </h1>
-                                {username && (
-                                    <h2 className="tw-text-gray-600 tw-text-5xl tw-font-extrabold">
-                                        {username.toUpperCase()}
-                                    </h2>
-                                )}
-                            </div>
+                        <div className="tw-flex tw-flex-wrap tw-items-center tw-gap-2 tw-rounded-lg tw-bg-blue-200 tw-p-4">
+                         
                             <Card
                                 title="Jobs Open"
                                 icon={BsBriefcase}
@@ -74,15 +75,17 @@ export function Dashboard() {
                                 icon={BsPersonCheck}
                                 value={employees}
                             />
+                             <JobStats
+                                accepted={employees}
+                                pending={applications}
+                                rejected={rejected}
+                            />
+                            
                         </div>
                     </div>
-                    <div className="tw-flex tw-gap-12">
+                    <div className="tw-flex tw-flex-wrap tw-items-center tw-gap-12 tw-rounded-lg tw-bg-blue-200 tw-p-4">
                         <ApplicationStats stats={stats} />
-                        <JobStats
-                            accepted={employees}
-                            pending={applications}
-                            rejected={rejected}
-                        />
+                        
                         <GenderDiversity
                             male={male}
                             female={female}

@@ -107,7 +107,7 @@ export function AddProfile() {
                         <img
                             src={preview}
                             alt="Profile Image"
-                            className="tw-h-48 tw-w-48 tw-rounded-full tw-border-4 tw-border-orange-500 tw-object-cover"
+                            className="tw-h-48 tw-w-48 tw-rounded-full tw-border-4 tw-border-blue-500 tw-object-cover"
                         />
                     </div>
                     <label className="tw-cursor-pointer">
@@ -285,7 +285,7 @@ export function AddProfile() {
                 </div>
 
                 <button
-                    className="tw-m-6 tw-rounded-full tw-border-none tw-bg-orange-500   tw-px-4 tw-py-3 tw-shadow-xl hover:tw-bg-orange-600"
+                    className="tw-m-6 tw-rounded-full tw-border-none tw-bg-blue-500   tw-px-4 tw-py-3 tw-shadow-xl hover:tw-bg-blue-600"
                     onClick={editProfile}
                 >
                     Save Profile
