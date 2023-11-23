@@ -66,7 +66,7 @@ export const userSlice = createSlice({
     },
 });
 
-export const { setUser, setIsLoggedIn, addSavedJob, removeSavedJob } = userSlice.actions;
+export const { setUser, setIsLoggedIn, addSavedJob, removeSavedJob, addAppliedJob, removeAppliedJob } = userSlice.actions;
 
 export const signUpUser = (userData) => {
     console.log("RTK: We started sign up ")
