@@ -18,7 +18,7 @@ export function Sidebar({ onSelect }) {
         onSelect(checked);
     }, [checked]);
     return (
-        <div className="  tw-inline-block  tw-w-60 tw-rounded-r-3xl tw-p-4">
+        <div className="  tw-inline-block  tw-w-60 tw-shrink-0 tw-rounded-r-3xl tw-p-4">
             <div className="tw-mb-8 tw-rounded-2xl tw-bg-gray-200 tw-p-4 tw-shadow-lg">
                 <div className="tw-mb-4 tw-rounded-lg tw-bg-white tw-p-4 tw-shadow-lg">
                     <p className="tw-text-xl tw-font-thin tw-text-gray-700">

@@ -81,7 +81,7 @@ export function JobFilter() {
 
     return (
         <>
-            <div className=" tw-m-2 tw-flex tw-justify-around tw-gap-3 tw-p-4 tw-shadow-xl">
+            <div className="  tw-flex tw-justify-around tw-gap-3  tw-p-4 tw-shadow-xl dark:tw-bg-slate-700">
                 <Dropdown
                     name="Job Title"
                     options={filterData.jobTitle}
@@ -108,7 +108,10 @@ export function JobFilter() {
                 />
 
                 <div className="tw-flex">
-                    <label htmlFor="salary" className="tw-mr-3 tw-text-xl">
+                    <label
+                        htmlFor="salary"
+                        className="tw-mr-3 tw-text-xl dark:tw-text-white"
+                    >
                         Salary
                     </label>
                     <input
@@ -134,14 +137,14 @@ export function JobFilter() {
                     </div>
                 </div>
             </div>
-            <div className="tw-flex tw-flex-wrap tw-gap-10">
+            <div className="tw-flex tw-gap-10 dark:tw-bg-gray-900">
                 <Sidebar
                     onSelect={(checked) =>
                         setFilters((prev) => ({ ...prev, jobType: checked }))
                     }
                 />
-                <div className="tw-m-5 tw-w-10/12">
-                    <h1>Recommended Jobs</h1>
+                <div className="tw-m-5">
+                    <h1 className="dark:tw-text-white">Recommended Jobs</h1>
                     <div className="tw-flex tw-w-full tw-flex-wrap tw-gap-10">
                         {jobs &&
                             jobs.map((job) => <Card key={job._id} job={job} />)}

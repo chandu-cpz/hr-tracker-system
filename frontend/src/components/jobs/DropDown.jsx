@@ -9,7 +9,7 @@ export function Dropdown({ name, options, icon, onSelect }) {
     return (
         <div className="dropdown">
             <a
-                className="dropdown-toggle text-decoration-none tw-text-xl tw-text-black"
+                className="dropdown-toggle text-decoration-none tw-text-xl tw-text-black dark:tw-text-white"
                 data-bs-toggle="dropdown"
             >
                 <span className="tw-pt-0.25 tw-mr-2 tw-h-11 tw-w-11 tw-shrink-0 tw-grow-0 tw-rounded-full tw-border tw-border-solid  tw-px-1 tw-pb-1">

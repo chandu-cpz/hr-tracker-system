@@ -51,10 +51,10 @@ export function Card({ job }) {
     const bookmarkIcon = isBookmarked ? <BsBookmarkFill /> : <BsBookmark />;
 
     return (
-        <div className="tw-h-fit tw-w-1/5 tw-flex-shrink-0 tw-rounded-2xl tw-border tw-border-solid tw-p-2 tw-shadow-md">
-            <div className="tw-rounded-2xl tw-bg-rose-300 tw-p-4">
-                <div className="tw-mb-4 tw-flex tw-items-center tw-justify-between">
-                    <div className="tw-inline-flex tw-items-center tw-rounded-full  tw-bg-white tw-px-2 tw-py-1 tw-font-medium">
+        <div className="tw-h-fit tw-w-1/5 tw-flex-shrink-0 tw-rounded-2xl tw-border tw-border-solid tw-p-2 tw-shadow-md dark:tw-bg-gray-500">
+            <div className="tw-rounded-2xl tw-bg-sky-300 tw-p-4 dark:tw-bg-gray-400">
+                <div className="tw-mb-4 tw-flex tw-items-center tw-justify-between ">
+                    <div className="tw-inline-flex tw-items-center tw-rounded-full  tw-bg-white tw-px-2 tw-py-1 tw-font-medium dark:tw-text-black">
                         {formatDate(createdAt)}
                     </div>
 
@@ -69,12 +69,12 @@ export function Card({ job }) {
                     </div>
                 </div>
 
-                <div className="tw-mb-2 tw-text-sm tw-text-gray-600">
+                <div className="tw-mb-2 tw-text-sm tw-text-gray-600 dark:tw-text-white">
                     {companyName}
                 </div>
 
                 <div className="tw-mb-2 tw-flex tw-justify-between">
-                    <h3 className="tw-mb-2 tw-overflow-hidden tw-text-ellipsis tw-text-2xl tw-font-medium">
+                    <h3 className="tw-mb-2 tw-overflow-hidden tw-text-ellipsis tw-text-2xl tw-font-medium dark:tw-text-white">
                         {jobTitle.toUpperCase()}
                     </h3>
                     <img
@@ -97,9 +97,11 @@ export function Card({ job }) {
             </div>
 
             <div className="tw-mt-4 tw-flex tw-items-center tw-justify-between">
-                <div className=" tw-ml-2 tw-text-lg tw-font-medium">
+                <div className=" tw-ml-2 tw-text-lg tw-font-medium dark:tw-text-white">
                     ${salary}
-                    <span className="tw-text-sm">/month</span>
+                    <span className="tw-text-sm dark:tw-text-white">
+                        /month
+                    </span>
                 </div>
 
                 <button

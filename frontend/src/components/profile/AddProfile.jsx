@@ -96,199 +96,201 @@ export function AddProfile() {
     };
 
     return (
-        <div className="tw-mx-auto tw-max-w-3xl tw-rounded-lg  tw-p-8 tw-bg-black">
-            <div className="tw-flex tw-flex-col tw-items-center  tw-rounded-lg tw-p-4 tw-shadow-2xl">
-                <div className="tw-mb-5 tw-flex tw-justify-center">
-                    <div className="">
-                        <h1 className="tw-mb-10 tw-text-center tw-text-2xl tw-font-bold">
-                            Edit Profile
-                        </h1>
-                        <img
-                            src={preview}
-                            alt="Profile Image"
-                            className="tw-h-48 tw-w-48 tw-rounded-full tw-border-4 tw-border-orange-500 tw-object-cover"
-                        />
+        <div className="dark:tw-bg-stone-900">
+            <div className="tw-mx-auto tw-max-w-3xl tw-rounded-lg  tw-p-8 dark:tw-bg-gray-700">
+                <div className="tw-flex tw-flex-col tw-items-center  tw-rounded-lg tw-p-4 tw-shadow-2xl dark:tw-bg-gray-500">
+                    <div className="tw-mb-5 tw-flex tw-justify-center">
+                        <div className="">
+                            <h1 className="tw-mb-10 tw-text-center tw-text-2xl tw-font-bold">
+                                Edit Profile
+                            </h1>
+                            <img
+                                src={preview}
+                                alt="Profile Image"
+                                className="tw-h-48 tw-w-48 tw-rounded-full tw-border-4 tw-border-orange-500 tw-object-cover"
+                            />
+                        </div>
+                        <label className="tw-cursor-pointer">
+                            <MdCameraAlt
+                                size={32}
+                                className="tw-ml-4 tw-mt-16 tw-text-gray-500 dark:tw-text-white"
+                            />
+                            <input
+                                type="file"
+                                name="image"
+                                accept="image/*"
+                                hidden
+                                onChange={handleImageChange}
+                            />
+                        </label>
                     </div>
-                    <label className="tw-cursor-pointer">
-                        <MdCameraAlt
-                            size={32}
-                            className="tw-ml-4 tw-mt-16 tw-text-gray-500"
-                        />
-                        <input
-                            type="file"
-                            name="image"
-                            accept="image/*"
-                            hidden
-                            onChange={handleImageChange}
-                        />
-                    </label>
-                </div>
-                {profileUploaded && (
-                    <span className="tw-text-green-500">
-                        The profile is been uploaded
-                    </span>
-                )}
+                    {profileUploaded && (
+                        <span className="tw-text-green-500">
+                            The profile is been uploaded
+                        </span>
+                    )}
 
-                <div className="tw-rounded-lg tw-bg-white tw-p-8 tw-shadow-xl">
-                    <div className="tw-flex">
-                        <div className="tw-m-5 ">
-                            <div className="tw-mb-6">
-                                <label className="tw-mb-2 tw-block tw-font-medium tw-text-gray-700">
-                                    Full Name
-                                </label>
-                                <input
-                                    type="text"
-                                    name="fullName"
-                                    value={profile.fullName}
-                                    onChange={handleChange}
-                                    className="tw-w-full tw-rounded-full tw-border tw-border-gray-300 tw-px-3 tw-py-2"
-                                />
-                                {errors.fullName && (
-                                    <span className="tw-text-red-500">
-                                        {errors.fullName}
-                                    </span>
-                                )}
+                    <div className="tw-rounded-lg tw-bg-white tw-p-8 tw-shadow-xl dark:tw-bg-gray-400">
+                        <div className="tw-flex">
+                            <div className="tw-m-5 ">
+                                <div className="tw-mb-6">
+                                    <label className="tw-mb-2 tw-block tw-font-medium tw-text-gray-700">
+                                        Full Name
+                                    </label>
+                                    <input
+                                        type="text"
+                                        name="fullName"
+                                        value={profile.fullName}
+                                        onChange={handleChange}
+                                        className="tw-w-full tw-rounded-full tw-border tw-border-gray-300 tw-px-3 tw-py-2"
+                                    />
+                                    {errors.fullName && (
+                                        <span className="tw-text-red-500">
+                                            {errors.fullName}
+                                        </span>
+                                    )}
+                                </div>
+
+                                <div className="tw-mb-6">
+                                    <label className="tw-mb-2 tw-block tw-font-medium tw-text-gray-700">
+                                        Email
+                                    </label>
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        value={profile.email}
+                                        onChange={handleChange}
+                                        className="tw-w-full tw-rounded-full tw-border tw-border-gray-300 tw-px-3 tw-py-2"
+                                    />
+                                    {errors.email && (
+                                        <span className="tw-text-red-500">
+                                            {errors.email}
+                                        </span>
+                                    )}
+                                </div>
+
+                                <div className="tw-mb-6">
+                                    <label className="tw-mb-2 tw-block tw-font-medium tw-text-gray-700">
+                                        Gender
+                                    </label>
+                                    <select
+                                        name="gender"
+                                        value={profile.gender}
+                                        onChange={handleChange}
+                                        className="tw-w-full tw-rounded-full tw-border tw-px-3 tw-py-2"
+                                    >
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+
+                                <div className="tw-mb-6">
+                                    <label className="tw-mb-2 tw-block tw-font-medium tw-text-gray-700">
+                                        Phone Number
+                                    </label>
+                                    <input
+                                        type="text"
+                                        name="phoneNumber"
+                                        value={profile.phoneNumber}
+                                        onChange={handleChange}
+                                        className="tw-w-full tw-rounded-full tw-border tw-border-gray-300 tw-px-3 tw-py-2"
+                                    />
+                                    {errors.phoneNumber && (
+                                        <span className="tw-text-red-500">
+                                            {errors.phoneNumber}
+                                        </span>
+                                    )}
+                                </div>
                             </div>
+                            <div className="tw-m-5">
+                                <div className="tw-mb-6">
+                                    <label className="tw-mb-2 tw-block tw-font-medium tw-text-gray-700">
+                                        Address
+                                    </label>
+                                    <input
+                                        type="text"
+                                        name="address"
+                                        value={profile.address}
+                                        onChange={handleChange}
+                                        className="tw-w-full tw-rounded-full tw-border tw-border-gray-300 tw-px-3 tw-py-2"
+                                    />
+                                </div>
 
-                            <div className="tw-mb-6">
-                                <label className="tw-mb-2 tw-block tw-font-medium tw-text-gray-700">
-                                    Email
-                                </label>
-                                <input
-                                    type="email"
-                                    name="email"
-                                    value={profile.email}
-                                    onChange={handleChange}
-                                    className="tw-w-full tw-rounded-full tw-border tw-border-gray-300 tw-px-3 tw-py-2"
-                                />
-                                {errors.email && (
-                                    <span className="tw-text-red-500">
-                                        {errors.email}
-                                    </span>
-                                )}
-                            </div>
+                                <div className="tw-mb-6">
+                                    <label className="tw-mb-2 tw-block tw-font-medium tw-text-gray-700">
+                                        Education
+                                    </label>
+                                    <input
+                                        type="text"
+                                        name="education"
+                                        value={profile.education}
+                                        onChange={handleChange}
+                                        className="tw-w-full tw-rounded-full tw-border tw-border-gray-300 tw-px-3 tw-py-2"
+                                    />
+                                </div>
 
-                            <div className="tw-mb-6">
-                                <label className="tw-mb-2 tw-block tw-font-medium tw-text-gray-700">
-                                    Gender
-                                </label>
-                                <select
-                                    name="gender"
-                                    value={profile.gender}
-                                    onChange={handleChange}
-                                    className="tw-w-full tw-rounded-full tw-border tw-px-3 tw-py-2"
-                                >
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
-                                    <option value="other">Other</option>
-                                </select>
-                            </div>
+                                <div className="tw-mb-6">
+                                    <label className="tw-mb-2 tw-block tw-font-medium tw-text-gray-700">
+                                        Experience (years)
+                                    </label>
+                                    <input
+                                        type="number"
+                                        name="experience"
+                                        value={profile.experience}
+                                        onChange={handleChange}
+                                        className="tw-w-full tw-rounded-full tw-border tw-border-gray-300 tw-px-3 tw-py-2"
+                                    />
+                                </div>
 
-                            <div className="tw-mb-6">
-                                <label className="tw-mb-2 tw-block tw-font-medium tw-text-gray-700">
-                                    Phone Number
-                                </label>
-                                <input
-                                    type="text"
-                                    name="phoneNumber"
-                                    value={profile.phoneNumber}
-                                    onChange={handleChange}
-                                    className="tw-w-full tw-rounded-full tw-border tw-border-gray-300 tw-px-3 tw-py-2"
-                                />
-                                {errors.phoneNumber && (
-                                    <span className="tw-text-red-500">
-                                        {errors.phoneNumber}
-                                    </span>
-                                )}
+                                <div className="tw-mb-6">
+                                    <label className="tw-mb-2 tw-block tw-font-medium tw-text-gray-700">
+                                        Skills
+                                    </label>
+                                    <Multiselect
+                                        placeholder="Select Skills"
+                                        style={{
+                                            searchBox: {
+                                                borderRadius: "9999px",
+                                            },
+                                            chips: {
+                                                background: "#f97316",
+                                                borderRadius: "9999px",
+                                            },
+                                            option: {
+                                                backgroundColor: "#f97316",
+                                            },
+                                        }}
+                                        isObject={false}
+                                        selectedValues={profile.skills}
+                                        onKeyPressFn={function noRefCheck() {}}
+                                        onRemove={(e) => {
+                                            setProfile({
+                                                ...profile,
+                                                skills: e,
+                                            });
+                                        }}
+                                        onSearch={function noRefCheck() {}}
+                                        onSelect={(e) => {
+                                            setProfile({
+                                                ...profile,
+                                                skills: e,
+                                            });
+                                        }}
+                                        options={skills}
+                                    />
+                                </div>
                             </div>
                         </div>
-                        <div className="tw-m-5">
-                            <div className="tw-mb-6">
-                                <label className="tw-mb-2 tw-block tw-font-medium tw-text-gray-700">
-                                    Address
-                                </label>
-                                <input
-                                    type="text"
-                                    name="address"
-                                    value={profile.address}
-                                    onChange={handleChange}
-                                    className="tw-w-full tw-rounded-full tw-border tw-border-gray-300 tw-px-3 tw-py-2"
-                                />
-                            </div>
-
-                            <div className="tw-mb-6">
-                                <label className="tw-mb-2 tw-block tw-font-medium tw-text-gray-700">
-                                    Education
-                                </label>
-                                <input
-                                    type="text"
-                                    name="education"
-                                    value={profile.education}
-                                    onChange={handleChange}
-                                    className="tw-w-full tw-rounded-full tw-border tw-border-gray-300 tw-px-3 tw-py-2"
-                                />
-                            </div>
-
-                            <div className="tw-mb-6">
-                                <label className="tw-mb-2 tw-block tw-font-medium tw-text-gray-700">
-                                    Experience (years)
-                                </label>
-                                <input
-                                    type="number"
-                                    name="experience"
-                                    value={profile.experience}
-                                    onChange={handleChange}
-                                    className="tw-w-full tw-rounded-full tw-border tw-border-gray-300 tw-px-3 tw-py-2"
-                                />
-                            </div>
-
-                            <div className="tw-mb-6">
-                                <label className="tw-mb-2 tw-block tw-font-medium tw-text-gray-700">
-                                    Skills
-                                </label>
-                                <Multiselect
-                                    placeholder="Select Skills"
-                                    style={{
-                                        searchBox: {
-                                            borderRadius: "9999px",
-                                        },
-                                        chips: {
-                                            background: "#f97316",
-                                            borderRadius: "9999px",
-                                        },
-                                        option: {
-                                            backgroundColor: "#f97316",
-                                        },
-                                    }}
-                                    isObject={false}
-                                    selectedValues={profile.skills}
-                                    onKeyPressFn={function noRefCheck() {}}
-                                    onRemove={(e) => {
-                                        setProfile({
-                                            ...profile,
-                                            skills: e,
-                                        });
-                                    }}
-                                    onSearch={function noRefCheck() {}}
-                                    onSelect={(e) => {
-                                        setProfile({
-                                            ...profile,
-                                            skills: e,
-                                        });
-                                    }}
-                                    options={skills}
-                                />
-                            </div>
-                        </div>
                     </div>
-                </div>
 
-                <button
-                    className="tw-m-4 tw-rounded-full tw-border-none tw-bg-gradient-to-b tw-from-orange-500 tw-to-orange-600 tw-px-4 tw-py-2  tw-text-3xl tw-text-white tw-shadow-2xl tw-transition-all  hover:tw-scale-105 hover:tw-shadow-xl"
-                    onClick={editProfile}
-                >
-                    Save Profile
-                </button>
+                    <button
+                        className="tw-m-4 tw-rounded-full tw-border-none tw-bg-gradient-to-b tw-from-orange-500 tw-to-orange-600 tw-px-4 tw-py-2  tw-text-3xl tw-text-white tw-shadow-2xl tw-transition-all  hover:tw-scale-105 hover:tw-shadow-xl"
+                        onClick={editProfile}
+                    >
+                        Save Profile
+                    </button>
+                </div>
             </div>
         </div>
     );
