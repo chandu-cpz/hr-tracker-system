@@ -30,20 +30,20 @@ export function UserDashboard() {
     }, []);
     return (
         <>
-            <div className="tw-flex">
+            <div className="tw-flex dark:tw-bg-gray-900">
                 <UserSidebar />
 
                 <div className=" tw-p-4">
                     <div>
-                        <h1 className="tw-ml-5">DashBoard</h1>
+                        <h1 className="tw-ml-5 dark:tw-text-white">DashBoard</h1>
                     </div>
                     <div className=" tw-flex tw-flex-wrap tw-items-center tw-justify-evenly tw-gap-x-16  tw-rounded-lg tw-p-8">
                         <div className="tw-self-start">
-                            <h1 className="tw-my-5 tw-text-2xl tw-text-gray-800">
+                            <h1 className="tw-my-5 tw-text-2xl tw-text-gray-800 dark:tw-text-white">
                                 Welcome back,
                             </h1>
                             {username && (
-                                <h2 className="tw-text-5xl tw-font-extrabold tw-text-gray-600">
+                                <h2 className="tw-text-5xl tw-font-extrabold tw-text-gray-600 dark:tw-text-white">
                                     {username.toUpperCase()}
                                 </h2>
                             )}
