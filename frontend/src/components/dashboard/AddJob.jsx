@@ -115,23 +115,23 @@ export function AddJob() {
     };
 
     return (
-        <div className="h-screen tw-flex">
+        <div className="h-screen tw-flex dark:tw-bg-stone-900">
             <Sidebar />
             <div className="tw-mx-auto tw-max-w-5xl tw-rounded-lg tw-p-8">
-                <div className="tw-flex tw-flex-col tw-items-center  tw-rounded-3xl tw-p-4 tw-shadow-xl">
+                <div className="tw-flex tw-flex-col tw-items-center  tw-rounded-3xl tw-p-4 tw-shadow-xl dark:tw-bg-gray-800">
                     <div className="tw-mb-5 tw-flex tw-justify-center">
                         <div className="">
-                            <h1 className="tw-mb-6 tw-text-center tw-font-mono tw-text-5xl tw-font-bold">
+                            <h1 className="tw-mb-6 tw-text-center tw-font-mono tw-text-5xl tw-font-bold dark:tw-text-white">
                                 Post Job
                             </h1>
                         </div>
                     </div>
 
-                    <div className="tw-rounded-2xl  tw-p-8 tw-shadow">
+                    <div className="tw-rounded-2xl tw-p-8 tw-shadow dark:tw-bg-gray-700">
                         <div className="tw-flex ">
                             <div className="tw-min-w-25 tw-m-5 tw-flex-shrink-0 tw-flex-grow">
                                 <div className="tw-mb-6">
-                                    <label className="tw-font-lg tw-mb-2 tw-block tw-text-gray-700">
+                                    <label className="tw-font-lg tw-mb-2 tw-block tw-text-gray-700 dark:tw-text-white">
                                         <FaBriefcase className="tw-mr-2" />
                                         Job Title
                                     </label>
@@ -150,7 +150,7 @@ export function AddJob() {
                                 </div>
 
                                 <div className="tw-mb-6">
-                                    <label className="tw-font-lg tw-mb-2 tw-block tw-text-gray-700">
+                                    <label className="tw-font-lg tw-mb-2 tw-block tw-text-gray-700 dark:tw-text-white">
                                         <FiHardDrive className="tw-mr-2" />
                                         Job Description
                                     </label>
@@ -169,7 +169,7 @@ export function AddJob() {
                                 </div>
 
                                 <div className="tw-mb-6">
-                                    <label className="tw-font-lg tw-mb-2 tw-block tw-text-gray-700">
+                                    <label className="tw-font-lg tw-mb-2 tw-block tw-text-gray-700 dark:tw-text-white">
                                         <GiOfficeChair className="tw-mr-2" />
                                         CompanyName
                                     </label>
@@ -188,7 +188,7 @@ export function AddJob() {
                                 </div>
 
                                 <div className="tw-mb-6">
-                                    <label className="tw-font-lg tw-mb-2 tw-block tw-text-gray-700">
+                                    <label className="tw-font-lg tw-mb-2 tw-block tw-text-gray-700 dark:tw-text-white">
                                         <FaDollarSign className="tw-mr-2" />
                                         Salary
                                     </label>
@@ -207,7 +207,7 @@ export function AddJob() {
                                 </div>
 
                                 <div className="tw-mb-6">
-                                    <label className="tw-font-lg tw-mb-2 tw-block tw-text-gray-700">
+                                    <label className="tw-font-lg tw-mb-2 tw-block tw-text-gray-700 dark:tw-text-white">
                                         <FaListUl className="tw-mr-2" />
                                         Responsibilities
                                     </label>
@@ -227,7 +227,7 @@ export function AddJob() {
                             </div>
                             <div className="tw-min-w-25 tw-m-5 ">
                                 <div className="tw-mb-6">
-                                    <label className="tw-font-lg tw-mb-2 tw-block tw-text-gray-700">
+                                    <label className="tw-font-lg tw-mb-2 tw-block tw-text-gray-700 dark:tw-text-white">
                                         <FaGraduationCap className="tw-mr-2" />
                                         Qualifications
                                     </label>
@@ -246,7 +246,7 @@ export function AddJob() {
                                 </div>
 
                                 <div className="tw-mb-6">
-                                    <label className="tw-font-lg tw-mb-2 tw-block tw-text-gray-700">
+                                    <label className="tw-font-lg tw-mb-2 tw-block tw-text-gray-700 dark:tw-text-white">
                                         <FaMapMarker className="tw-mr-2" />
                                         Location
                                     </label>
@@ -265,7 +265,7 @@ export function AddJob() {
                                 </div>
 
                                 <div className="tw-mb-6">
-                                    <label className="tw-mb-2 tw-block tw-font-medium">
+                                    <label className="tw-mb-2 tw-block tw-font-medium dark:tw-text-white">
                                         Job Type
                                     </label>
                                     <select
@@ -292,7 +292,7 @@ export function AddJob() {
                                 </div>
 
                                 <div className="tw-mb-6">
-                                    <label className="tw-font-lg tw-mb-2 tw-block tw-text-gray-700">
+                                    <label className="tw-font-lg tw-mb-2 tw-block tw-text-gray-700 dark:tw-text-white">
                                         <IoMdConstruct className="tw-mr-2" />
                                         Skills
                                     </label>
@@ -334,7 +334,7 @@ export function AddJob() {
                                     )}
                                 </div>
                                 <div className="tw-mb-6">
-                                    <label className="tw-font-lg tw-mb-2 tw-block tw-text-gray-700">
+                                    <label className="tw-font-lg tw-mb-2 tw-block tw-text-gray-700 dark:tw-text-white">
                                         <IoDocumentTextOutline className="tw-mr-2" />
                                         No Of Posts
                                     </label>
