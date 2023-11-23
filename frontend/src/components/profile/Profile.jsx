@@ -61,12 +61,16 @@ export function Profile() {
 
                                 <div className="tw-mt-5 tw-flex tw-items-center">
                                     <FaPhoneAlt className="tw-mr-2 tw-text-orange-500" />
-                                    <span>{user.phoneNumber}</span>
+                                    <span className="dark:tw-text-black">
+                                        {user.phoneNumber}
+                                    </span>
                                 </div>
 
                                 <div className="tw-mb-5  tw-flex tw-items-center">
-                                    <FaEnvelope className="tw-mr-2 tw-text-orange-500" />
-                                    <span>{user.email}</span>
+                                    <FaEnvelope className="tw-mr-2 tw-text-orange-500 " />
+                                    <span className="dark:tw-text-black">
+                                        {user.email}
+                                    </span>
                                 </div>
                                 <Link to="/editprofile">
                                     <button className=" tw-rounded-full tw-border-none tw-bg-gradient-to-b tw-from-orange-500 tw-to-orange-600 tw-px-2 tw-py-2  tw-text-white tw-shadow-2xl tw-transition-all  hover:tw-scale-105 hover:tw-shadow-xl">
@@ -84,7 +88,7 @@ export function Profile() {
                                 </h3>
 
                                 <div className="tw-mb-2 tw-flex tw-items-center">
-                                    <p className="tw-mr-4 tw-font-medium">
+                                    <p className="tw-mr-4 tw-font-medium dark:tw-text-black">
                                         Gender:
                                     </p>
                                     <p className="tw-rounded-full tw-bg-orange-500 tw-px-2 tw-py-1 tw-text-white">
@@ -93,7 +97,7 @@ export function Profile() {
                                 </div>
 
                                 <div className="tw-mb-2 tw-flex tw-items-center">
-                                    <p className="tw-mr-4 tw-font-medium">
+                                    <p className="tw-mr-4 tw-font-medium dark:tw-text-black">
                                         Location:
                                     </p>
                                     <p className="tw-rounded-full tw-bg-orange-500 tw-px-2 tw-py-1 tw-text-white">
@@ -102,7 +106,7 @@ export function Profile() {
                                 </div>
 
                                 <div className="tw-flex tw-items-center">
-                                    <p className="tw-mr-4 tw-font-medium">
+                                    <p className="tw-mr-4 tw-font-medium dark:tw-text-black">
                                         Education:
                                     </p>
                                     <p className="tw-rounded-full tw-bg-orange-500 tw-px-2 tw-py-1 tw-text-white">
@@ -112,15 +116,15 @@ export function Profile() {
                             </div>
 
                             <div>
-                                <h3 className="tw-mb-4 tw-text-2xl tw-font-medium tw-text-orange-600">
+                                <h3 className="tw-mb-4 tw-text-2xl tw-font-medium tw-text-orange-600 dark:tw-text-black">
                                     Experience
                                 </h3>
 
                                 <div className="tw-mb-2 tw-flex tw-items-center">
-                                    <p className="tw-mr-4 tw-font-medium">
+                                    <p className="tw-mr-4 tw-font-medium dark:tw-text-black">
                                         Years:
                                     </p>
-                                    <p className="tw-rounded-full tw-bg-orange-500 tw-px-2 tw-py-1 tw-text-white">
+                                    <p className="tw-rounded-full tw-bg-orange-500 tw-px-2 tw-py-1 tw-text-white ">
                                         {user.experience}
                                     </p>
                                 </div>

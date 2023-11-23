@@ -48,7 +48,11 @@ export function Card({ job }) {
         setIsBookmarked((prev) => !prev);
     };
 
-    const bookmarkIcon = isBookmarked ? <BsBookmarkFill /> : <BsBookmark />;
+    const bookmarkIcon = isBookmarked ? (
+        <BsBookmarkFill className="dark:tw-text-black" />
+    ) : (
+        <BsBookmark className="dark:tw-text-black" />
+    );
 
     return (
         <div className="tw-h-fit tw-w-1/5 tw-flex-shrink-0 tw-rounded-2xl tw-border tw-border-solid tw-p-2 tw-shadow-md dark:tw-bg-gray-500">
@@ -88,7 +92,7 @@ export function Card({ job }) {
                         skills.map((skill, index) => (
                             <span
                                 key={index}
-                                className="tw-mb-2 tw-mr-2 tw-rounded-full tw-bg-white tw-px-3 tw-py-1 tw-font-medium "
+                                className="tw-mb-2 tw-mr-2 tw-rounded-full tw-bg-white tw-px-3 tw-py-1 tw-font-medium dark:tw-text-black "
                             >
                                 {skill}
                             </span>

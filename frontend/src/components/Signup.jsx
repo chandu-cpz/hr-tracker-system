@@ -205,10 +205,14 @@ export function Signup() {
                         <button
                             type="button"
                             onClick={() => setShowPassword(!showPassword)}
-                            className=" tw-absolute tw-bottom-0 tw-right-0 tw-m-2 tw-border-none tw-bg-white"
+                            className=" tw-absolute tw-bottom-0 tw-right-0 tw-m-2 tw-rounded-full tw-border-none tw-bg-white"
                             style={{ zIndex: "10" }}
                         >
-                            {showPassword ? <FaEye /> : <FaEyeSlash />}
+                            {showPassword ? (
+                                <FaEye className="dark:tw-text-black" />
+                            ) : (
+                                <FaEyeSlash className="dark:tw-text-black" />
+                            )}
                         </button>
                     </div>
 

@@ -27,7 +27,7 @@ export function Sidebar({ onSelect }) {
                 </div>
 
                 <div>
-                    <h3 className="tw-mb-2 tw-text-lg tw-font-bold">
+                    <h3 className="tw-mb-2 tw-text-lg tw-font-bold dark:tw-text-black">
                         Working Schedule
                     </h3>
 
@@ -40,7 +40,10 @@ export function Sidebar({ onSelect }) {
                                 checked={checked.includes("FULL_TIME")}
                                 onChange={() => handleToggle("FULL_TIME")}
                             />
-                            <label htmlFor="fulltime" className="tw-text-xl">
+                            <label
+                                htmlFor="fulltime"
+                                className="tw-text-xl dark:tw-text-black"
+                            >
                                 Full Time
                             </label>
                         </div>
@@ -53,7 +56,10 @@ export function Sidebar({ onSelect }) {
                                 checked={checked.includes("PART_TIME")}
                                 onChange={() => handleToggle("PART_TIME")}
                             />
-                            <label htmlFor="parttime" className="tw-text-xl">
+                            <label
+                                htmlFor="parttime"
+                                className="tw-text-xl dark:tw-text-black"
+                            >
                                 Part Time
                             </label>
                         </div>
@@ -66,7 +72,10 @@ export function Sidebar({ onSelect }) {
                                 checked={checked.includes("INTERNSHIP")}
                                 onChange={() => handleToggle("INTERNSHIP")}
                             />
-                            <label htmlFor="internship" className="tw-text-xl">
+                            <label
+                                htmlFor="internship"
+                                className="tw-text-xl dark:tw-text-black"
+                            >
                                 Internship
                             </label>
                         </div>
