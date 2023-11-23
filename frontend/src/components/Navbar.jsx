@@ -22,9 +22,11 @@ export function Navbar() {
         if (!darkMode) {
             localStorage.setItem("theme", "dark");
             document.documentElement.classList.add("tw-dark");
+            document.documentElement.setAttribute("data-bs-theme", "dark");
         } else {
             localStorage.setItem("theme", "light");
             document.documentElement.classList.remove("tw-dark");
+            document.documentElement.setAttribute("data-bs-theme", "light");
         }
         setDarkMode((prev) => !prev);
         console.log("The value of dark mode" + darkMode);
