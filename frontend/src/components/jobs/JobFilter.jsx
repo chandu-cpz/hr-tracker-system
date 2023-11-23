@@ -81,7 +81,7 @@ export function JobFilter() {
 
     return (
         <>
-            <div className=" tw-flex tw-justify-around tw-gap-3 tw-bg-slate-500 tw-p-4 tw-shadow-lg">
+            <div className=" tw-m-2 tw-flex tw-justify-around tw-gap-3 tw-p-4 tw-shadow-xl">
                 <Dropdown
                     name="Job Title"
                     options={filterData.jobTitle}
@@ -108,10 +108,7 @@ export function JobFilter() {
                 />
 
                 <div className="tw-flex">
-                    <label
-                        htmlFor="salary"
-                        className="tw-mr-3 tw-text-xl tw-text-white"
-                    >
+                    <label htmlFor="salary" className="tw-mr-3 tw-text-xl">
                         Salary
                     </label>
                     <input
@@ -125,16 +122,16 @@ export function JobFilter() {
                         type="number"
                         value={selectedSalary}
                         onChange={(e) => setSelectedSalary(e.target.value)}
-                        className="tw-ml-5 tw-rounded-full"
+                        className="tw-ml-5 tw-rounded-full tw-border-none"
                     />
-                </div>
-                <div>
-                    <button
-                        className=" tw-rounded-full tw-border-none tw-bg-gradient-to-b tw-from-orange-500 tw-to-orange-600 tw-px-2 tw-py-1  tw-text-white tw-shadow-2xl tw-transition-all  hover:tw-scale-105 hover:tw-shadow-xl"
-                        onClick={() => setFilters({})}
-                    >
-                        Clear
-                    </button>
+                    <div>
+                        <button
+                            className=" tw-rounded-full tw-border-none tw-bg-gradient-to-b tw-from-orange-500 tw-to-orange-600 tw-px-2 tw-py-1  tw-text-white tw-shadow-2xl tw-transition-all  hover:tw-scale-105 hover:tw-shadow-xl"
+                            onClick={() => setFilters({})}
+                        >
+                            Clear
+                        </button>
+                    </div>
                 </div>
             </div>
             <div className="tw-flex tw-flex-wrap tw-gap-10">

@@ -7,7 +7,6 @@ import uploadFile from "../../utils/uploadFile";
 import axios from "axios";
 import { setUser } from "../../redux/slice/userSlice";
 import { useNavigate } from "react-router-dom";
-import validator from "validator";
 
 export function AddProfile() {
     const dispatch = useDispatch();
@@ -68,7 +67,7 @@ export function AddProfile() {
         }
 
         // Validate each field
-    
+
         if (profile.phoneNumber) {
             if (profile.phoneNumber.length !== 10) {
                 newErrors.phoneNumber =
@@ -97,8 +96,8 @@ export function AddProfile() {
     };
 
     return (
-        <div className="tw-bg-gray-100 tw-mx-auto tw-max-w-3xl tw-rounded-lg tw-p-8">
-            <div className="tw-flex tw-flex-col tw-items-center  tw-rounded-lg tw-p-4 tw-shadow-md">
+        <div className="tw-mx-auto tw-max-w-3xl tw-rounded-lg  tw-p-8">
+            <div className="tw-flex tw-flex-col tw-items-center  tw-rounded-lg tw-p-4 tw-shadow-2xl">
                 <div className="tw-mb-5 tw-flex tw-justify-center">
                     <div className="">
                         <h1 className="tw-mb-10 tw-text-center tw-text-2xl tw-font-bold">
@@ -113,7 +112,7 @@ export function AddProfile() {
                     <label className="tw-cursor-pointer">
                         <MdCameraAlt
                             size={32}
-                            className="tw-text-gray-500 tw-ml-4 tw-mt-16"
+                            className="tw-ml-4 tw-mt-16 tw-text-gray-500"
                         />
                         <input
                             type="file"
@@ -130,11 +129,11 @@ export function AddProfile() {
                     </span>
                 )}
 
-                <div className="tw-rounded-lg tw-bg-white tw-p-8 tw-shadow">
+                <div className="tw-rounded-lg tw-bg-white tw-p-8 tw-shadow-xl">
                     <div className="tw-flex">
                         <div className="tw-m-5 ">
                             <div className="tw-mb-6">
-                                <label className="tw-text-gray-700 tw-mb-2 tw-block tw-font-medium">
+                                <label className="tw-mb-2 tw-block tw-font-medium tw-text-gray-700">
                                     Full Name
                                 </label>
                                 <input
@@ -142,7 +141,7 @@ export function AddProfile() {
                                     name="fullName"
                                     value={profile.fullName}
                                     onChange={handleChange}
-                                    className="tw-border-gray-300 tw-w-full tw-rounded-full tw-border tw-px-3 tw-py-2"
+                                    className="tw-w-full tw-rounded-full tw-border tw-border-gray-300 tw-px-3 tw-py-2"
                                 />
                                 {errors.fullName && (
                                     <span className="tw-text-red-500">
@@ -152,7 +151,7 @@ export function AddProfile() {
                             </div>
 
                             <div className="tw-mb-6">
-                                <label className="tw-text-gray-700 tw-mb-2 tw-block tw-font-medium">
+                                <label className="tw-mb-2 tw-block tw-font-medium tw-text-gray-700">
                                     Email
                                 </label>
                                 <input
@@ -160,7 +159,7 @@ export function AddProfile() {
                                     name="email"
                                     value={profile.email}
                                     onChange={handleChange}
-                                    className="tw-border-gray-300 tw-w-full tw-rounded-full tw-border tw-px-3 tw-py-2"
+                                    className="tw-w-full tw-rounded-full tw-border tw-border-gray-300 tw-px-3 tw-py-2"
                                 />
                                 {errors.email && (
                                     <span className="tw-text-red-500">
@@ -170,7 +169,7 @@ export function AddProfile() {
                             </div>
 
                             <div className="tw-mb-6">
-                                <label className="tw-text-gray-700 tw-mb-2 tw-block tw-font-medium">
+                                <label className="tw-mb-2 tw-block tw-font-medium tw-text-gray-700">
                                     Gender
                                 </label>
                                 <select
@@ -186,7 +185,7 @@ export function AddProfile() {
                             </div>
 
                             <div className="tw-mb-6">
-                                <label className="tw-text-gray-700 tw-mb-2 tw-block tw-font-medium">
+                                <label className="tw-mb-2 tw-block tw-font-medium tw-text-gray-700">
                                     Phone Number
                                 </label>
                                 <input
@@ -194,7 +193,7 @@ export function AddProfile() {
                                     name="phoneNumber"
                                     value={profile.phoneNumber}
                                     onChange={handleChange}
-                                    className="tw-border-gray-300 tw-w-full tw-rounded-full tw-border tw-px-3 tw-py-2"
+                                    className="tw-w-full tw-rounded-full tw-border tw-border-gray-300 tw-px-3 tw-py-2"
                                 />
                                 {errors.phoneNumber && (
                                     <span className="tw-text-red-500">
@@ -205,7 +204,7 @@ export function AddProfile() {
                         </div>
                         <div className="tw-m-5">
                             <div className="tw-mb-6">
-                                <label className="tw-text-gray-700 tw-mb-2 tw-block tw-font-medium">
+                                <label className="tw-mb-2 tw-block tw-font-medium tw-text-gray-700">
                                     Address
                                 </label>
                                 <input
@@ -213,12 +212,12 @@ export function AddProfile() {
                                     name="address"
                                     value={profile.address}
                                     onChange={handleChange}
-                                    className="tw-border-gray-300 tw-w-full tw-rounded-full tw-border tw-px-3 tw-py-2"
+                                    className="tw-w-full tw-rounded-full tw-border tw-border-gray-300 tw-px-3 tw-py-2"
                                 />
                             </div>
 
                             <div className="tw-mb-6">
-                                <label className="tw-text-gray-700 tw-mb-2 tw-block tw-font-medium">
+                                <label className="tw-mb-2 tw-block tw-font-medium tw-text-gray-700">
                                     Education
                                 </label>
                                 <input
@@ -226,12 +225,12 @@ export function AddProfile() {
                                     name="education"
                                     value={profile.education}
                                     onChange={handleChange}
-                                    className="tw-border-gray-300 tw-w-full tw-rounded-full tw-border tw-px-3 tw-py-2"
+                                    className="tw-w-full tw-rounded-full tw-border tw-border-gray-300 tw-px-3 tw-py-2"
                                 />
                             </div>
 
                             <div className="tw-mb-6">
-                                <label className="tw-text-gray-700 tw-mb-2 tw-block tw-font-medium">
+                                <label className="tw-mb-2 tw-block tw-font-medium tw-text-gray-700">
                                     Experience (years)
                                 </label>
                                 <input
@@ -239,12 +238,12 @@ export function AddProfile() {
                                     name="experience"
                                     value={profile.experience}
                                     onChange={handleChange}
-                                    className="tw-border-gray-300 tw-w-full tw-rounded-full tw-border tw-px-3 tw-py-2"
+                                    className="tw-w-full tw-rounded-full tw-border tw-border-gray-300 tw-px-3 tw-py-2"
                                 />
                             </div>
 
                             <div className="tw-mb-6">
-                                <label className="tw-text-gray-700 tw-mb-2 tw-block tw-font-medium">
+                                <label className="tw-mb-2 tw-block tw-font-medium tw-text-gray-700">
                                     Skills
                                 </label>
                                 <Multiselect
@@ -285,7 +284,7 @@ export function AddProfile() {
                 </div>
 
                 <button
-                    className="tw-m-6 tw-rounded-full tw-border-none tw-bg-orange-500   tw-px-4 tw-py-3 tw-shadow-xl hover:tw-bg-orange-600"
+                    className="tw-m-4 tw-rounded-full tw-border-none tw-bg-gradient-to-b tw-from-orange-500 tw-to-orange-600 tw-px-4 tw-py-2  tw-text-3xl tw-text-white tw-shadow-2xl tw-transition-all  hover:tw-scale-105 hover:tw-shadow-xl"
                     onClick={editProfile}
                 >
                     Save Profile

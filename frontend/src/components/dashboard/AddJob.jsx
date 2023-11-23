@@ -117,8 +117,8 @@ export function AddJob() {
     return (
         <div className="h-screen tw-flex">
             <Sidebar />
-            <div className="tw-bg-gray-100 tw-mx-auto tw-max-w-3xl tw-rounded-lg tw-p-8">
-                <div className="tw-flex tw-flex-col tw-items-center  tw-rounded-lg tw-p-4 tw-shadow-md">
+            <div className="tw-mx-auto tw-max-w-5xl tw-rounded-lg tw-p-8">
+                <div className="tw-flex tw-flex-col tw-items-center  tw-rounded-3xl tw-p-4 tw-shadow-xl">
                     <div className="tw-mb-5 tw-flex tw-justify-center">
                         <div className="">
                             <h1 className="tw-mb-6 tw-text-center tw-font-mono tw-text-5xl tw-font-bold">
@@ -127,11 +127,11 @@ export function AddJob() {
                         </div>
                     </div>
 
-                    <div className="tw-rounded-lg  tw-p-8 tw-shadow">
+                    <div className="tw-rounded-2xl  tw-p-8 tw-shadow">
                         <div className="tw-flex ">
                             <div className="tw-min-w-25 tw-m-5 tw-flex-shrink-0 tw-flex-grow">
                                 <div className="tw-mb-6">
-                                    <label className="tw-text-gray-700 tw-font-lg tw-mb-2 tw-block">
+                                    <label className="tw-font-lg tw-mb-2 tw-block tw-text-gray-700">
                                         <FaBriefcase className="tw-mr-2" />
                                         Job Title
                                     </label>
@@ -140,7 +140,7 @@ export function AddJob() {
                                         name="jobTitle"
                                         value={job.jobTitle}
                                         onChange={handleChange}
-                                        className="tw-border-gray-300 tw-w-full tw-rounded-full tw-border tw-px-3 tw-py-2"
+                                        className="tw-w-full tw-rounded-full tw-border tw-border-gray-300 tw-px-3 tw-py-2"
                                     />
                                     {errors?.jobTitle && (
                                         <span className="tw-text-red-500">
@@ -150,7 +150,7 @@ export function AddJob() {
                                 </div>
 
                                 <div className="tw-mb-6">
-                                    <label className="tw-text-gray-700 tw-font-lg tw-mb-2 tw-block">
+                                    <label className="tw-font-lg tw-mb-2 tw-block tw-text-gray-700">
                                         <FiHardDrive className="tw-mr-2" />
                                         Job Description
                                     </label>
@@ -159,7 +159,7 @@ export function AddJob() {
                                         name="jobDescription"
                                         value={job.jobDescription}
                                         onChange={handleChange}
-                                        className="tw-border-gray-300 tw-w-full tw-rounded-full tw-border tw-px-3 tw-py-2"
+                                        className="tw-w-full tw-rounded-full tw-border tw-border-gray-300 tw-px-3 tw-py-2"
                                     />
                                     {errors?.jobDescription && (
                                         <span className="tw-text-red-500">
@@ -169,7 +169,7 @@ export function AddJob() {
                                 </div>
 
                                 <div className="tw-mb-6">
-                                    <label className="tw-text-gray-700 tw-font-lg tw-mb-2 tw-block">
+                                    <label className="tw-font-lg tw-mb-2 tw-block tw-text-gray-700">
                                         <GiOfficeChair className="tw-mr-2" />
                                         CompanyName
                                     </label>
@@ -188,7 +188,7 @@ export function AddJob() {
                                 </div>
 
                                 <div className="tw-mb-6">
-                                    <label className="tw-text-gray-700 tw-font-lg tw-mb-2 tw-block">
+                                    <label className="tw-font-lg tw-mb-2 tw-block tw-text-gray-700">
                                         <FaDollarSign className="tw-mr-2" />
                                         Salary
                                     </label>
@@ -197,7 +197,7 @@ export function AddJob() {
                                         name="salary"
                                         value={job.salary}
                                         onChange={handleChange}
-                                        className="tw-border-gray-300 tw-w-full tw-rounded-full tw-border tw-px-3 tw-py-2"
+                                        className="tw-w-full tw-rounded-full tw-border tw-border-gray-300 tw-px-3 tw-py-2"
                                     />
                                     {errors?.salary && (
                                         <span className="tw-text-red-500">
@@ -207,7 +207,7 @@ export function AddJob() {
                                 </div>
 
                                 <div className="tw-mb-6">
-                                    <label className="tw-text-gray-700 tw-font-lg tw-mb-2 tw-block">
+                                    <label className="tw-font-lg tw-mb-2 tw-block tw-text-gray-700">
                                         <FaListUl className="tw-mr-2" />
                                         Responsibilities
                                     </label>
@@ -216,7 +216,7 @@ export function AddJob() {
                                         name="responsibilities"
                                         value={job.responsibilities}
                                         onChange={handleChange}
-                                        className="tw-border-gray-300 tw-w-full tw-rounded-full tw-border tw-px-3 tw-py-2"
+                                        className="tw-w-full tw-rounded-full tw-border tw-border-gray-300 tw-px-3 tw-py-2"
                                     />
                                     {errors?.responsibilities && (
                                         <span className="tw-text-red-500">
@@ -227,7 +227,7 @@ export function AddJob() {
                             </div>
                             <div className="tw-min-w-25 tw-m-5 ">
                                 <div className="tw-mb-6">
-                                    <label className="tw-text-gray-700 tw-font-lg tw-mb-2 tw-block">
+                                    <label className="tw-font-lg tw-mb-2 tw-block tw-text-gray-700">
                                         <FaGraduationCap className="tw-mr-2" />
                                         Qualifications
                                     </label>
@@ -236,7 +236,7 @@ export function AddJob() {
                                         name="qualifications"
                                         value={job.qualifications}
                                         onChange={handleChange}
-                                        className="tw-border-gray-300 tw-w-full tw-rounded-full tw-border tw-px-3 tw-py-2"
+                                        className="tw-w-full tw-rounded-full tw-border tw-border-gray-300 tw-px-3 tw-py-2"
                                     />
                                     {errors?.qualifications && (
                                         <span className="tw-text-red-500">
@@ -246,7 +246,7 @@ export function AddJob() {
                                 </div>
 
                                 <div className="tw-mb-6">
-                                    <label className="tw-text-gray-700 tw-font-lg tw-mb-2 tw-block">
+                                    <label className="tw-font-lg tw-mb-2 tw-block tw-text-gray-700">
                                         <FaMapMarker className="tw-mr-2" />
                                         Location
                                     </label>
@@ -255,7 +255,7 @@ export function AddJob() {
                                         name="location"
                                         value={job.location}
                                         onChange={handleChange}
-                                        className="tw-border-gray-300 tw-w-full tw-rounded-full tw-border tw-px-3 tw-py-2"
+                                        className="tw-w-full tw-rounded-full tw-border tw-border-gray-300 tw-px-3 tw-py-2"
                                     />
                                     {errors?.location && (
                                         <span className="tw-text-red-500">
@@ -272,9 +272,8 @@ export function AddJob() {
                                         name="jobType"
                                         value={job.jobType}
                                         onChange={handleChange}
-                                        className="tw-border-gray-300 tw-w-full tw-rounded-full tw-border tw-px-3 tw-py-2"
+                                        className="tw-w-full tw-rounded-full tw-border tw-border-gray-300 tw-px-3 tw-py-2"
                                     >
-                                   
                                         <option value="FULL_TIME">
                                             Full Time
                                         </option>
@@ -284,8 +283,8 @@ export function AddJob() {
                                         <option value="INTERNSHIP">
                                             Internship
                                         </option>
-                                    </select> 
-                                        {errors?.jobType && (
+                                    </select>
+                                    {errors?.jobType && (
                                         <span className="tw-text-red-500">
                                             {errors.jobType}
                                         </span>
@@ -293,7 +292,7 @@ export function AddJob() {
                                 </div>
 
                                 <div className="tw-mb-6">
-                                    <label className="tw-text-gray-700 tw-font-lg tw-mb-2 tw-block">
+                                    <label className="tw-font-lg tw-mb-2 tw-block tw-text-gray-700">
                                         <IoMdConstruct className="tw-mr-2" />
                                         Skills
                                     </label>
@@ -335,7 +334,7 @@ export function AddJob() {
                                     )}
                                 </div>
                                 <div className="tw-mb-6">
-                                    <label className="tw-text-gray-700 tw-font-lg tw-mb-2 tw-block">
+                                    <label className="tw-font-lg tw-mb-2 tw-block tw-text-gray-700">
                                         <IoDocumentTextOutline className="tw-mr-2" />
                                         No Of Posts
                                     </label>
@@ -344,7 +343,7 @@ export function AddJob() {
                                         name="noOfPosts"
                                         value={job.noOfPosts}
                                         onChange={handleChange}
-                                        className="tw-border-gray-300 tw-w-full tw-rounded-full tw-border tw-px-3 tw-py-2"
+                                        className="tw-w-full tw-rounded-full tw-border tw-border-gray-300 tw-px-3 tw-py-2"
                                     />
                                     {errors?.noOfPosts && (
                                         <span className="tw-text-red-500">
@@ -357,7 +356,7 @@ export function AddJob() {
                     </div>
 
                     <button
-                        className="tw-m-6 tw-rounded-full tw-border-none tw-bg-orange-500   tw-px-4 tw-py-3 tw-shadow-xl hover:tw-bg-orange-600"
+                        className=" tw-my-3 tw-rounded-full tw-border-none tw-bg-gradient-to-b tw-from-orange-500 tw-to-orange-600 tw-px-5 tw-py-3 tw-text-3xl tw-text-white tw-shadow-2xl tw-transition-all  hover:tw-scale-105 hover:tw-shadow-xl"
                         onClick={submitJob}
                     >
                         Post Job

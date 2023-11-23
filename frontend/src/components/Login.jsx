@@ -72,17 +72,17 @@ export function Login() {
     };
 
     return (
-        <div className="tw-flex tw-h-screen tw-bg-gray">
-            <div className="tw-mt-16 tw-flex tw-items-center">
+        <div className="tw-flex tw-h-screen ">
+            <div className=" tw-mt-16 tw-flex tw-items-center">
                 <div className="tw-ml-4 tw-w-1/6  tw-text-right">
                     <div className="tw-flex tw-flex-col">
-                        <h1 className="tw-mb-2 tw-whitespace-nowrap tw-text-4xl tw-font-extrabold tw-text-black ">
+                        <h1 className=" tw-m-12 tw-whitespace-nowrap tw-text-5xl tw-font-extrabold tw-text-black">
                             Streamline Recruiting Workflows
                         </h1>
-                        <h1 className="tw-mb-2 tw-whitespace-nowrap tw-text-4xl tw-font-extrabold tw-text-stone-700 tw-text-opacity-90">
+                        <h1 className="tw-m-12 tw-whitespace-nowrap tw-text-5xl tw-font-extrabold tw-text-stone-700 tw-text-opacity-90">
                             Centralize Application Tracking
                         </h1>
-                        <h1 className="tw-mb-2 tw-whitespace-nowrap tw-text-3xl tw-font-extrabold tw-text-black tw-text-opacity-60">
+                        <h1 className="tw-m-12 tw-whitespace-nowrap tw-text-5xl tw-font-extrabold tw-text-black tw-text-opacity-60">
                             Optimize Hiring Outcomes
                         </h1>
                     </div>
@@ -90,14 +90,14 @@ export function Login() {
             </div>
             <div className="tw-flex tw-flex-1 tw-items-center tw-justify-center ">
                 <div className="tw-mx-auto tw-ml-0 tw-w-full  tw-translate-x-full tw-transform  tw-rounded-xl tw-bg-white tw-p-12 tw-shadow-lg tw-transition-transform tw-duration-300 tw-ease-in-out md:tw-max-w-md">
-                    <h2 className="tw-mb-4 tw-mt-4 tw-text-2xl tw-font-bold">
+                    <h2 className="tw-mb-10 tw-mt-4 tw-text-center tw-text-4xl tw-font-bold">
                         Login
                     </h2>
                     <form className="tw-text-left">
-                        <div className="tw-flex tw-flex-col tw-items-start md:tw-flex-col">
+                        <div className="tw-flex tw-flex-col tw-items-start tw-gap-10 md:tw-flex-col">
                             <div className="tw-mb-4md:tw-mb-0 tw-flex tw-w-full tw-flex-col md:tw-mr-4">
                                 <label
-                                    className="text-gray-700 tw-mb-2 tw-block tw-text-sm tw-font-bold"
+                                    className="text-gray-700 tw-mb-3 tw-block tw-text-sm tw-font-bold"
                                     htmlFor="email"
                                 >
                                     Email:
@@ -106,7 +106,7 @@ export function Login() {
                                     type="email"
                                     id="email"
                                     name="email"
-                                    className="tw-text-gray-700 tw-focus:outline-none tw-focus:shadow-outline tw-placeholder-gray-500 tw-focus:border-blue-500  tw-focus:ring tw-w-full tw-appearance-none tw-rounded-full tw-border tw-bg-white  tw-px-3 tw-py-2 tw-leading-tight tw-shadow"
+                                    className="tw-focus:outline-none tw-focus:shadow-outline tw-focus:border-blue-500 tw-focus:ring tw-w-full  tw-appearance-none tw-rounded-full tw-border tw-bg-white tw-px-3 tw-py-2  tw-leading-tight tw-text-gray-700 tw-placeholder-gray-500 tw-shadow"
                                     placeholder=""
                                     value={userData.email}
                                     onChange={handleChange}
@@ -117,13 +117,13 @@ export function Login() {
                             </div>
                             <div className="tw-relative tw-w-full">
                                 <label
-                                    className="tw-text-gray-700 tw-mb-2 tw-block tw-text-sm tw-font-bold"
+                                    className="tw-mb-3 tw-block tw-text-sm tw-font-bold tw-text-gray-700"
                                     htmlFor="password"
                                 >
                                     Password:
                                 </label>
                                 <input
-                                    className="tw-text-gray-700 tw-focus:tw-outline-none tw-focus:tw-shadow-outline tw-w-full tw-appearance-none tw-rounded-full tw-border tw-py-2 tw-pr-10 tw-leading-tight tw-shadow"
+                                    className="tw-focus:tw-outline-none tw-focus:tw-shadow-outline tw-w-full tw-appearance-none tw-rounded-full tw-border tw-py-2 tw-pr-10 tw-leading-tight tw-text-gray-700 tw-shadow"
                                     type={showPassword ? "text" : "password"}
                                     id="password"
                                     name="password"
@@ -149,7 +149,7 @@ export function Login() {
                             </div>
                             <button
                                 type="submit"
-                                className="tw-hover:bg-orange-700 tw-focus:outline-none tw-focus:shadow-outline tw-mt-2 tw-rounded-full tw-bg-orange-500 tw-px-6 tw-py-3 tw-font-bold tw-text-white"
+                                className="tw-hover:bg-orange-700 tw-focus:outline-none tw-focus:shadow-outline tw-mt-2 tw-rounded-full  tw-border-none tw-bg-orange-500  tw-bg-gradient-to-b tw-from-orange-500 tw-to-orange-600 tw-p-5  tw-px-6 tw-py-3 tw-text-3xl tw-font-medium tw-text-white tw-shadow-2xl tw-transition-all hover:tw-scale-105 hover:tw-shadow-xl"
                                 onClick={submitUser}
                             >
                                 Login

@@ -8,8 +8,8 @@ import { FaGear } from "react-icons/fa6";
 
 export function UserSidebar() {
     return (
-        <div className="tw-bg-gray-100 tw-flex tw-h-screen tw-rounded-r-3xl tw-p-4">
-            <div className="tw-mb-10 tw-rounded-3xl tw-bg-gray tw-p-9 tw-shadow-lg">
+        <div className="tw-flex tw-h-screen tw-rounded-r-3xl tw-p-4 ">
+            <div className="tw-mb-10 tw-rounded-3xl tw-p-9 tw-shadow-2xl ">
                 <div>
                     <h3 className="tw-mb-4 tw-pb-3 tw-text-2xl ">MAIN MENU</h3>
 
