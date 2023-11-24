@@ -120,7 +120,7 @@ export function Application() {
                                     </h3>
 
                                     <div className="tw-mb-2 tw-flex tw-items-center">
-                                        <p className="tw-mr-4 tw-font-medium">
+                                        <p className="tw-mr-4 tw-font-medium dark:tw-text-black">
                                             Gender:
                                         </p>
                                         <p className="tw-rounded-full tw-bg-orange-500 tw-px-2 tw-py-1 tw-text-white">
@@ -129,7 +129,7 @@ export function Application() {
                                     </div>
 
                                     <div className="tw-mb-2 tw-flex tw-items-center">
-                                        <p className="tw-mr-4 tw-font-medium">
+                                        <p className="tw-mr-4 tw-font-medium dark:tw-text-black">
                                             Location:
                                         </p>
                                         <p className="tw-rounded-full tw-bg-orange-500 tw-px-2 tw-py-1 tw-text-white">
@@ -138,7 +138,7 @@ export function Application() {
                                     </div>
 
                                     <div className="tw-flex tw-items-center">
-                                        <p className="tw-mr-4 tw-font-medium">
+                                        <p className="tw-mr-4 tw-font-medium dark:tw-text-black">
                                             Education:
                                         </p>
                                         <p className="tw-rounded-full tw-bg-orange-500 tw-px-2 tw-py-1 tw-text-white">
@@ -153,7 +153,7 @@ export function Application() {
                                     </h3>
 
                                     <div className="tw-mb-2 tw-flex tw-items-center">
-                                        <p className="tw-mr-4 tw-font-medium">
+                                        <p className="tw-mr-4 tw-font-medium dark:tw-text-black">
                                             Years:
                                         </p>
                                         <p className="tw-rounded-full tw-bg-orange-500 tw-px-2 tw-py-1 tw-text-white">
