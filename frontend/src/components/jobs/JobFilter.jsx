@@ -117,7 +117,7 @@ export function JobFilter() {
                     <input
                         type="range"
                         min="0"
-                        max="99999"
+                        max="999999"
                         value={selectedSalary}
                         onChange={handleSalaryChange}
                     />
