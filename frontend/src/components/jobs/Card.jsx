@@ -82,7 +82,7 @@ export function Card({ job }) {
                         {jobTitle.toUpperCase()}
                     </h3>
                     <img
-                        src="logo.png"
+                        src={job.postedBy.companyImage}
                         className="tw-mr-2 tw-h-6 tw-w-6 tw-rounded-full"
                     />
                 </div>

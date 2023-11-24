@@ -120,6 +120,19 @@ export function Signup() {
         }
     };
 
+    const handleHR = () => {
+        let newrole;
+        if (userData.role === "HR") {
+            newrole = "USER";
+        } else {
+            newrole = "HR";
+        }
+        setUserData({
+            ...userData,
+            role: newrole,
+        });
+    };
+
     return (
         <div className="tw-flex tw-h-screen tw-items-center tw-justify-center dark:tw-bg-stone-900">
             <div className="tw-mt-16 tw-flex tw-items-center">
@@ -263,7 +276,7 @@ export function Signup() {
                                 className="form-checkbox"
                                 name="role"
                                 value="HR"
-                                onChange={handleChange}
+                                onChange={handleHR}
                             />
                             <span className="text-gray-700 tw-mb-2 tw-ml-2 tw-block tw-text-sm tw-font-bold">
                                 HR

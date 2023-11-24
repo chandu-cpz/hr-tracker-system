@@ -12,6 +12,7 @@ import {
 import uploadFile from "../../utils/uploadFile";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../redux/slice/userSlice";
+import { addAppliedJob } from "../../redux/slice/userSlice";
 
 export function ApplyJob() {
     const [isApplyed, setIsApplied] = useState();
@@ -43,19 +44,14 @@ export function ApplyJob() {
                     jobId: jobId,
                     resume: resume,
                 })
-                .then(response => {
+                .then((response) => {
                     setIsApplied(true);
-                  });
+                });
         } catch (err) {
             console.log(err);
             setIsApplied(false);
         }
-        dispatch(
-            setUser({
-                ...user,
-                jobsApplied: user.jobsApplied.push(jobId),
-            })
-        );
+        dispatch(addAppliedJob(jobId));
     };
 
     const handleUploadFile = async (e) => {
@@ -96,7 +92,7 @@ export function ApplyJob() {
     }
 
     return (
-        <div className="tw-bg-gray-200 tw-flex tw-min-h-screen tw-p-4 tw-text-xl">
+        <div className="tw-flex tw-min-h-screen tw-bg-gray-200 tw-p-4 tw-text-xl">
             {/* Sidebar */}
             <UserSidebar />
 
@@ -106,7 +102,7 @@ export function ApplyJob() {
                 <div className="max-w-4xl tw-mx-auto tw-rounded-lg tw-bg-white tw-p-6 tw-shadow-lg">
                     <div className="tw-mx-6 tw-flex tw-justify-between">
                         {jobDetails.jobTitle && (
-                            <h1 className="tw-text-gray-900 tw-mb-4 tw-justify-self-center tw-text-3xl tw-font-bold">
+                            <h1 className="tw-mb-4 tw-justify-self-center tw-text-3xl tw-font-bold tw-text-gray-900">
                                 {jobDetails.jobTitle.toUpperCase()}
                             </h1>
                         )}
@@ -116,7 +112,7 @@ export function ApplyJob() {
                         </button>
                     </div>
                     {/* Title */}
-                    <div className="tw-m-4 tw-rounded-xl tw-bg-gray tw-p-6 tw-shadow-lg">
+                    <div className="tw-bg-gray tw-m-4 tw-rounded-xl tw-p-6 tw-shadow-lg">
                         {/* Company */}
                         {jobDetails.companyName && (
                             <div className="tw-mb-4 tw-flex tw-items-center">
@@ -158,7 +154,7 @@ export function ApplyJob() {
                     {/* Description */}
                     {jobDetails.jobDescription && (
                         <>
-                            <div className="tw-m-4 tw-rounded-xl tw-bg-gray tw-p-6 tw-shadow-lg">
+                            <div className="tw-bg-gray tw-m-4 tw-rounded-xl tw-p-6 tw-shadow-lg">
                                 <h2 className="tw-mb-2 tw-text-2xl tw-font-bold">
                                     Job Description
                                 </h2>
@@ -169,7 +165,7 @@ export function ApplyJob() {
 
                     {/* Responsibilities */}
                     {jobDetails.responsibilities && (
-                        <div className=" tw-m-4 tw-rounded-xl tw-bg-gray tw-p-6 tw-shadow-lg">
+                        <div className=" tw-bg-gray tw-m-4 tw-rounded-xl tw-p-6 tw-shadow-lg">
                             <h2 className="tw-mb-2 tw-text-2xl tw-font-bold">
                                 Responsibilities
                             </h2>
@@ -179,7 +175,7 @@ export function ApplyJob() {
 
                     {/* Qualifications */}
                     {jobDetails.qualifications && (
-                        <div className=" tw-m-4 tw-rounded-xl tw-bg-gray tw-p-6 tw-shadow-lg">
+                        <div className=" tw-bg-gray tw-m-4 tw-rounded-xl tw-p-6 tw-shadow-lg">
                             <h2 className="tw-mb-2 tw-text-2xl tw-font-bold">
                                 Qualifications
                             </h2>
@@ -207,7 +203,7 @@ export function ApplyJob() {
                         </div>
                     )}
                     <div className="tw-mt-4">
-                        <label className="tw-text-gray-700 tw-mb-2 tw-block tw-font-bold">
+                        <label className="tw-mb-2 tw-block tw-font-bold tw-text-gray-700">
                             Upload Your Resume
                         </label>
 
@@ -215,7 +211,7 @@ export function ApplyJob() {
                             <label className="tw-flex tw-h-32 tw-w-full tw-flex-col tw-border-4 tw-border-dashed tw-p-10 tw-text-center">
                                 <div className="tw-flex tw-flex-col tw-items-center ">
                                     <FaPaperclip
-                                        className="tw-text-gray-400 tw-mb-3"
+                                        className="tw-mb-3 tw-text-gray-400"
                                         size={60}
                                     />
                                 </div>
@@ -246,8 +242,16 @@ export function ApplyJob() {
                             Apply for Job
                         </button>
                     </div>
-                    {isApplyed === true && <p className="tw-text-green-500 tw-text-center">Applied Successfully</p>}
-                    {isApplyed === false && <p className="tw-text-red-500 tw-text-center">Failed to Apply</p>}
+                    {isApplyed === true && (
+                        <p className="tw-text-center tw-text-green-500">
+                            Applied Successfully
+                        </p>
+                    )}
+                    {isApplyed === false && (
+                        <p className="tw-text-center tw-text-red-500">
+                            Failed to Apply
+                        </p>
+                    )}
                     {resume && <img src={resume.replace(/\.pdf$/, ".png")} />}
                 </div>
             </div>
