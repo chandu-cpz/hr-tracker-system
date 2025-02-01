@@ -1,0 +1,8 @@
+{
+    "rewrites": [
+      {
+        "source": "/api/(.*)",
+        "destination": "https://hr-tracker-system.onrender.com/api/$1"
+      }
+    ] 
+  }

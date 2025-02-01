@@ -24,10 +24,10 @@ export function AppliedJobs() {
     }, []);
 
     return (
-        <div className="tw-flex tw-flex-wrap tw-gap-10">
+        <div className="tw-flex tw-flex-wrap tw-gap-10 dark:tw-bg-gray-900 ">
             <UserSidebar />
             <div className="tw-mt-5 tw-w-3/4">
-                <h1>Applied Jobs</h1>
+                <h1 className="tw-my-5 dark:tw-text-white">Applied Jobs</h1>
                 <div className="tw-flex tw-flex-wrap tw-gap-10">
                     {jobs.map((job) => {
                         return <Card key={job._id} job={job} />;

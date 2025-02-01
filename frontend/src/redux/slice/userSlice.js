@@ -49,7 +49,7 @@ export const userSlice = createSlice({
                 ...state,
                 user: {
                     ...state.user,
-                    appliedJobs: [...state.user.appliedJobs, action.payload]
+                    jobsApplied: [...state.user.jobsApplied, action.payload]
                 }
             }
         },
@@ -59,14 +59,14 @@ export const userSlice = createSlice({
                 ...state,
                 user: {
                     ...state.user,
-                    appliedJobs: state.user.appliedJobs.filter(id => id !== action.payload)
+                    jobsApplied: state.user.jobsApplied.filter(id => id !== action.payload)
                 }
             }
         }
     },
 });
 
-export const { setUser, setIsLoggedIn, addSavedJob, removeSavedJob } = userSlice.actions;
+export const { setUser, setIsLoggedIn, addSavedJob, removeSavedJob, addAppliedJob, removeAppliedJob } = userSlice.actions;
 
 export const signUpUser = (userData) => {
     console.log("RTK: We started sign up ")

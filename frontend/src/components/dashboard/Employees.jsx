@@ -18,17 +18,17 @@ export function Employees() {
     }, []);
 
     return (
-        <div className="tw-flex tw-flex-wrap tw-gap-10">
+        <div className="tw-flex tw-flex-wrap tw-gap-10 dark:tw-bg-stone-900 ">
             <Sidebar />
             <div className=" tw-w-13/15 tw-mt-5">
-                <h1>Employees</h1>
-                <div className=" tw-mx-auto tw-flex tw-flex-wrap tw-justify-center tw-gap-10">
+                <h1 className="dark:tw-text-white">Employees</h1>
+                <div className=" tw-mx-auto tw-flex tw-flex-wrap tw-justify-center tw-gap-10 ">
                     {/* Table for Applicants*/}
                     {employees.length > 0 && (
                         <table className="tw-mt-5  tw-border-collapse">
                             <thead>
-                                <tr className="tw-bg-orange-500 tw-text-white">
-                                    <th className="tw-border tw-border-orange-600 tw-p-2">
+                                <tr className="tw-bg-orange-500 tw-text-white ">
+                                    <th className="tw-border tw-border-orange-600 tw-p-2 ">
                                         Name
                                     </th>
                                     <th className="tw-border tw-border-orange-600 tw-p-2">
@@ -52,22 +52,22 @@ export function Employees() {
                             <tbody>
                                 {employees.map((employee) => (
                                     <tr
-                                        className="tw-bg-white hover:tw-bg-gray"
+                                        className="tw-bg-white hover:tw-bg-gray dark:tw-bg-stone-900 dark:tw-text-white"
                                         key={employee._id}
                                     >
-                                        <td className="tw-border tw-border-orange-400 tw-p-2">
+                                        <td className="tw-border tw-border-orange-400 tw-p-2 dark:tw-bg-stone-900 dark:tw-text-white">
                                             {employee.appliedBy.fullName}
                                         </td>
-                                        <td className="tw-border tw-border-orange-400 tw-p-2">
+                                        <td className="tw-border tw-border-orange-400 tw-p-2 dark:tw-bg-stone-900 dark:tw-text-white">
                                             {employee.appliedBy.email}
                                         </td>
-                                        <td className="tw-border tw-border-orange-400 tw-p-2">
+                                        <td className="tw-border tw-border-orange-400 tw-p-2 dark:tw-bg-stone-900 dark:tw-text-white">
                                             {employee.appliedBy.gender}
                                         </td>
-                                        <td className="tw-border tw-border-orange-400 tw-p-2">
+                                        <td className="tw-border tw-border-orange-400 tw-p-2 dark:tw-bg-stone-900 dark:tw-text-white">
                                             {employee.appliedBy.education}
                                         </td>
-                                        <td className="tw-border tw-border-orange-400 tw-p-2">
+                                        <td className="tw-border tw-border-orange-400 tw-p-2 dark:tw-bg-stone-900 dark:tw-text-white">
                                             {employee.appliedBy.skills.join(
                                                 ", "
                                             )}

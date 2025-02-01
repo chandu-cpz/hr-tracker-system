@@ -81,7 +81,7 @@ export function JobFilter() {
 
     return (
         <>
-            <div className=" tw-flex tw-justify-around tw-gap-3 tw-bg-slate-500 tw-p-4 tw-shadow-lg">
+            <div className="  tw-flex tw-justify-around tw-gap-3  tw-p-4 tw-shadow-xl dark:tw-bg-slate-700">
                 <Dropdown
                     name="Job Title"
                     options={filterData.jobTitle}
@@ -110,14 +110,14 @@ export function JobFilter() {
                 <div className="tw-flex">
                     <label
                         htmlFor="salary"
-                        className="tw-mr-3 tw-text-xl tw-text-white"
+                        className="tw-mr-3 tw-text-xl dark:tw-text-white"
                     >
                         Salary
                     </label>
                     <input
                         type="range"
                         min="0"
-                        max="99999"
+                        max="999999"
                         value={selectedSalary}
                         onChange={handleSalaryChange}
                     />
@@ -125,26 +125,26 @@ export function JobFilter() {
                         type="number"
                         value={selectedSalary}
                         onChange={(e) => setSelectedSalary(e.target.value)}
-                        className="tw-ml-5 tw-rounded-full"
+                        className="tw-ml-5 tw-rounded-full tw-border-none"
                     />
-                </div>
-                <div>
-                    <button
-                        className=" tw-rounded-full tw-border-none tw-bg-gradient-to-b tw-from-orange-500 tw-to-orange-600 tw-px-2 tw-py-1  tw-text-white tw-shadow-2xl tw-transition-all  hover:tw-scale-105 hover:tw-shadow-xl"
-                        onClick={() => setFilters({})}
-                    >
-                        Clear
-                    </button>
+                    <div>
+                        <button
+                            className=" tw-rounded-full tw-border-none tw-bg-gradient-to-b tw-from-orange-500 tw-to-orange-600 tw-px-2 tw-py-1  tw-text-white tw-shadow-2xl tw-transition-all  hover:tw-scale-105 hover:tw-shadow-xl"
+                            onClick={() => setFilters({})}
+                        >
+                            Clear
+                        </button>
+                    </div>
                 </div>
             </div>
-            <div className="tw-flex tw-flex-wrap tw-gap-10">
+            <div className="tw-flex tw-gap-10 dark:tw-bg-gray-900">
                 <Sidebar
                     onSelect={(checked) =>
                         setFilters((prev) => ({ ...prev, jobType: checked }))
                     }
                 />
-                <div className="tw-m-5 tw-w-10/12">
-                    <h1>Recommended Jobs</h1>
+                <div className="tw-m-5">
+                    <h1 className="dark:tw-text-white">Recommended Jobs</h1>
                     <div className="tw-flex tw-w-full tw-flex-wrap tw-gap-10">
                         {jobs &&
                             jobs.map((job) => <Card key={job._id} job={job} />)}

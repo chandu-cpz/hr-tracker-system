@@ -40,12 +40,12 @@ export function Application() {
     };
 
     return (
-        <div className="tw-flex tw-flex-wrap tw-gap-10">
+        <div className="tw-flex tw-flex-wrap tw-gap-10 ">
             <Sidebar />
-            <div className="tw-mt-5 tw-w-3/4">
+            <div className="drak:tw-text-white tw-w-3/4 tw-pt-5 dark:tw-bg-slate-900">
                 <div className="tw-flex tw-justify-around">
                     {" "}
-                    <h1> Applicant Details: </h1>
+                    <h1 className="dark:tw-text-white"> Applicant Details: </h1>
                     <div className="tw-flex">
                         <div>
                             <button
@@ -84,28 +84,28 @@ export function Application() {
                 <div>
                     {/* Applicant Profile */}
                     {application && (
-                        <div className="tw-bg-gray-100 tw-mx-auto tw-max-w-3xl tw-rounded-lg tw-p-8">
+                        <div className="tw-mx-auto tw-max-w-3xl tw-rounded-lg tw-bg-gray-100 tw-p-8 dark:tw-bg-gray-600">
                             <div className="tw-flex tw-items-center tw-rounded-lg tw-bg-orange-200 tw-p-4 tw-shadow-md">
                                 <img
-                                    className="tw-mr-8 tw-h-40 tw-w-40 tw-rounded-full tw-border-4 tw-border-orange-500"
+                                    className="tw-mr-8 tw-h-40 tw-w-40 tw-rounded-full tw-border-4 tw-border-orange-500 "
                                     src={application.appliedBy.profileImage}
                                     alt={application.appliedBy.fullName}
                                 />
 
                                 <div>
-                                    <h1 className="tw-text-4xl tw-font-bold tw-text-orange-600">
+                                    <h1 className="drak:tw-text-white tw-text-4xl tw-font-bold tw-text-orange-600">
                                         {application.appliedBy.fullName}
                                     </h1>
 
-                                    <div className="tw-mt-5 tw-flex tw-items-center">
-                                        <FaPhoneAlt className="tw-mr-2 tw-text-orange-500" />
+                                    <div className="drak:tw-text-white tw-mt-5 tw-flex tw-items-center">
+                                        <FaPhoneAlt className="drak:tw-text-white tw-mr-2 tw-text-orange-500" />
                                         <span>
                                             {application.appliedBy.phoneNumber}
                                         </span>
                                     </div>
 
-                                    <div className="tw-mb-5  tw-flex tw-items-center">
-                                        <FaEnvelope className="tw-mr-2 tw-text-orange-500" />
+                                    <div className="drak:tw-text-white  tw-mb-5 tw-flex tw-items-center">
+                                        <FaEnvelope className="drak:tw-text-white tw-mr-2 tw-text-orange-500" />
                                         <span>
                                             {application.appliedBy.email}
                                         </span>
@@ -113,14 +113,14 @@ export function Application() {
                                 </div>
                             </div>
 
-                            <div className="tw-mt-8 tw-grid tw-grid-cols-1 tw-gap-4 tw-rounded-lg tw-bg-orange-100 tw-p-4 tw-shadow-md md:tw-grid-cols-2">
+                            <div className="drak:tw-text-white tw-mt-8 tw-grid tw-grid-cols-1 tw-gap-4 tw-rounded-lg tw-bg-orange-100 tw-p-4 tw-shadow-md md:tw-grid-cols-2">
                                 <div>
                                     <h3 className="tw-mb-4 tw-text-2xl tw-font-medium tw-text-orange-600">
                                         Info
                                     </h3>
 
                                     <div className="tw-mb-2 tw-flex tw-items-center">
-                                        <p className="tw-mr-4 tw-font-medium">
+                                        <p className="tw-mr-4 tw-font-medium dark:tw-text-black">
                                             Gender:
                                         </p>
                                         <p className="tw-rounded-full tw-bg-orange-500 tw-px-2 tw-py-1 tw-text-white">
@@ -129,7 +129,7 @@ export function Application() {
                                     </div>
 
                                     <div className="tw-mb-2 tw-flex tw-items-center">
-                                        <p className="tw-mr-4 tw-font-medium">
+                                        <p className="tw-mr-4 tw-font-medium dark:tw-text-black">
                                             Location:
                                         </p>
                                         <p className="tw-rounded-full tw-bg-orange-500 tw-px-2 tw-py-1 tw-text-white">
@@ -138,7 +138,7 @@ export function Application() {
                                     </div>
 
                                     <div className="tw-flex tw-items-center">
-                                        <p className="tw-mr-4 tw-font-medium">
+                                        <p className="tw-mr-4 tw-font-medium dark:tw-text-black">
                                             Education:
                                         </p>
                                         <p className="tw-rounded-full tw-bg-orange-500 tw-px-2 tw-py-1 tw-text-white">
@@ -153,7 +153,7 @@ export function Application() {
                                     </h3>
 
                                     <div className="tw-mb-2 tw-flex tw-items-center">
-                                        <p className="tw-mr-4 tw-font-medium">
+                                        <p className="tw-mr-4 tw-font-medium dark:tw-text-black">
                                             Years:
                                         </p>
                                         <p className="tw-rounded-full tw-bg-orange-500 tw-px-2 tw-py-1 tw-text-white">
@@ -184,8 +184,11 @@ export function Application() {
                         </div>
                     )}
                     {application && (
-                        <div className="tw-flex tw-justify-around">
-                            <h1> Applicant Resume: </h1>
+                        <div className="drak:tw-text-white tw-m-3 tw-flex tw-justify-around">
+                            <h1 className="dark:tw-text-white">
+                                {" "}
+                                Applicant Resume:{" "}
+                            </h1>
                             <a
                                 href={application.resume}
                                 target="_blank"

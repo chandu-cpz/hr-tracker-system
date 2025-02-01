@@ -8,10 +8,12 @@ import { FaGear } from "react-icons/fa6";
 
 export function Sidebar() {
     return (
-        <div className="tw-bg-gray-100 tw-flex tw-h-screen tw-rounded-r-3xl tw-p-4">
-            <div className="tw-mb-10 tw-rounded-3xl tw-bg-gray tw-p-9 tw-shadow-lg">
+        <div className=" tw-flex tw-h-screen tw-rounded-r-3xl tw-p-4 dark:tw-bg-neutral-900 tw-mt-1">
+            <div className="tw-mb-10 tw-rounded-3xl  tw-p-9 tw-shadow-lg">
                 <div>
-                    <h3 className="tw-mb-4 tw-pb-3 tw-text-2xl ">MAIN MENU</h3>
+                    <h3 className="tw-mb-4 tw-pb-3 tw-text-2xl dark:tw-text-white ">
+                        MAIN MENU
+                    </h3>
 
                     <NavLink
                         to="/dashboard"
@@ -22,8 +24,13 @@ export function Sidebar() {
                         }
                     >
                         <div className="tw-flex tw-gap-4">
-                            <MdDashboard size={35} />
-                            <p className="tw-text-3xl">Dashboard</p>
+                            <MdDashboard
+                                size={35}
+                                className="dark:tw-text-white"
+                            />
+                            <p className="tw-text-3xl dark:tw-text-white">
+                                Dashboard
+                            </p>
                         </div>
                     </NavLink>
 
@@ -36,8 +43,13 @@ export function Sidebar() {
                         }
                     >
                         <div className="tw-flex tw-gap-4">
-                            <MdGroupAdd size={35} />
-                            <p className="tw-text-3xl">Post Job</p>
+                            <MdGroupAdd
+                                size={35}
+                                className="dark:tw-text-white"
+                            />
+                            <p className="tw-text-3xl dark:tw-text-white">
+                                Post Job
+                            </p>
                         </div>
                     </NavLink>
 
@@ -50,8 +62,13 @@ export function Sidebar() {
                         }
                     >
                         <div className="tw-flex tw-gap-4">
-                            <FaRegCalendarAlt size={35} />
-                            <p className="tw-text-3xl">Applicants</p>
+                            <FaRegCalendarAlt
+                                size={35}
+                                className="dark:tw-text-white"
+                            />
+                            <p className="tw-text-3xl dark:tw-text-white">
+                                Applicants
+                            </p>
                         </div>
                     </NavLink>
 
@@ -64,14 +81,21 @@ export function Sidebar() {
                         }
                     >
                         <div className="tw-flex tw-gap-4">
-                            <MdOutlinePersonPin size={35} />
-                            <p className="tw-text-3xl">Employees</p>
+                            <MdOutlinePersonPin
+                                size={35}
+                                className="dark:tw-text-white"
+                            />
+                            <p className="tw-text-3xl dark:tw-text-white">
+                                Employees
+                            </p>
                         </div>
                     </NavLink>
                 </div>
 
                 <div>
-                    <h3 className="tw-mb-4 tw-pb-3 tw-text-2xl ">OTHERS</h3>
+                    <h3 className="tw-mb-4 tw-pb-3 tw-text-2xl dark:tw-text-white">
+                        OTHERS
+                    </h3>
 
                     <NavLink
                         to="/profile"
@@ -82,8 +106,11 @@ export function Sidebar() {
                         }
                     >
                         <div className="tw-flex tw-gap-4">
-                            <FaGear size={35} />
-                            <p className="tw-text-3xl"> Profile</p>
+                            <FaGear size={35} className="dark:tw-text-white" />
+                            <p className="tw-text-3xl dark:tw-text-white">
+                                {" "}
+                                Profile
+                            </p>
                         </div>
                     </NavLink>
                 </div>

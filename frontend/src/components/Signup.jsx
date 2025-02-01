@@ -30,7 +30,7 @@ export function Signup() {
     };
 
     const [preview, setPreview] = useState(userData.companyImage);
-    
+
     const handleImageChange = async (e) => {
         setPreview(URL.createObjectURL(e.target.files[0]));
         setUserData({
@@ -120,29 +120,44 @@ export function Signup() {
         }
     };
 
+    const handleHR = () => {
+        let newrole;
+        if (userData.role === "HR") {
+            newrole = "USER";
+        } else {
+            newrole = "HR";
+        }
+        setUserData({
+            ...userData,
+            role: newrole,
+        });
+    };
+
     return (
-        <div className="tw-flex tw-h-screen tw-items-center tw-justify-center tw-bg-gray">
+        <div className="tw-flex tw-h-screen tw-items-center tw-justify-center dark:tw-bg-stone-900">
             <div className="tw-mt-16 tw-flex tw-items-center">
                 <div className="tw-ml-4 tw-w-1/6  tw-text-right">
                     <div className="tw-flex tw-flex-col">
-                        <h1 className="tw-mb-2 tw-whitespace-nowrap tw-text-4xl tw-font-extrabold tw-text-black ">
+                        <h1 className="tw-m-12 tw-whitespace-nowrap tw-text-4xl tw-font-extrabold tw-text-black dark:tw-text-gray-400">
                             Streamline Recruiting Workflows
                         </h1>
-                        <h1 className="tw-mb-2 tw-whitespace-nowrap tw-text-4xl tw-font-extrabold tw-text-stone-700 tw-text-opacity-90">
+                        <h1 className="tw-m-12 tw-whitespace-nowrap tw-text-4xl tw-font-extrabold tw-text-stone-700 tw-text-opacity-90 dark:tw-text-gray-300">
                             Centralize Application Tracking
                         </h1>
-                        <h1 className="tw-mb-2 tw-whitespace-nowrap tw-text-3xl tw-font-extrabold tw-text-black tw-text-opacity-60">
+                        <h1 className="tw-m-12 tw-whitespace-nowrap tw-text-3xl tw-font-extrabold tw-text-black tw-text-opacity-60 dark:tw-text-gray-200">
                             Optimize Hiring Outcomes
                         </h1>
                     </div>
                 </div>
             </div>
-            <div className="tw-mx-auto  tw-ml-4 tw-w-full tw-max-w-md tw-translate-x-full tw-transform tw-rounded-xl tw-bg-white tw-p-6 tw-shadow-lg tw-transition-transform tw-duration-300 tw-ease-in-out">
-                <h2 className="tw-mb-4 tw-text-2xl tw-font-bold">Sign Up</h2>
+            <div className="tw-mx-auto tw-ml-4 tw-w-full tw-max-w-md tw-translate-x-full  tw-rounded-xl tw-bg-white tw-p-6 tw-shadow-lg dark:tw-bg-stone-600 dark:tw-text-white">
+                <h2 className="tw-my-5 tw-text-center tw-text-4xl tw-font-bold">
+                    Sign Up
+                </h2>
                 <form>
                     <div className="tw-mb-4 md:tw-mb-0 md:tw-mr-4">
                         <label
-                            className="tw-text-gray-700 tw-mb-2 tw-block tw-text-sm tw-font-bold"
+                            className="tw-mb-2 tw-block tw-text-sm tw-font-bold tw-text-gray-700 dark:tw-text-white"
                             htmlFor="name"
                         >
                             Name:
@@ -151,7 +166,7 @@ export function Signup() {
                             type="text"
                             id="name"
                             name="fullName"
-                            className="tw-text-gray-700 tw-focus:outline-none tw-focus:shadow-outline tw-w-full tw-appearance-none tw-rounded-full tw-border tw-px-3 tw-py-2 tw-leading-tight tw-shadow"
+                            className="tw-focus:outline-none tw-focus:shadow-outline tw-w-full tw-appearance-none tw-rounded-full tw-border tw-px-3 tw-py-2 tw-leading-tight tw-text-gray-700 tw-shadow"
                             placeholder=""
                             value={userData.fullName}
                             onChange={handleChange}
@@ -164,7 +179,7 @@ export function Signup() {
                     </div>
                     <div className="tw-mb-4">
                         <label
-                            className="tw-text-gray-700 tw-mb-2 tw-block tw-text-sm tw-font-bold"
+                            className="tw-mb-2 tw-block tw-text-sm tw-font-bold tw-text-gray-700 dark:tw-text-white"
                             htmlFor="email"
                         >
                             Email:
@@ -173,7 +188,7 @@ export function Signup() {
                             type="email"
                             id="email"
                             name="email"
-                            className="tw-text-gray-700 tw-focus:outline-none tw-focus:shadow-outline tw-w-full tw-appearance-none tw-rounded-full tw-border tw-px-3 tw-py-2 tw-leading-tight tw-shadow"
+                            className="tw-focus:outline-none tw-focus:shadow-outline tw-w-full tw-appearance-none tw-rounded-full tw-border tw-px-3 tw-py-2 tw-leading-tight tw-text-gray-700 tw-shadow"
                             placeholder=""
                             value={userData.email}
                             onChange={handleChange}
@@ -186,13 +201,13 @@ export function Signup() {
                     </div>
                     <div className="tw-relative">
                         <label
-                            className="tw-text-gray-700 tw-mb-2 tw-block tw-text-sm tw-font-bold"
+                            className="tw-mb-2 tw-block tw-text-sm tw-font-bold tw-text-gray-700 dark:tw-text-white"
                             htmlFor="password"
                         >
                             Password:
                         </label>
                         <input
-                            className="tw-text-gray-700 tw-focus:tw-outline-none tw-focus:tw-shadow-outline tw-w-full tw-appearance-none tw-rounded-full tw-border tw-py-2 tw-pr-10 tw-leading-tight tw-shadow"
+                            className="tw-focus:tw-outline-none tw-focus:tw-shadow-outline tw-w-full tw-appearance-none tw-rounded-full tw-border tw-py-2 tw-pr-10 tw-leading-tight tw-text-gray-700 tw-shadow"
                             type={showPassword ? "text" : "password"}
                             id="password"
                             name="password"
@@ -203,10 +218,14 @@ export function Signup() {
                         <button
                             type="button"
                             onClick={() => setShowPassword(!showPassword)}
-                            className=" tw-absolute tw-bottom-0 tw-right-0 tw-m-2 tw-border-none tw-bg-white"
+                            className=" tw-absolute tw-bottom-0 tw-right-0 tw-m-2 tw-rounded-full tw-border-none tw-bg-white"
                             style={{ zIndex: "10" }}
                         >
-                            {showPassword ? <FaEye /> : <FaEyeSlash />}
+                            {showPassword ? (
+                                <FaEye className="dark:tw-text-black" />
+                            ) : (
+                                <FaEyeSlash className="dark:tw-text-black" />
+                            )}
                         </button>
                     </div>
 
@@ -219,7 +238,7 @@ export function Signup() {
                         <span className="text-gray-700 tw-mb-2 tw-block tw-text-sm tw-font-bold">
                             Gender
                         </span>
-                        <label className="tw-mr-6 tw-inline-flex tw-items-center">
+                        <label className="tw-mr-6 tw-inline-flex tw-items-center dark:tw-text-white">
                             <input
                                 type="radio"
                                 className="form-radio"
@@ -227,9 +246,9 @@ export function Signup() {
                                 value="male"
                                 onChange={handleChange}
                             />
-                            <span className="ml-2">Male</span>
+                            <span className="tw-ml-2">Male</span>
                         </label>
-                        <label className="tw-mr-6 tw-inline-flex tw-items-center">
+                        <label className="tw-mr-6 tw-inline-flex tw-items-center dark:tw-text-white">
                             <input
                                 type="radio"
                                 className="form-radio"
@@ -237,7 +256,7 @@ export function Signup() {
                                 value="female"
                                 onChange={handleChange}
                             />
-                            <span className="ml-2">Female</span>
+                            <span className="tw-ml-2">Female</span>
                         </label>
                         <label className="tw-inline-flex tw-items-center">
                             <input
@@ -247,19 +266,19 @@ export function Signup() {
                                 value="other"
                                 onChange={handleChange}
                             />
-                            <span className="ml-2">Other</span>
+                            <span className="tw-ml-2">Other</span>
                         </label>
                     </div>
                     <div className="tw-mb-4">
-                        <label className="tw-mr-6 tw-inline-flex tw-items-center">
+                        <label className="tw-mr-6 tw-inline-flex tw-items-center dark:tw-text-white">
                             <input
                                 type="checkbox"
                                 className="form-checkbox"
                                 name="role"
                                 value="HR"
-                                onChange={handleChange}
+                                onChange={handleHR}
                             />
-                            <span className="text-gray-700 tw-mb-2 tw-block tw-text-sm tw-font-bold">
+                            <span className="text-gray-700 tw-mb-2 tw-ml-2 tw-block tw-text-sm tw-font-bold">
                                 HR
                             </span>
                         </label>
@@ -269,7 +288,7 @@ export function Signup() {
                         <>
                             <div className="tw-mb-4">
                                 <label
-                                    className="tw-text-gray-700 tw-mb-2 tw-block tw-text-sm tw-font-bold"
+                                    className="tw-mb-2 tw-block tw-text-sm tw-font-bold tw-text-gray-700 dark:tw-text-white"
                                     htmlFor="company"
                                 >
                                     Company Name:
@@ -278,7 +297,7 @@ export function Signup() {
                                     type="text"
                                     id="company"
                                     name="company"
-                                    className="tw-text-gray-700 tw-focus:outline-none tw-focus:shadow-outline tw-w-full tw-appearance-none tw-rounded-full tw-border tw-px-3 tw-py-2 tw-leading-tight tw-shadow"
+                                    className="tw-focus:outline-none tw-focus:shadow-outline tw-w-full tw-appearance-none tw-rounded-full tw-border tw-px-3 tw-py-2 tw-leading-tight tw-text-gray-700 tw-shadow"
                                     placeholder=""
                                     value={userData.company}
                                     onChange={handleChange}
@@ -289,11 +308,11 @@ export function Signup() {
                             </div>
 
                             <div className="tw-mb-4">
-                                <label className="tw-text-gray-700 tw-mb-2 tw-block tw-text-sm tw-font-bold">
+                                <label className="tw-mb-2 tw-block tw-text-sm tw-font-bold tw-text-gray-700 dark:tw-text-white">
                                     Company Image:
                                     <MdCameraAlt
                                         size={32}
-                                        className="tw-text-gray-500 tw-ml-4 tw-mt-16"
+                                        className="tw-ml-4 tw-mt-16 tw-text-gray-500"
                                     />
                                 </label>
                                 {userData.companyImage && (
@@ -316,7 +335,7 @@ export function Signup() {
 
                     <button
                         type="submit"
-                        className="tw-hover:bg-orange-700 tw-focus:outline-none tw-focus:shadow-outline tw-rounded-full tw-bg-orange-500 tw-px-4 tw-py-2 tw-font-bold tw-text-white"
+                        className="tw-hover:bg-orange-700  tw-focus:outline-none tw-focus:shadow-outline tw-rounded-full tw-border-none tw-bg-orange-500  tw-bg-gradient-to-b tw-from-orange-500 tw-to-orange-600 tw-p-5  tw-px-4 tw-py-3 tw-text-3xl tw-font-medium tw-text-white  tw-shadow-2xl tw-transition-all hover:tw-scale-105 hover:tw-shadow-xl"
                         onClick={submitUser}
                     >
                         Sign Up

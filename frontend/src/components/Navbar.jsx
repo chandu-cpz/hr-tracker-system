@@ -4,8 +4,34 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { setUser, setIsLoggedIn } from "../redux/slice/userSlice";
+import { HiSun, HiMoon } from "react-icons/hi";
 
 export function Navbar() {
+    const [darkMode, setDarkMode] = useState(false);
+    useEffect(() => {
+        console.log("fist use effect is triggered");
+        const theme = localStorage.getItem("theme");
+        console.log(theme);
+        if (theme === "dark") {
+            setDarkMode(true);
+            document.documentElement.classList.add("tw-dark");
+        } else if (theme === "light") setDarkMode(false);
+    }, []);
+
+    function toggleDarkMode() {
+        if (!darkMode) {
+            localStorage.setItem("theme", "dark");
+            document.documentElement.classList.add("tw-dark");
+            document.documentElement.setAttribute("data-bs-theme", "dark");
+        } else {
+            localStorage.setItem("theme", "light");
+            document.documentElement.classList.remove("tw-dark");
+            document.documentElement.setAttribute("data-bs-theme", "light");
+        }
+        setDarkMode((prev) => !prev);
+        console.log("The value of dark mode" + darkMode);
+    }
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
     useEffect(() => {
@@ -39,21 +65,37 @@ export function Navbar() {
     };
 
     return (
-        <div className=" tw-h-15 tw-flex tw-justify-evenly tw-bg-gray tw-p-2 tw-shadow-lg">
+        <div className=" tw-h-15 tw-flex tw-justify-evenly tw-p-2 tw-shadow-lg dark:tw-bg-neutral-900">
             <NavLink to="/" className="tw-text-current tw-no-underline">
-                <h1 className="tw-ms-4">HRJ</h1>
+                <h1 className="tw-ms-4 dark:tw-text-gray-100">HRJ</h1>
             </NavLink>
 
             <NavLink
                 to="/jobs"
                 className={({ isActive }) =>
-                    `tw-mt-2 tw-text-3xl tw-text-current tw-no-underline ${
+                    `tw-mt-2 tw-text-3xl tw-text-current tw-no-underline  ${
                         isActive ? "tw-text-orange-500" : "tw-text-gray-500"
                     }`
                 }
             >
-                <p className="">Find jobs</p>
+                <p className="dark:tw-text-gray-100">Find Jobs</p>
             </NavLink>
+            <button
+                className="tw-relative tw-inline-flex tw-h-14 tw-w-14 tw-items-center tw-justify-center tw-rounded-full tw-border-2 tw-border-gray-600 tw-bg-white"
+                onClick={toggleDarkMode}
+            >
+                <HiSun
+                    className={`tw-text-xl dark:tw-text-gray-100 ${
+                        darkMode && "tw-hidden"
+                    }`}
+                />
+
+                <HiMoon
+                    className={`tw-text-xl dark:tw-text-black ${
+                        !darkMode && "tw-hidden"
+                    }`}
+                />
+            </button>
             {isLoggedIn ? (
                 <div className="tw-flex tw-gap-2">
                     <div className="dropdown">
@@ -93,7 +135,7 @@ export function Navbar() {
                             </li>
                             <li className="dropdown-item">
                                 <button
-                                    className="tw-rounded-full tw-border-none tw-bg-orange-500 tw-px-4 tw-text-2xl"
+                                    className=" tw-mx-auto tw-rounded-full tw-border-none tw-bg-gradient-to-b tw-from-orange-500 tw-to-orange-600 tw-px-5 tw-py-2 tw-text-xl tw-text-white tw-shadow-2xl tw-transition-all  hover:tw-scale-105 hover:tw-shadow-xl"
                                     onClick={logOut}
                                 >
                                     Log Out
@@ -112,19 +154,19 @@ export function Navbar() {
                             }`
                         }
                     >
-                        <p className="">Dashboard</p>
+                        <p className="dark:tw-text-gray-100">Dashboard</p>
                     </NavLink>
                 </div>
             ) : (
                 <div>
                     <NavLink to="/login">
-                        <button className="tw-mx-1 tw-rounded-full tw-border-none tw-bg-orange-500 tw-px-5 tw-text-2xl lg:tw-mr-5 lg:tw-p-3 lg:tw-px-5">
+                        <button className=" tw-mx-2 tw-rounded-full tw-border-none tw-bg-gradient-to-b tw-from-orange-500 tw-to-orange-600 tw-px-5 tw-py-3  tw-text-3xl tw-text-white tw-shadow-2xl tw-transition-all  hover:tw-scale-105 hover:tw-shadow-xl">
                             Login
                         </button>
                     </NavLink>
 
                     <NavLink to="/register">
-                        <button className="tw-rounded-full tw-border-none tw-bg-orange-500 tw-px-5 tw-text-2xl lg:tw-mr-5 lg:tw-p-3 lg:tw-px-5">
+                        <button className=" tw-px-23 tw-mx-2 tw-rounded-full tw-border-none tw-bg-gradient-to-b tw-from-orange-500  tw-to-orange-600 tw-py-3  tw-text-3xl tw-text-white tw-shadow-2xl tw-transition-all  hover:tw-scale-105 hover:tw-shadow-xl">
                             Sign Up
                         </button>
                     </NavLink>
