@@ -26,7 +26,7 @@ export async function createApplication(req, res) {
 	const newApplication = await Application.create(application);
 	console.log(newApplication);
 	const createdApplication = await Application.findById(newApplication._id).populate("jobId")
-	sendMail(req.body.user.email, "New Application Recieved", generateApplicationEmail(createdApplication));
+	sendMail(req.body.user.email, "New Application Recieved", generateApplicationEmail(createdApplication, req.body.user.fullName));
 	res.send(newApplication);
 }
 

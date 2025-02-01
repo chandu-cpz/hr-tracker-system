@@ -41,7 +41,7 @@ export function generateSignUpEmailTemplate(username) {
     `;
 }
 
-export function generateApplicationEmail(application) {
+export function generateApplicationEmail(application, username) {
 
   return `
       <!DOCTYPE html>
@@ -90,7 +90,7 @@ export function generateApplicationEmail(application) {
         </head>
   
         <body>
-          <h3>Hi <b>${application.appliedBy.fullName}</b>,</h3>
+          <h3>Hi <b>${username}</b>,</h3>
   
           <p>Your application for the position of <b>${application.jobId.jobTitle}</b> has been received by our HR department.</p>
   
@@ -101,7 +101,7 @@ export function generateApplicationEmail(application) {
           <ul>
             <li>Position Title: ${application.jobId.jobTitle}</li>
             <li><a href="${application.resumeSrc}" download>Download Resume</a></li>
-            <li>Application Status: <span class="${application.accepted ? "accepted" : "pending"}">${application.accepted ? "Accepted" : "Pending"}</span></li> 
+            <li>Application Status: ${application.accepted}</span></li> 
           </ul>
           
           <p>Thanks,</p>

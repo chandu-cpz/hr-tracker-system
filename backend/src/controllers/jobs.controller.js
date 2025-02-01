@@ -137,8 +137,11 @@ export async function getJobs(req, res) {
             response.experience = experience;
         }
 
-        const jobs = await query.exec();
-        console.log(jobs);
+        const jobs = await query.populate({
+            path: 'postedBy',
+            select: 'companyImage',
+        }).exec();
+        console.log("Jobs sent successfully");
         response.jobs = jobs;
         const totalJobs = await jobs.length;
         const totalDocs = await Job.countDocuments(query.getQuery());
