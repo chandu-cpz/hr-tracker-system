@@ -2,6 +2,8 @@ import { Job } from "../models/jobs.model.js";
 import { User } from "../models/user.model.js";
 import validator from "validator";
 import express from "express";
+import { getRecommendationClient } from "../utils/grpc.js";
+import mongoose from "mongoose";
 
 const router = express.Router();
 
@@ -275,4 +277,51 @@ export async function addJob(req, res) {
     }
 
     //send back some response ;
+}
+
+
+export async function recommendJobs(req, res) {
+    console.log("================================================");
+    console.log(
+        `(recommendJobs Controller): ${new Date().toLocaleString()}`
+    );
+    const jobId = req.body._id;
+    console.log(jobId);
+    const recommendationClient = await getRecommendationClient();
+
+    recommendationClient.GetJobRecommendations(
+        { JobId: jobId },
+        async (error, response) => { // Make the callback async
+            if (error) {
+                console.error("gRPC Error:", error);
+                return res.status(500).json({ error: error.message });
+            }
+
+            console.log("gRPC Response (raw):", response);
+
+            if (response && response.recommendedJobIds) {
+                try {
+                    // 1. Convert job IDs to ObjectIds and fetch jobs from MongoDB
+                    const recommendedJobObjectIds = response.recommendedJobIds.map(jobId => new mongoose.Types.ObjectId(jobId));
+                    const recommendedJobs = await Promise.all( // Use Promise.all to fetch jobs concurrently
+                        recommendedJobObjectIds.map(objectId => Job.findById(objectId).lean()) // .lean() to get plain JavaScript objects
+                    );
+
+                    console.log("Recommended Jobs from MongoDB:", recommendedJobs); // Log the fetched job objects
+
+                    // 2. Send the fetched job objects in the JSON response
+                    return res.json({
+                        "recommendedJobs": recommendedJobs
+                    });
+
+                } catch (dbError) {
+                    console.error("Error fetching jobs from MongoDB:", dbError);
+                    return res.status(500).json({ error: "Error fetching recommended jobs from database" });
+                }
+
+            } else {
+                console.warn("gRPC Response missing recommendedJobIds:", response);
+                return res.status(500).json({ error: "Invalid response from recommendation service" });
+            }
+        });
 }
