@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Resume_parsing</string>
+    <string name="title_activity_login_screen">Login_screen</string>
+</resources>
