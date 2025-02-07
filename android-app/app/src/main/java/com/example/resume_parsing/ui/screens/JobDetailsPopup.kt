@@ -13,12 +13,81 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.ui.draw.clip
 import com.example.resume_parsing.network.Job
 import com.example.resume_parsing.viewmodel.JobViewModel
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
+//@OptIn(ExperimentalLayoutApi::class)
+//@Composable
+//fun JobDetailsPopup(job: Job, onClose: () -> Unit) {
+//    Box(
+//        modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.8f)),
+//        contentAlignment = Alignment.Center
+//    ) {
+//        Card(
+//            modifier = Modifier.fillMaxSize(0.9f),
+//            shape = RoundedCornerShape(16.dp),
+//            colors = CardDefaults.cardColors(containerColor = Color.White)
+//        ) {
+//            Column(modifier = Modifier.padding(16.dp)) {
+//                Text(text = job.jobTitle, fontSize = 22.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(bottom = 8.dp))
+//
+//                // Company Info Box
+//                JobInfoSection(job)
+//
+//                Spacer(modifier = Modifier.height(16.dp))
+//
+//                // Job Details Sections
+//                JobDetailSection("Job Description", job.jobDescription)
+//                JobDetailSection("Responsibilities", job.responsibilities)
+//                JobDetailSection("Qualifications", job.qualifications)
+//
+//                Spacer(modifier = Modifier.height(16.dp))
+//
+//                // Required Skills
+//                Text(text = "Required Skills", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+//                FlowRow(
+//                    modifier = Modifier
+//                        .fillMaxWidth()
+//                        .padding(top = 8.dp),
+//                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+//                    verticalArrangement = Arrangement.spacedBy(6.dp) // Ensure proper vertical spacing
+//                ) {
+//                    job.skills.forEach { skill ->
+//                        Box(
+//                            modifier = Modifier
+//                                .background(Color(0xFFFF9800), shape = RoundedCornerShape(50))
+//                                .padding(horizontal = 10.dp, vertical = 4.dp)
+//                        ) {
+//                            Text(
+//                                text = skill,
+//                                fontSize = 12.sp,
+//                                color = Color.Black
+//                            )
+//                        }
+//                    }
+//                }
+//
+//
+//                Spacer(modifier = Modifier.height(16.dp))
+//
+//                // Upload Resume Section
+//                UploadResumeSection()
+//
+//                Spacer(modifier = Modifier.height(16.dp))
+//
+//                // Buttons Row
+//                ActionButtons(onClose)
+//            }
+//        }
+//    }
+//}
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun JobDetailsPopup(job: Job, onClose: () -> Unit) {
@@ -31,7 +100,11 @@ fun JobDetailsPopup(job: Job, onClose: () -> Unit) {
             shape = RoundedCornerShape(16.dp),
             colors = CardDefaults.cardColors(containerColor = Color.White)
         ) {
-            Column(modifier = Modifier.padding(16.dp)) {
+            Column(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .verticalScroll(rememberScrollState()) // Add vertical scroll
+            ) {
                 Text(text = job.jobTitle, fontSize = 22.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(bottom = 8.dp))
 
                 // Company Info Box
@@ -49,16 +122,23 @@ fun JobDetailsPopup(job: Job, onClose: () -> Unit) {
                 // Required Skills
                 Text(text = "Required Skills", fontSize = 18.sp, fontWeight = FontWeight.Bold)
                 FlowRow(
-                    modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                    verticalArrangement = Arrangement.spacedBy(6.dp) // Ensure proper vertical spacing
                 ) {
                     job.skills.forEach { skill ->
                         Box(
                             modifier = Modifier
                                 .background(Color(0xFFFF9800), shape = RoundedCornerShape(50))
-                                .padding(horizontal = 12.dp, vertical = 6.dp)
+                                .padding(horizontal = 10.dp, vertical = 4.dp)
                         ) {
-                            Text(text = skill, fontSize = 14.sp, color = Color.White)
+                            Text(
+                                text = skill,
+                                fontSize = 12.sp,
+                                color = Color.Black
+                            )
                         }
                     }
                 }
@@ -76,7 +156,6 @@ fun JobDetailsPopup(job: Job, onClose: () -> Unit) {
         }
     }
 }
-
 @Composable
 fun JobInfoSection(job: Job) {
     Card(
@@ -88,7 +167,10 @@ fun JobInfoSection(job: Job) {
         Column(modifier = Modifier.padding(16.dp)) {
             JobInfoRow(Icons.Filled.Business, "Company", job.companyName)
             JobInfoRow(Icons.Filled.LocationOn, "Location", job.location)
-            JobInfoRow(Icons.Filled.CalendarToday, "Date Posted", "Posted ${job.updatedAt}")
+            job.updatedAt?.let { dateString ->
+                val formattedDate = formatDateTime(dateString)
+                JobInfoRow(Icons.Filled.CalendarToday, "Date Posted", formattedDate)
+            }
             JobInfoRow(Icons.Filled.AttachMoney, "Salary", "$${job.salary}")
         }
     }
@@ -106,7 +188,7 @@ fun JobInfoRow(icon: androidx.compose.ui.graphics.vector.ImageVector, label: Str
 @Composable
 fun JobDetailSection(title: String, content: String) {
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth().padding(vertical = 5.dp),
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)
@@ -154,5 +236,19 @@ fun ActionButtons(onClose: () -> Unit) {
         ) {
             Text(text = "Apply for Job", color = Color.White)
         }
+    }
+}
+
+fun formatDateTime(dateString: String): String {
+    return try {
+        // Parse the date string into a ZonedDateTime
+        val zonedDateTime = ZonedDateTime.parse(dateString)
+        // Define the desired output format (date and time)
+        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy, HH:mm")
+        // Format the date and time
+        zonedDateTime.format(formatter)
+    } catch (e: Exception) {
+        // Fallback in case of parsing error
+        "Invalid Date"
     }
 }

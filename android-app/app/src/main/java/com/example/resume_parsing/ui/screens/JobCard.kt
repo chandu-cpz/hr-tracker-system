@@ -16,6 +16,8 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import androidx.compose.foundation.layout.FlowRow
 import com.example.resume_parsing.network.Job
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -44,8 +46,19 @@ fun JobCard(job: Job, onClick: () -> Unit) {
             ) {
                 Column {
                     // Date Posted
-                    job.updatedAt?.let {
-                        Text(text = it, fontSize = 12.sp, color = Color.Black.copy(alpha = 0.7f))
+//                    job.updatedAt?.let {
+//                        Text(text = it, fontSize = 12.sp, color = Color.Black.copy(alpha = 0.7f))
+//                    }
+                    Box(
+                        modifier = Modifier
+                            .background(Color(0xFFE3F2FD), shape = RoundedCornerShape(50))
+                            .padding(horizontal = 10.dp, vertical = 4.dp)
+                    ){
+                        job.updatedAt?.let { dateString ->
+                            val formattedDate = formatDate(dateString)
+
+                        Text(text =  formattedDate, fontSize = 12.sp, color = Color.Black.copy(alpha = 0.7f))
+                    }
                     }
 
                     // Company Name
@@ -117,5 +130,18 @@ fun JobCard(job: Job, onClick: () -> Unit) {
                 }
             }
         }
+    }
+}
+fun formatDate(dateString: String): String {
+    return try {
+        // Parse the date string into a ZonedDateTime
+        val zonedDateTime = ZonedDateTime.parse(dateString)
+        // Define the desired output format
+        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+        // Format the date
+        zonedDateTime.format(formatter)
+    } catch (e: Exception) {
+        // Fallback in case of parsing error
+        "Invalid Date"
     }
 }
