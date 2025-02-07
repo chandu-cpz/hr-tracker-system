@@ -53,6 +53,6 @@ interface ApiService {
     fun logout(): Call<ResponseBody>
     @GET("api/login/auto")
     suspend fun AutoLogin(): Response<UserResponse> // The token will automatically be sent in cookies
-    @GET("api/jobs/all")  // Replace with your actual endpoint
+    @GET("api/jobs/")  // Replace with your actual endpoint
     suspend fun getAllJobs(): JobResponse
 }

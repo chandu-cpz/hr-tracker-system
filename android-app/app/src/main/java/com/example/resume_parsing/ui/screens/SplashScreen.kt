@@ -36,7 +36,7 @@ fun SplashScreen(navController: NavController) {
 
             // If the response is successful, navigate to the main screen
             if (response?.isSuccessful == true) {
-                navController.navigate("home") // Replace with your target screen
+                navController.navigate("main") // Replace with your target screen
             } else {
                 navController.navigate("login") // Navigate to login if token is invalid or expired
                 Log.d("error_autologin","errroorrr");

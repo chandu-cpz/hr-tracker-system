@@ -119,7 +119,7 @@ fun LoginScreen(navController: NavController) {
                                             if (user.error == null) {
                                                 Toast.makeText(navController.context, "Login successful", Toast.LENGTH_SHORT).show()
                                                 // Navigate to the main screen or dashboard
-                                                navController.navigate("home")  // Replace with your target screen
+                                                navController.navigate("main")  // Replace with your target screen
                                             }else {
                                                 Toast.makeText(navController.context, "Login failed: ${response.message()}", Toast.LENGTH_SHORT).show()
                                             }
