@@ -84,7 +84,7 @@ fun JobCard(job: Job, onClick: () -> Unit) {
                         horizontalArrangement = Arrangement.spacedBy(6.dp),
                         verticalArrangement = Arrangement.spacedBy(6.dp)
                     ) {
-                        job.skills.forEach { skill ->
+                        job.skills?.forEach { skill ->
                             Box(
                                 modifier = Modifier
                                     .background(Color(0xFFE3F2FD), shape = RoundedCornerShape(50))

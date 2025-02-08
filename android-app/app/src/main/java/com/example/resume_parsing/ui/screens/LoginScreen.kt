@@ -17,9 +17,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.resume_parsing.App
 import com.example.resume_parsing.network.RetrofitClient
 import com.example.resume_parsing.network.LoginRequest
 import com.example.resume_parsing.network.UserResponse
+import com.example.resume_parsing.utils.PreferencesHelper
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -118,7 +120,7 @@ fun LoginScreen(navController: NavController) {
                                         if (user != null ) {
                                             if (user.error == null) {
                                                 Toast.makeText(navController.context, "Login successful", Toast.LENGTH_SHORT).show()
-                                                // Navigate to the main screen or dashboard
+                                                PreferencesHelper.saveUserData(App.context, user)
                                                 navController.navigate("main")  // Replace with your target screen
                                             }else {
                                                 Toast.makeText(navController.context, "Login failed: ${response.message()}", Toast.LENGTH_SHORT).show()
@@ -131,6 +133,7 @@ fun LoginScreen(navController: NavController) {
 
                                 override fun onFailure(call: Call<UserResponse>, t: Throwable) {
                                     isLoading = false
+                                    t.message?.let { Log.d("errror", it) };
                                     Toast.makeText(navController.context, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
                                 }
                             })

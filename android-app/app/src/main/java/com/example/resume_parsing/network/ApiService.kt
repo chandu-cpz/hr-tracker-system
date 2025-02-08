@@ -5,7 +5,6 @@ import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
-import retrofit2.http.Header
 import retrofit2.http.POST
 
 data class UserSignUpRequest(
@@ -29,7 +28,7 @@ data class Job(
     val noOfPosts: Int,
     val salary: Int,
     val isOpen: Boolean,
-    val skills: List<String>,
+    val skills: List<String>?,
     val experience: String?,
     val postedBy: PostedBy?,
     val appliedBy: List<String>?,
@@ -43,7 +42,24 @@ data class PostedBy(
 
 data class JobResponse(val jobs: List<Job>)
 data class LoginRequest(val email: String, val password: String)
-data class UserResponse(val email: String, val fullName: String, val error: String? = null)
+
+data class UserResponse(
+    val _id: String,
+    val fullName: String,
+    val role: String,
+    val gender: String,
+    val email: String,
+    val skills: List<String>?,
+    val company: String?,
+    val createdAt: String?,
+    val updatedAt: String?,
+    val address: String?,
+    val education: String?,
+    val experience: String?,
+    val phoneNumber: String?,
+    val profileImage: String?,
+    val error: String?
+)
 interface ApiService {
     @POST("/api/signup")  // Replace with your actual API endpoint
     suspend fun signUp(@Body userSignUpRequest: UserSignUpRequest): Response<Unit>

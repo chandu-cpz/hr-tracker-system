@@ -128,7 +128,7 @@ fun JobDetailsPopup(job: Job, onClose: () -> Unit) {
                     horizontalArrangement = Arrangement.spacedBy(6.dp),
                     verticalArrangement = Arrangement.spacedBy(6.dp) // Ensure proper vertical spacing
                 ) {
-                    job.skills.forEach { skill ->
+                    job.skills?.forEach { skill ->
                         Box(
                             modifier = Modifier
                                 .background(Color(0xFFFF9800), shape = RoundedCornerShape(50))
