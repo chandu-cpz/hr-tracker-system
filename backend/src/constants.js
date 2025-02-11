@@ -4,7 +4,8 @@ import path from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-export const PROTOFILE_PATH = path.join(__dirname, '../proto/recommendation.proto');
+export const RECOMMENDATIONPROTOFILE_PATH = path.join(__dirname, '../proto/recommendation.proto');
+export const ATSPROTOFILE_PATH = path.join(__dirname, '../proto/ats.proto');
 
 export const DB_NAME = "hrdb";
 

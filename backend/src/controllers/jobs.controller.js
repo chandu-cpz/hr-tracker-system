@@ -2,7 +2,7 @@ import { Job } from "../models/jobs.model.js";
 import { User } from "../models/user.model.js";
 import validator from "validator";
 import express from "express";
-import { getRecommendationClient } from "../utils/grpc.js";
+import { getRecommendationClient,getATSClient } from "../utils/grpc.js";
 import mongoose from "mongoose";
 
 const router = express.Router();
@@ -325,3 +325,40 @@ export async function recommendJobs(req, res) {
             }
         });
 }
+export async function calculateATS(req, res) {
+    console.log("================================================");
+    console.log(
+        `(calculateATS Controller): ${new Date().toLocaleString()}`
+    );
+
+    const jobId = req.body.jobId;
+    const userId = req.body.userId;
+
+    console.log(`Job ID: ${jobId}, User ID: ${userId}`);
+
+    if (!jobId || !userId) {
+        return res.status(400).json({ error: "JobId and UserId are required." });
+    }
+
+    const atsClient = await getATSClient();
+
+    atsClient.CalculateATSScore(
+        { JobId: jobId, UserId: userId },
+        (error, response) => {
+            if (error) {
+                console.error("gRPC Error:", error);
+                return res.status(500).json({ error: error.message });
+            }
+
+            console.log("gRPC Response (raw):", response);
+
+            if (response && typeof response.score === 'number') {
+                return res.json({ atsScore: response.score });
+            } else {
+                console.warn("gRPC Response invalid or missing score:", response);
+                return res.status(500).json({ error: "Invalid response from ATS service" });
+            }
+        }
+    );
+}
+

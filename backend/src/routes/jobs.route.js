@@ -8,7 +8,8 @@ import {
     getSingleJob,
     openJobsCount,
     saveJob,
-    recommendJobs
+    recommendJobs,
+    calculateATS
 } from "../controllers/jobs.controller.js";
 import { addJob } from "../controllers/jobs.controller.js";
 
@@ -27,3 +28,5 @@ jobsRouter.get("/details/:jobId", getSingleJob);
 jobsRouter.post("/", checkAuth, requiredRole("HR"), addJob);
 
 jobsRouter.post("/recommendations",recommendJobs)
+
+jobsRouter.post('/calculate-ats', calculateATS); 

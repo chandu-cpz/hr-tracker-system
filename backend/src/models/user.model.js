@@ -67,6 +67,9 @@ const userSchema = new mongoose.Schema(
         companyImage: {
             type: String,
         },
+        resume:{
+            type: String,
+        }
     },
     { timestamps: true }
 );
