@@ -9,7 +9,7 @@ from grpc_generated import recommendation_pb2 as recommendation_pb2
 from grpc_generated import recommendation_pb2_grpc as recommendation_pb2_grpc
 from grpc_generated import ats_pb2 as ats_pb2
 from grpc_generated import ats_pb2_grpc as ats_pb2_grpc
-from ats import calculate_ats_score
+from ats import calculate_ats_score  # Import the updated function
 from mongo import getClient
 
 load_dotenv() # Load environment variables
@@ -48,21 +48,21 @@ class ATSServiceServicer(ats_pb2_grpc.ATSServiceServicer):
             resume_text = await self.get_resume_from_db(user_id)
 
             if not resume_text:
-                print(" Resume not found")
+                print("Resume not found")
                 return ats_pb2.ATSScoreResponse(score=-1)
-            if not job :
-                print("Job  not found")
+            if not job:
+                print("Job not found")
                 return ats_pb2.ATSScoreResponse(score=-1)
 
-            score = await calculate_ats_score(job, resume_text)
-            print(f"ATS Score: {score}")
-
-            return ats_pb2.ATSScoreResponse(score=score)
+            score, feedback = await calculate_ats_score(job, resume_text)
+            stringified_feedback = {k: str(v) for k, v in feedback.items()}
+            response = ats_pb2.ATSScoreResponse(score=score, feedback=stringified_feedback)
+            print(f"Full gRPC Response Object: {response}")
+            return response
 
         except Exception as e:
-            print(f"Error calculating ATS score: {e}")
+            print(f"Error calculating ATS score in server: {e}")
             return ats_pb2.ATSScoreResponse(score=-1)
-
     async def get_job_from_db(self, job_id):
         client = await getClient()
         db = client[os.getenv("DB_NAME")]
@@ -72,8 +72,8 @@ class ATSServiceServicer(ats_pb2_grpc.ATSServiceServicer):
             try:
                 job_id_object = ObjectId(job_id)
             except Exception as e:
-                print(f"Invalid job_id format: {e}") #handle this case. 
-                return None 
+                print(f"Invalid job_id format: {e}") #handle this case.
+                return None
 
             job = await jobs_collection.find_one({"_id": job_id_object})
             return job

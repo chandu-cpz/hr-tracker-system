@@ -353,7 +353,10 @@ export async function calculateATS(req, res) {
             console.log("gRPC Response (raw):", response);
 
             if (response && typeof response.score === 'number') {
-                return res.json({ atsScore: response.score });
+                return res.json({ atsScore: response.score,
+                    feedback: response.feedback
+                                
+                });
             } else {
                 console.warn("gRPC Response invalid or missing score:", response);
                 return res.status(500).json({ error: "Invalid response from ATS service" });

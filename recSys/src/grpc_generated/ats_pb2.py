@@ -24,17 +24,21 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\tats.proto\x12\x03\x61ts\"0\n\x0f\x41TSScoreRequest\x12\r\n\x05JobId\x18\x01 \x01(\t\x12\x0e\n\x06UserId\x18\x02 \x01(\t\"!\n\x10\x41TSScoreResponse\x12\r\n\x05score\x18\x01 \x01(\x02\x32P\n\nATSService\x12\x42\n\x11\x43\x61lculateATSScore\x12\x14.ats.ATSScoreRequest\x1a\x15.ats.ATSScoreResponse\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\tats.proto\x12\x03\x61ts\"0\n\x0f\x41TSScoreRequest\x12\r\n\x05JobId\x18\x01 \x01(\t\x12\x0e\n\x06UserId\x18\x02 \x01(\t\"\x89\x01\n\x10\x41TSScoreResponse\x12\r\n\x05score\x18\x01 \x01(\x02\x12\x35\n\x08\x66\x65\x65\x64\x62\x61\x63k\x18\x02 \x03(\x0b\x32#.ats.ATSScoreResponse.FeedbackEntry\x1a/\n\rFeedbackEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x32P\n\nATSService\x12\x42\n\x11\x43\x61lculateATSScore\x12\x14.ats.ATSScoreRequest\x1a\x15.ats.ATSScoreResponse\"\x00\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'ats_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
+  _globals['_ATSSCORERESPONSE_FEEDBACKENTRY']._loaded_options = None
+  _globals['_ATSSCORERESPONSE_FEEDBACKENTRY']._serialized_options = b'8\001'
   _globals['_ATSSCOREREQUEST']._serialized_start=18
   _globals['_ATSSCOREREQUEST']._serialized_end=66
-  _globals['_ATSSCORERESPONSE']._serialized_start=68
-  _globals['_ATSSCORERESPONSE']._serialized_end=101
-  _globals['_ATSSERVICE']._serialized_start=103
-  _globals['_ATSSERVICE']._serialized_end=183
+  _globals['_ATSSCORERESPONSE']._serialized_start=69
+  _globals['_ATSSCORERESPONSE']._serialized_end=206
+  _globals['_ATSSCORERESPONSE_FEEDBACKENTRY']._serialized_start=159
+  _globals['_ATSSCORERESPONSE_FEEDBACKENTRY']._serialized_end=206
+  _globals['_ATSSERVICE']._serialized_start=208
+  _globals['_ATSSERVICE']._serialized_end=288
 # @@protoc_insertion_point(module_scope)
