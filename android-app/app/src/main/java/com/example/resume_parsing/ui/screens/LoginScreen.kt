@@ -1,3 +1,5 @@
+
+
 package com.example.resume_parsing.ui.screens
 
 import android.util.Log
@@ -121,7 +123,14 @@ fun LoginScreen(navController: NavController) {
                                             if (user.error == null) {
                                                 Toast.makeText(navController.context, "Login successful", Toast.LENGTH_SHORT).show()
                                                 PreferencesHelper.saveUserData(App.context, user)
-                                                navController.navigate("main")  // Replace with your target screen
+
+                                                // Check user role and navigate accordingly
+                                                if (user.role == "HR") {
+                                                    navController.navigate("HrMainScreen") // Navigate to HR nav graph
+                                                } else {
+                                                    navController.navigate("main") // Navigate to MainScreen
+                                                }
+
                                             }else {
                                                 Toast.makeText(navController.context, "Login failed: ${response.message()}", Toast.LENGTH_SHORT).show()
                                             }
@@ -158,5 +167,3 @@ fun LoginScreen(navController: NavController) {
         }
     }
 }
-
-

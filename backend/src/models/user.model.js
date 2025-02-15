@@ -24,7 +24,6 @@ const userSchema = new mongoose.Schema(
         },
         phoneNumber: {
             type: String,
-            unique: true,
             sparse: true,
         },
         email: {
@@ -67,6 +66,9 @@ const userSchema = new mongoose.Schema(
         companyImage: {
             type: String,
         },
+        resume:{
+            type: String,
+        }
     },
     { timestamps: true }
 );

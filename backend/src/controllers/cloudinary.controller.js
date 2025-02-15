@@ -13,12 +13,12 @@ export const getSignedUploadPreset = (req, res) => {
         folder: req.params.folder,
         timestamp
     }, cloudinary.config().api_secret);
-
+    console.log(signedPreset);
+    console.log(timestamp);
     //send sined preset and timestamp to client
     return res.json({
         signedPreset,
         timestamp
     });
     console.log("================================================");
-
 }

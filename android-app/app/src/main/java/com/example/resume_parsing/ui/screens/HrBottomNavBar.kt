@@ -1,5 +1,4 @@
-
-package com.example.resume_parsing.ui.components
+package com.example.resume_parsing.ui.screens
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Business
@@ -12,10 +11,10 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
 
 @Composable
-fun BottomNavigationBar(navController: NavController) {
+fun HrBottomNavigationBar(navController: NavController) {
     val items = listOf(
-        BottomNavItem("recommended_jobs", "Recommended", Icons.Default.Home),
-        BottomNavItem("job_offers", "Offers", Icons.Default.Business),
+        BottomNavItem("Post_job", "Post Job", Icons.Default.Home),
+        BottomNavItem("DashBoard", "DashBoard", Icons.Default.Business),
         BottomNavItem("profile", "Profile", Icons.Default.Person)
     )
 

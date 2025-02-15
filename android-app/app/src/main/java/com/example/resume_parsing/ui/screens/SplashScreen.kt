@@ -13,45 +13,52 @@ import androidx.navigation.NavController
 import com.example.resume_parsing.network.RetrofitClient
 import com.example.resume_parsing.utils.PreferencesHelper
 import kotlinx.coroutines.launch
-import retrofit2.Response
+
 @Composable
 fun SplashScreen(navController: NavController) {
     val context = LocalContext.current
-    var isLoading by remember { mutableStateOf(true) } // Show loading until we verify the token
+    var isLoading by remember { mutableStateOf(true) }
 
-    // LaunchedEffect to trigger side effects like network calls
     LaunchedEffect(Unit) {
-        val token = PreferencesHelper.getToken(context) // Retrieve the saved token
+        val token = PreferencesHelper.getToken(context)
+        val role = PreferencesHelper.getUserData(context)?.role // Get the user's role from SharedPreferences
 
         if (token != null) {
-            // Try to auto-login by sending the token to the server for validation
             val response = try {
                 RetrofitClient.apiService.AutoLogin()
-
             } catch (e: Exception) {
-              null
-
+                null
             }
-            Log.d("error_autologin",response.toString() );
 
-            // If the response is successful, navigate to the main screen
+            Log.d("error_autologin", response.toString())
+
             if (response?.isSuccessful == true) {
-                navController.navigate("main") // Replace with your target screen
+                // Check the role from SharedPreferences and navigate accordingly
+                if (role == "HR") {
+                    navController.navigate("HrMainScreen") {
+                        popUpTo("splash") { inclusive = true } // Clear splash from backstack
+                    }
+                } else {
+                    navController.navigate("main") {
+                        popUpTo("splash") { inclusive = true } // Clear splash from backstack
+                    }
+                }
             } else {
-                navController.navigate("login") // Navigate to login if token is invalid or expired
-                Log.d("error_autologin","errroorrr");
+                navController.navigate("login") {
+                    popUpTo("splash") { inclusive = true } // Clear splash from backstack
+                }
+                Log.d("error_autologin", "Error during auto-login, navigating to login screen")
             }
             isLoading = false
         } else {
-            // If no token is found, navigate to the login screen directly
             isLoading = false
-            navController.navigate("login")
+            navController.navigate("login") {
+                popUpTo("splash") { inclusive = true } // Clear splash from backstack
+            }
         }
     }
 
-    // Show loading state while checking for the token
     if (isLoading) {
-        // Show a loading spinner
-        CircularProgressIndicator(modifier = Modifier.fillMaxSize()) // Show loading while verifying token
+        CircularProgressIndicator(modifier = Modifier.fillMaxSize())
     }
 }

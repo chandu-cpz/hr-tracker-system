@@ -25,7 +25,6 @@ const hrSchema = new mongoose.Schema(
         phoneNumber: {
             type: String,
             required: true,
-            unique: true,
         },
         company: {
             true: String,

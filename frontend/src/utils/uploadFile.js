@@ -15,8 +15,6 @@ const uploadFile = async (file, folder) => {
     formData.append('folder', folder);
     formData.append("timestamp", uploadPreset.timestamp);
     formData.append("api_key", import.meta.env.VITE_CLOUDINARY_API_KEY);
-
-
     // Make upload request
     const uploadRes = await axios.post(
         `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}/auto/upload`,

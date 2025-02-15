@@ -15,7 +15,8 @@ export async function updateUser(req, res) {
         education,
         experience,
         profileImage,
-        email, // Extract email from request body
+        email, 
+        resume,// Extract email from request body
     } = req.body;
 
     // Create an object containing the information
@@ -29,6 +30,7 @@ export async function updateUser(req, res) {
         experience,
         profileImage,
         email,
+        resume,
     };
 
     // Delete all null and undefined values
@@ -66,6 +68,13 @@ export async function updateUser(req, res) {
 
     // Update the user details
     try {
+        if (userData.phoneNumber) {
+            const existingUserWithPhoneNumber = await User.findOne({ phoneNumber: userData.phoneNumber });
+
+            if (existingUserWithPhoneNumber && existingUserWithPhoneNumber._id.toString() !== userId) {
+                return res.status(400).json({ error: "Phone number is already in use." });
+            }
+        }
         const user = await User.findByIdAndUpdate(userId, userData, { new: true });
         console.log("Updated user details are:");
         console.log(user);
@@ -77,4 +86,3 @@ export async function updateUser(req, res) {
         console.log("================================================");
     }
 }
-
