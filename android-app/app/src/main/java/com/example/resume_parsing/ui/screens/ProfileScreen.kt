@@ -239,6 +239,7 @@ fun ProfileScreen(navController: NavHostController) {
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState()) // Making Profile Screen Scrollable
+            .background(Color(0xFF2C3E50)),
     ) {
         Box(
             modifier = Modifier
