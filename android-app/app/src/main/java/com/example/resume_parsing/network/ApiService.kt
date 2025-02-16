@@ -12,6 +12,7 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Part
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 data class UserSignUpRequest(
     val fullName: String,
@@ -60,7 +61,6 @@ data class UpdateUserRequest(
     val user: UserInfo
 )
 data class UserInfo(val _id: String)
-data class JobResponse(val jobs: List<Job>)
 data class LoginRequest(val email: String, val password: String)
 
 data class UserResponse(
@@ -135,6 +135,10 @@ data class PostJobResponse(
     val createdAt: String,
     val updatedAt: String
 )
+data class JobResponse(
+    val jobs: List<Job>,
+    val totalPages: Int
+)
 interface ApiService {
     @POST("/api/signup")  // Replace with your actual API endpoint
     suspend fun signUp(@Body userSignUpRequest: UserSignUpRequest): Response<Unit>
@@ -145,7 +149,17 @@ interface ApiService {
     @GET("api/login/auto")
     suspend fun AutoLogin(): Response<UserResponse> // The token will automatically be sent in cookies
     @GET("api/jobs/")  // Replace with your actual endpoint
-    suspend fun getAllJobs(): JobResponse
+    suspend fun getAllJobs(
+        @Query("page") page: Int = 1,
+        @Query("jobTitle") jobTitle: String? = null,
+        @Query("location") location: String? = null,
+        @Query("experience") experience: String? = null,
+        @Query("jobType") jobType: String? = null,
+        @Query("minSalary") minSalary: String? = null,
+        @Query("maxSalary") maxSalary: String? = null,
+        @Query("sort") sort: String? = null,
+        @Query("sortOrder") sortOrder: String? = null
+    ): JobResponse
     @GET("/api/signed-upload/{folder}")  // Adjust endpoint if needed
     suspend fun getSignedUploadPreset(@retrofit2.http.Path("folder") folder: String): SignedUploadResponse
     @Multipart

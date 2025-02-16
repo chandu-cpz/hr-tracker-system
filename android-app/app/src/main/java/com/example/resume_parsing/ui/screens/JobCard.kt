@@ -23,7 +23,7 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun JobCard(job: Job, onClick: () -> Unit) {
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
-    val cardWidth = (screenWidth - 32.dp) / 2 // Adjust for padding and fit two cards per row
+    val cardWidth = (screenWidth - 32.dp) / 2
 
     Box(
         modifier = Modifier
@@ -46,9 +46,6 @@ fun JobCard(job: Job, onClick: () -> Unit) {
             ) {
                 Column {
                     // Date Posted
-//                    job.updatedAt?.let {
-//                        Text(text = it, fontSize = 12.sp, color = Color.Black.copy(alpha = 0.7f))
-//                    }
                     Box(
                         modifier = Modifier
                             .background(Color(0xFFE3F2FD), shape = RoundedCornerShape(50))
@@ -57,13 +54,13 @@ fun JobCard(job: Job, onClick: () -> Unit) {
                         job.updatedAt?.let { dateString ->
                             val formattedDate = formatDate(dateString)
 
-                        Text(text =  formattedDate, fontSize = 12.sp, color = Color.Black.copy(alpha = 0.7f))
-                    }
+                            Text(text =  formattedDate, fontSize = 12.sp, color = Color.Black.copy(alpha = 0.7f))
+                        }
                     }
 
                     // Company Name
                     Text(
-                        text = job.companyName,
+                        text = job.companyName ?: "Company Name Unavailable", // Handle null case
                         fontSize = 16.sp,
                         color = Color.DarkGray,
                         modifier = Modifier.padding(12.dp)
@@ -71,7 +68,7 @@ fun JobCard(job: Job, onClick: () -> Unit) {
 
                     // Job Title
                     Text(
-                        text = job.jobTitle,
+                        text = job.jobTitle ?: "Job Title Unavailable", // Handle null case
                         fontSize = 22.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.Black,
@@ -80,7 +77,9 @@ fun JobCard(job: Job, onClick: () -> Unit) {
 
                     // Skills
                     FlowRow(
-                        modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 8.dp),
                         horizontalArrangement = Arrangement.spacedBy(6.dp),
                         verticalArrangement = Arrangement.spacedBy(6.dp)
                     ) {
@@ -114,7 +113,7 @@ fun JobCard(job: Job, onClick: () -> Unit) {
             ) {
                 // Salary (Bottom Left)
                 Text(
-                    text = "${'$'}${job.salary}/month",
+                    text = "${'$'}${job.salary ?: "Salary Negotiable"}/month", // Handle null case
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.Black
@@ -132,16 +131,13 @@ fun JobCard(job: Job, onClick: () -> Unit) {
         }
     }
 }
+
 fun formatDate(dateString: String): String {
     return try {
-        // Parse the date string into a ZonedDateTime
         val zonedDateTime = ZonedDateTime.parse(dateString)
-        // Define the desired output format
         val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
-        // Format the date
         zonedDateTime.format(formatter)
     } catch (e: Exception) {
-        // Fallback in case of parsing error
         "Invalid Date"
     }
 }
