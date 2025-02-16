@@ -44,7 +44,8 @@ data class Job(
 )
 
 data class PostedBy(
-    val companyImage: String?
+    val companyImage: String?,
+    val _id: String
 )
 
 data class UpdateUserRequest(
@@ -139,6 +140,53 @@ data class JobResponse(
     val jobs: List<Job>,
     val totalPages: Int
 )
+data class Application(
+    val _id: String,
+    val resume: String,
+    val jobId: String,
+    val accepted: String,
+    val appliedBy: UserResponse,
+    val postedBy: String,
+    val createdAt: String,
+    val updatedAt: String
+)
+data class ApplicationResponse(
+    val _id: String,
+    val resume: String,
+    val jobId: Job,
+    val accepted: String,
+    val appliedBy: UserResponse,
+    val postedBy: String,
+    val createdAt: String,
+    val updatedAt: String
+)
+data class ApplicationCountResponse(
+    val applications: Int,
+    val employees: Int,
+    val rejected: Int,
+    val male: Int,
+    val female: Int,
+    val others: Int,
+    val accepted:Int
+)
+
+data class JobTitleStat(
+    val _id:String,
+    val count:Int
+)
+data class GetApplicantsResponse(
+    val accepted: String,
+    val appliedBy: UserResponse,
+    val createdAt: String,
+    val jobId: String,
+    val postedBy: String,
+    val resume: String,
+    val updatedAt: String,
+    val __v: Int,
+    val _id: String
+)
+data class GetApplicationDetail(val applicationId: String)
+data class AcceptRejectRequest(val applicationId:String)
 interface ApiService {
     @POST("/api/signup")  // Replace with your actual API endpoint
     suspend fun signUp(@Body userSignUpRequest: UserSignUpRequest): Response<Unit>
@@ -176,5 +224,24 @@ interface ApiService {
     suspend fun updateUser(@Body updateUserRequest: UpdateUserRequest): Response<UserResponse>
     @POST("/api/jobs")  // Replace with your actual API endpoint
     suspend fun postJob(@Body postJobRequest: PostJobRequest): Response<PostJobResponse>
+    @GET("/api/application/count")
+    suspend fun getApplicationCount(@Query("user._id") userId:String ,@Query("user.role") userRole:String ): Response<ApplicationCountResponse>
+    @GET("/api/jobs/")
+    suspend fun getJobsPostedByHR(
+        @Query("postedBy") postedBy:String
+    ): JobResponse
+
+    @GET("/api/application/applicants/")
+    suspend fun getApplicants(
+        @Query("postedBy") postedBy: String
+    ):List<GetApplicantsResponse>
+
+    @POST("/api/application/accept")
+    suspend fun acceptApplication(@Body applicationId:AcceptRejectRequest): Response<ApplicationResponse>
+    @POST("/api/application/reject")
+    suspend fun rejectApplication(@Body applicationId:AcceptRejectRequest): Response<ApplicationResponse>
+    @POST("api/application/details")
+    suspend fun getSingleApplicationDetails(@Body applicationId: GetApplicationDetail):UserResponse
+
 
 }
