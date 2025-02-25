@@ -1,5 +1,5 @@
 import express from "express";
-import { updateUser } from "../../controllers/auth/editprofile.controller.js";
+import {  updateUser } from "../../controllers/auth/editprofile.controller.js";
 import { checkAuth } from "../../middlewares/checkAuth.middleware.js";
 
 

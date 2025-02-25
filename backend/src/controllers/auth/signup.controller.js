@@ -36,50 +36,56 @@ export async function createUser(req, res) {
         }
     });
 
-    if (!userData?.fullName?.trim()) return res.send({ error: "fullName is required" });
-    if (!userData?.email?.trim()) return res.send({ error: "email is required" });
-    if (userData?.email?.trim()) {
-        if (!validator.isEmail(userData.email)) return res.send({ error: "email is required" });
-    }
-    if (!userData?.gender?.trim()) return res.send({ error: "gender is required" });
-    if (userData?.role == "HR") {
-        if (!userData?.company?.trim()) return res.send({ error: "company is required" });
-    }
-    if (!userData?.password?.trim()) return res.send({ error: "password is required" });
-    else {
-        const options = {
-            minLength: 8,
-            minLowercase: 1,
-            minUppercase: 1,
-        };
+    try {  // Add a try-catch block encompassing the entire function logic
 
-        if (!validator.isStrongPassword(userData.password, options)) {
-            newErrors.password = "Password is not strong enough";
-            isValid = false;
+        if (!userData?.fullName?.trim()) return res.status(400).send({ error: "fullName is required" });
+        if (!userData?.email?.trim()) return res.status(400).send({ error: "email is required" });
+        if (userData?.email?.trim()) {
+            if (!validator.isEmail(userData.email)) return res.status(400).send({ error: "Invalid email format" });
         }
-    }
+        if (!userData?.gender?.trim()) return res.status(400).send({ error: "gender is required" });
+        if (userData?.role == "HR") {
+            if (!userData?.company?.trim()) return res.status(400).send({ error: "company is required for HR role" });
+        }
+        if (!userData?.password?.trim()) return res.status(400).send({ error: "password is required" });
+        else {
+            const options = {
+                minLength: 8,
+                minLowercase: 1,
+                minUppercase: 1,
+            };
 
-    // check if user exists using email
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-        console.log("The user already exists aborting ... ");
-        console.log("================================================")
-        return res.send({ error: 'User already exists' });
-    }
+            if (!validator.isStrongPassword(userData.password, options)) {
+                return res.status(401).send({ error: "Password is not strong enough" });
+            }
+        }
 
-    //Not a existing user so create a new one
-    try {
-        const user = await User.create(userData);
-        console.log("The created user details are: ");
-        console.log(user);
-        await sendMail(user.email, "Welcome", generateSignUpEmailTemplate(user.fullName));
+        // check if user exists using email
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            console.log("The user already exists aborting ... ");
+            console.log("================================================")
+            return res.status(409).send({ error: 'User already exists' });  // 409 Conflict
+        }
 
+        //Not a existing user so create a new one
+        try {
+            const user = await User.create(userData);
+            console.log("The created user details are: ");
+            console.log(user);
+            await sendMail(user.email, "Welcome", generateSignUpEmailTemplate(user.fullName));
+
+            //send the user details
+            res.status(201).send({ message: "User created successfully" }); // 201 Created
+            console.log("================================================");
+        } catch (dbError) {
+            console.error("Database error:", dbError);
+            return res.status(500).send({ error: "Failed to create user in database", details: dbError.message });  // 500 Internal Server Error
+        }
+
+
+    } catch (err) {
+        console.error("General error:", err); // Log the error for debugging.
+        return res.status(500).send({ error: "An unexpected error occurred", details: err.message }); // Respond with an error message.
     }
-    catch (err) {
-        console.log(err.message);
-    }
-    //send the user details
-    res.status(200).send("Completed Creating user");
-    console.log("================================================");
 }
-
