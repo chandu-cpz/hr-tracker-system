@@ -117,4 +117,19 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
+
+# Ignore node_modules directory
+node_modules/
+#Ignore .DS_Store files (macOS)
+.DS_Store
+
+#Ignore temporary files
+*.tmp
+
+# Ignore log files
+*.log
+
+# Ignore virtualenv directory
+.venv/
+
 # End of https://mrkandreev.name/snippets/gitignore-generator/#Node

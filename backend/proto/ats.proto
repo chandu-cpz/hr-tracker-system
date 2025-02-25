@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package ats;
+
+service ATSService {
+  rpc CalculateATSScore (ATSScoreRequest) returns (ATSScoreResponse) {}
+}
+
+message ATSScoreRequest {
+  string JobId = 1;
+  string UserId = 2;
+}
+
+message ATSScoreResponse {
+  float score = 1;
+  map<string, string> feedback = 2;  // Add feedback field (Map is key-value pairs for future scaling)
+}

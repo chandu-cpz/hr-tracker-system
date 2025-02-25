@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package recommendation;
+
+message RecommendationRequest {
+  string JobId = 1; 
+}
+
+message RecommendationResponse {
+  repeated string recommendedJobIds = 1; 
+}
+
+service RecommendationService {
+  rpc GetJobRecommendations (RecommendationRequest) returns (RecommendationResponse);
+}
