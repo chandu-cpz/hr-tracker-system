@@ -9,7 +9,6 @@ import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.PATCH
 import retrofit2.http.POST
-import retrofit2.http.PUT
 import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -167,7 +166,8 @@ data class ApplicationCountResponse(
     val male: Int,
     val female: Int,
     val others: Int,
-    val accepted:Int
+    val accepted:Int,
+    val pending: Int,
 )
 
 data class JobTitleStat(
@@ -187,6 +187,7 @@ data class GetApplicantsResponse(
 )
 data class GetApplicationDetail(val applicationId: String)
 data class AcceptRejectRequest(val applicationId:String)
+data class jobcountresponse(val openJobsCount:Int)
 interface ApiService {
     @POST("/api/signup")  // Replace with your actual API endpoint
     suspend fun signUp(@Body userSignUpRequest: UserSignUpRequest): Response<Unit>
@@ -242,6 +243,7 @@ interface ApiService {
     suspend fun rejectApplication(@Body applicationId:AcceptRejectRequest): Response<ApplicationResponse>
     @POST("api/application/details")
     suspend fun getSingleApplicationDetails(@Body applicationId: GetApplicationDetail):UserResponse
-
+    @GET("/api/jobs/open")
+    suspend fun JobOpenCounter():Response<jobcountresponse>
 
 }

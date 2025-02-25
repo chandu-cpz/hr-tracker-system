@@ -7,7 +7,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
-    private const val BASE_URL = "http://192.168.0.7:8000/"  // Replace with your backend URL
+    private const val BASE_URL = "http://192.168.0.3:8000/"  // Replace with your backend URL
 
     private val client = OkHttpClient.Builder()
         .cookieJar(MyCookieJar(App.context)) // Use the CookieJar to handle cookies

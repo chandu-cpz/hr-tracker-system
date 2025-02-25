@@ -21,9 +21,10 @@ import com.example.resume_parsing.ui.screens.JobPostedListScreen
 import com.example.resume_parsing.ui.screens.LoginScreen
 import com.example.resume_parsing.ui.screens.Post_job
 import com.example.resume_parsing.ui.screens.ProfileScreen
-import com.example.resume_parsing.ui.screens.RecommendedJobsScreen
+import com.example.resume_parsing.ui.screens.UserDashBoard
 import com.example.resume_parsing.ui.screens.SignupScreen
 import com.example.resume_parsing.ui.screens.SplashScreen
+import com.example.resume_parsing.ui.screens.UserDashBoard
 
 @RequiresApi(Build.VERSION_CODES.Q)
 @Composable
@@ -48,11 +49,11 @@ fun MainScreen(navController: NavHostController) {
     ) { paddingValues ->
         NavHost(
             bottomNavController,
-            startDestination = "job_offers",
+            startDestination = "user_dashboard",
             modifier = Modifier.padding(paddingValues)
         ) {
-            composable("recommended_jobs") { RecommendedJobsScreen(bottomNavController) }
             composable("job_offers") { JobOffersScreen(bottomNavController) }
+            composable("user_dashboard") { UserDashBoard(bottomNavController) }
             composable("profile") { ProfileScreen(navController) }
             composable("login") { LoginScreen(navController) }
 
