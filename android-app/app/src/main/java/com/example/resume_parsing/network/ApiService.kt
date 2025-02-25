@@ -1,11 +1,14 @@
 package com.example.resume_parsing.network
 
+import com.google.gson.annotations.SerializedName
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.Headers
 import retrofit2.http.Multipart
 import retrofit2.http.PATCH
 import retrofit2.http.POST
@@ -137,18 +140,10 @@ data class PostJobResponse(
 )
 data class JobResponse(
     val jobs: List<Job>,
-    val totalPages: Int
+    val totalPages: Int,
+    val openJobsCount: Int? = null
 )
-data class Application(
-    val _id: String,
-    val resume: String,
-    val jobId: String,
-    val accepted: String,
-    val appliedBy: UserResponse,
-    val postedBy: String,
-    val createdAt: String,
-    val updatedAt: String
-)
+
 data class ApplicationResponse(
     val _id: String,
     val resume: String,
@@ -174,20 +169,72 @@ data class JobTitleStat(
     val _id:String,
     val count:Int
 )
-data class GetApplicantsResponse(
-    val accepted: String,
-    val appliedBy: UserResponse,
-    val createdAt: String,
-    val jobId: String,
-    val postedBy: String,
-    val resume: String,
-    val updatedAt: String,
-    val __v: Int,
-    val _id: String
-)
+
 data class GetApplicationDetail(val applicationId: String)
 data class AcceptRejectRequest(val applicationId:String)
 data class jobcountresponse(val openJobsCount:Int)
+data class Applicant(
+    @SerializedName("_id") val id: String,  // Use SerializedName to match JSON keys if different from Kotlin names
+    @SerializedName("appliedBy") val appliedBy: AppliedBy,  // Assuming "appliedBy" is an object
+    // Other fields from your Application model...
+    val accepted: String,
+    val postedBy: String
+)
+
+data class AppliedBy(
+    @SerializedName("_id") val id: String,
+    val fullName: String,
+    val email: String,
+    val gender: String,
+    val education: String,
+    val skills: List<String> ,// skills is an array
+    val profileImage: Any?,
+    val phoneNumber: String?,
+    val experience: String?,
+    val address: String?
+)
+
+data class ApplicationIdRequest(
+    @SerializedName("applicationId") val applicationId: String
+)
+data class Application(
+    @SerializedName("_id") val id: String,  // Application ID
+    @SerializedName("appliedBy") val appliedBy: AppliedBy, // Applicant's details
+    val resume: String?,  // URL to the resume file (PDF or image)
+    val accepted: String, // "PENDING", "ACCEPTED", "REJECTED"
+    val postedBy: String, // ID of the user who posted the job
+
+)
+
+
+data class AtsScoreResponse(
+    val atsScore: Double,
+    val feedback: Feedback
+)
+data class Feedback(
+    val quantifiable_results: String,
+    val skills_suggestion: String,
+    val keyword_suggestion: String,
+    val missing_keywords: String,
+    val missing_skills: String,
+    val future_improvements: String
+)
+
+
+data class RecommendedJobResponse(
+    @SerializedName("recommendedJobs") val recommendedJobs: List<Job>
+)
+
+data class JobIdRequest(
+    val jobId: String
+)
+data class AtsRequest(val jobId:String, val userId:String)
+
+data class ApplyJobRequest(
+    val jobId: String,
+    val resume: String
+)
+
 interface ApiService {
     @POST("/api/signup")  // Replace with your actual API endpoint
     suspend fun signUp(@Body userSignUpRequest: UserSignUpRequest): Response<Unit>
@@ -231,19 +278,41 @@ interface ApiService {
     suspend fun getJobsPostedByHR(
         @Query("postedBy") postedBy:String
     ): JobResponse
-
-    @GET("/api/application/applicants/")
-    suspend fun getApplicants(
-        @Query("postedBy") postedBy: String
-    ):List<GetApplicantsResponse>
-
-    @POST("/api/application/accept")
-    suspend fun acceptApplication(@Body applicationId:AcceptRejectRequest): Response<ApplicationResponse>
-    @POST("/api/application/reject")
-    suspend fun rejectApplication(@Body applicationId:AcceptRejectRequest): Response<ApplicationResponse>
-    @POST("api/application/details")
-    suspend fun getSingleApplicationDetails(@Body applicationId: GetApplicationDetail):UserResponse
     @GET("/api/jobs/open")
     suspend fun JobOpenCounter():Response<jobcountresponse>
+    @Headers("Content-Type: application/json")  // Important: Explicitly set content type
+    @GET("/api/application/applicants")
+    suspend fun getApplicants(): Response<List<Applicant>> // Suspend function for coroutines
+    @Headers("Content-Type: application/json")
+    @POST("/api/application/details") // Make it a POST since you're sending a body
+    suspend fun getApplicationDetails(@Body applicationIdRequest: ApplicationIdRequest): Response<Application>
+
+    @Headers("Content-Type: application/json")
+    @POST("/api/application/accept") // Make it a POST since you're sending a body
+    suspend fun acceptApplication(@Body applicationIdRequest: ApplicationIdRequest): Response<Unit> // Assuming no response body
+
+    @Headers("Content-Type: application/json")
+    @POST("/api/application/reject") // Make it a POST since you're sending a body
+    suspend fun rejectApplication(@Body applicationIdRequest: ApplicationIdRequest): Response<Unit> // Assuming no response body
+    @Headers("Content-Type: application/json")
+    @GET("/api/application/employees")
+    suspend fun getEmployee(): Response<List<Applicant>>
+    @POST("/api/jobs/recommendations") //New endpoint for recommended jobs
+    suspend fun getRecommendedJobs(): RecommendedJobResponse
+    @POST("/api/jobs/savejob")
+    suspend fun saveJob(@Body jobIdRequest: JobIdRequest): Response<Unit>
+
+    @DELETE("/api/jobs/savejob/{jobId}")
+    suspend fun deleteJob(@Path("jobId") jobId: String): Response<Unit>
+
+    @POST("/api/jobs/calculate-ats")
+    suspend fun calculateAtsScore(
+        @Body atsRequest: AtsRequest
+    ): Response<AtsScoreResponse>
+
+    @POST("/api/application")
+    suspend fun applyJob(
+        @Body applyJobRequest: ApplyJobRequest
+    ): Response<Unit>
 
 }

@@ -1,17 +1,17 @@
 package com.example.resume_parsing.viewmodel
 
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.resume_parsing.network.Job
-import com.example.resume_parsing.network.JobResponse
+
 import com.example.resume_parsing.network.RetrofitClient
 import kotlinx.coroutines.launch
 
 class JobViewModel : ViewModel() {
 
+    // Regular Job List State
     private val _jobs = mutableStateOf<List<Job>>(emptyList())
     val jobs: State<List<Job>> = _jobs
 
@@ -22,11 +22,20 @@ class JobViewModel : ViewModel() {
     val isError: State<Boolean> = _isError
 
     private val _page = mutableStateOf(1) // Start at page 1
-    val page:State<Int> = _page
+    val page: State<Int> = _page
 
     private val _totalPages = mutableStateOf(1)
     val totalPages: State<Int> = _totalPages
 
+    // Recommended Job List State
+    private val _recommendedJobs = mutableStateOf<List<Job>>(emptyList())
+    val recommendedJobs: State<List<Job>> = _recommendedJobs
+
+    private val _recommendationsLoading = mutableStateOf(false)
+    val recommendationsLoading: State<Boolean> = _recommendationsLoading
+
+    private val _recommendationsError = mutableStateOf(false)
+    val recommendationsError: State<Boolean> = _recommendationsError
 
     // Query parameters
     private val _jobTitle = mutableStateOf<String?>(null)
@@ -78,6 +87,7 @@ class JobViewModel : ViewModel() {
         _jobType.value = type
         resetAndLoadJobs()
     }
+
     fun setMinSalary(min: String?) {
         _minSalary.value = min
         resetAndLoadJobs()
@@ -87,6 +97,7 @@ class JobViewModel : ViewModel() {
         _maxSalary.value = max
         resetAndLoadJobs()
     }
+
     fun setSortField(sort: String?) {
         _sortField.value = sort
         resetAndLoadJobs()
@@ -137,6 +148,24 @@ class JobViewModel : ViewModel() {
                 _isError.value = true
             } finally {
                 _isLoading.value = false
+            }
+        }
+    }
+
+    fun loadRecommendedJobs() {
+        viewModelScope.launch {
+            _recommendationsLoading.value = true
+            _recommendationsError.value = false
+
+            try {
+                val response = RetrofitClient.apiService.getRecommendedJobs()
+                _recommendedJobs.value = response.recommendedJobs
+
+            } catch (e: Exception) {
+                println("Error fetching recommended jobs: ${e.message}")
+                _recommendationsError.value = true
+            } finally {
+                _recommendationsLoading.value = false
             }
         }
     }

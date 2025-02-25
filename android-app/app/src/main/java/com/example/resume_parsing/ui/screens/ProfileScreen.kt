@@ -1,3 +1,5 @@
+
+
 package com.example.resume_parsing.ui.screens
 
 import android.content.Context
@@ -77,14 +79,6 @@ fun ShowFileViewer(context: Context, pdfUrl: String){
 
 }
 
-//@Composable //Remove composable here
-//fun FileViewer(context: Context, pdfUrl: String) { //FileViewer is no longer needed
-//    val intent = Intent(Intent.ACTION_VIEW)
-//    intent.setDataAndType(Uri.parse(pdfUrl), "application/pdf")
-//    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-//    val new_intent = Intent.createChooser(intent, "Open File")
-//    startActivity(context, new_intent, null) //Cannot be called inside composable function
-//}
 
 @RequiresApi(Build.VERSION_CODES.Q)
 @Composable
@@ -173,7 +167,7 @@ fun ProfileScreen(navController: NavHostController) {
 
     // Load PDF as Image at Composition
     LaunchedEffect(resumeUrl) {
-        if (!resumeUrl.isNullOrBlank()) {
+        if (userRole == "USER" && !resumeUrl.isNullOrBlank()) { //Only attempt for users
             isLoading = true
             coroutineScope.launch {
                 val bitmap = convertPdfToBitmap(resumeUrl)
@@ -311,7 +305,7 @@ fun ProfileScreen(navController: NavHostController) {
             }
         }
 
-        // Resume Section (moved outside Card)
+        // Conditionally render Resume section for USER
         if (userRole == "USER") {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -412,6 +406,7 @@ fun ProfileScreen(navController: NavHostController) {
                         InfoItem(label = "Education", value = userData.value?.education ?: "")
                     }
 
+                    //Experience section should also be there on the HR View
                     Column {
                         Text("Experience", fontSize = 18.sp, color = Color(0xFFE65100))
                         Spacer(modifier = Modifier.height(8.dp))
