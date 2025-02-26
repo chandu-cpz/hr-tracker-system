@@ -2,7 +2,7 @@ import { Job } from "../models/jobs.model.js";
 import { User } from "../models/user.model.js";
 import validator from "validator";
 import express from "express";
-import { getRecommendationClient,getATSClient } from "../utils/grpc.js";
+import { getRecommendationClient } from "../utils/grpc.js";
 import mongoose from "mongoose";
 
 const router = express.Router();
@@ -280,126 +280,51 @@ export async function addJob(req, res) {
 }
 
 
-// export async function recommendJobs(req, res) {
-//     console.log("================================================");
-//     console.log(
-//         `(recommendJobs Controller): ${new Date().toLocaleString()}`
-//     );
-//     const jobId = req.body._id;
-//     console.log(jobId);
-//     const recommendationClient = await getRecommendationClient();
-
-//     recommendationClient.GetJobRecommendations(
-//         { JobId: jobId },
-//         async (error, response) => { // Make the callback async
-//             if (error) {
-//                 console.error("gRPC Error:", error);
-//                 return res.status(500).json({ error: error.message });
-//             }
-
-//             console.log("gRPC Response (raw):", response);
-
-//             if (response && response.recommendedJobIds) {
-//                 try {
-//                     // 1. Convert job IDs to ObjectIds and fetch jobs from MongoDB
-//                     const recommendedJobObjectIds = response.recommendedJobIds.map(jobId => new mongoose.Types.ObjectId(jobId));
-//                     const recommendedJobs = await Promise.all( // Use Promise.all to fetch jobs concurrently
-//                         recommendedJobObjectIds.map(objectId => Job.findById(objectId).lean()) // .lean() to get plain JavaScript objects
-//                     );
-
-//                     console.log("Recommended Jobs from MongoDB:", recommendedJobs); // Log the fetched job objects
-
-//                     // 2. Send the fetched job objects in the JSON response
-//                     return res.json({
-//                         "recommendedJobs": recommendedJobs
-//                     });
-
-//                 } catch (dbError) {
-//                     console.error("Error fetching jobs from MongoDB:", dbError);
-//                     return res.status(500).json({ error: "Error fetching recommended jobs from database" });
-//                 }
-
-//             } else {
-//                 console.warn("gRPC Response missing recommendedJobIds:", response);
-//                 return res.status(500).json({ error: "Invalid response from recommendation service" });
-//             }
-//         });
-// }
 export async function recommendJobs(req, res) {
     console.log("================================================");
     console.log(
-      `(recommendJobs Controller): ${new Date().toLocaleString()}`
+        `(recommendJobs Controller): ${new Date().toLocaleString()}`
     );
     const jobId = req.body._id;
     console.log(jobId);
     const recommendationClient = await getRecommendationClient();
-  
+
     recommendationClient.GetJobRecommendations(
-      { JobId: jobId },
-      async (error, response) => {
-        if (error) {
-          console.error("gRPC Error:", error);
-          return res.status(500).json({ error: error.message });
-        }
-  
-        console.log("gRPC Response (raw):", response);
-  
-        if (response && response.recommendedJobIds) {
-          try {
-            const recommendedJobObjectIds = response.recommendedJobIds.map(
-              (jobId) => new mongoose.Types.ObjectId(jobId)
-            );
-            const recommendedJobs = await Promise.all(
-              recommendedJobObjectIds.map((objectId) =>
-                Job.findById(objectId).lean()
-              )
-            );
-  
-            console.log("Recommended Jobs from MongoDB:", recommendedJobs);
-  
-            const transformedRecommendedJobs = recommendedJobs.map((job) => {
-              const transformedJob = {
-                _id: job._id,
-                jobTitle: job.jobTitle,
-                jobDescription: job.jobDescription,
-                companyName: job.companyName,
-                responsibilities: job.responsibilities,
-                qualifications: job.qualifications,
-                location: job.location,
-                jobtype: job.jobtype,
-                noOfPosts: job.noOfPosts,
-                salary: job.salary,
-                isOpen: job.isOpen,
-                skills: job.skills,
-                createdAt: job.createdAt,
-                updatedAt: job.updatedAt,
-                appiledBy: job.appiledBy || [],
-                postedBy: job.postedBy
-                  ? { _id: job.postedBy } // Create object if job.postedBy exists
-                  : { _id: null }, // Always send an object
-  
-              };
-              return transformedJob;
-            });
-  
-            return res.json({ recommendedJobs: transformedRecommendedJobs });
-          } catch (dbError) {
-            console.error("Error fetching jobs from MongoDB:", dbError);
-            return res
-              .status(500)
-              .json({
-                error: "Error fetching recommended jobs from database",
-              });
-          }
-        } else {
-          console.warn("gRPC Response missing recommendedJobIds:", response);
-          return res
-            .status(500)
-            .json({ error: "Invalid response from recommendation service" });
-        }
-      }
-    );
-  }
+        { JobId: jobId },
+        async (error, response) => { // Make the callback async
+            if (error) {
+                console.error("gRPC Error:", error);
+                return res.status(500).json({ error: error.message });
+            }
+
+            console.log("gRPC Response (raw):", response);
+
+            if (response && response.recommendedJobIds) {
+                try {
+                    // 1. Convert job IDs to ObjectIds and fetch jobs from MongoDB
+                    const recommendedJobObjectIds = response.recommendedJobIds.map(jobId => new mongoose.Types.ObjectId(jobId));
+                    const recommendedJobs = await Promise.all( // Use Promise.all to fetch jobs concurrently
+                        recommendedJobObjectIds.map(objectId => Job.findById(objectId).lean()) // .lean() to get plain JavaScript objects
+                    );
+
+                    console.log("Recommended Jobs from MongoDB:", recommendedJobs); // Log the fetched job objects
+
+                    // 2. Send the fetched job objects in the JSON response
+                    return res.json({
+                        "recommendedJobs": recommendedJobs
+                    });
+
+                } catch (dbError) {
+                    console.error("Error fetching jobs from MongoDB:", dbError);
+                    return res.status(500).json({ error: "Error fetching recommended jobs from database" });
+                }
+
+            } else {
+                console.warn("gRPC Response missing recommendedJobIds:", response);
+                return res.status(500).json({ error: "Invalid response from recommendation service" });
+            }
+        });
+}
 export async function calculateATS(req, res) {
     console.log("================================================");
     console.log(
@@ -408,7 +333,7 @@ export async function calculateATS(req, res) {
 
     const jobId = req.body.jobId;
     const userId = req.body.userId;
-    console.log(req.body);
+
     console.log(`Job ID: ${jobId}, User ID: ${userId}`);
 
     if (!jobId || !userId) {
@@ -428,9 +353,10 @@ export async function calculateATS(req, res) {
             console.log("gRPC Response (raw):", response);
 
             if (response && typeof response.score === 'number') {
-                return res.json({ atsScore: response.score,
+                return res.json({
+                    atsScore: response.score,
                     feedback: response.feedback
-                                
+
                 });
             } else {
                 console.warn("gRPC Response invalid or missing score:", response);
@@ -439,4 +365,3 @@ export async function calculateATS(req, res) {
         }
     );
 }
-

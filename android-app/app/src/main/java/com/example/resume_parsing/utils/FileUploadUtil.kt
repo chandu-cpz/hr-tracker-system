@@ -22,54 +22,61 @@ object FileUploadUtil {
             Log.d("FileUpload", "${fileUri.path} is being uploaded to $folder")
 
             val apiService = RetrofitClient.apiService
-            val cloudName = "dmbqqvqcb" // Replace with your Cloudinary cloud name
+            val cloudName = "dmbqqvqcb" // Your Cloudinary cloud name
             val apiKey = "253373599139292" // Your Cloudinary API key
 
             return@withContext try {
                 // Step 1: Get signed upload preset from backend
                 val uploadPresetResponse = apiService.getSignedUploadPreset(folder)
-                val signedPreset = uploadPresetResponse.signedPreset
+                val signature = uploadPresetResponse.signedPreset
                 val timestamp = uploadPresetResponse.timestamp
 
-                Log.d("FileUpload", "Received signedPreset: $signedPreset, timestamp: $timestamp")
-
+                Log.d("FileUpload", "Received signature: $signature, timestamp: $timestamp")
+                
                 // Step 2: Convert URI to File
                 val file = FileUtils.uriToFile(fileUri, context) ?: return@withContext null
-                Log.d("FileUpload", "Converted file: ${file.absolutePath}")
+                Log.d("FileUpload", "Converted file: ${file.absolutePath}, name: ${file.name}")
 
-                // Step 3: Prepare file for upload
-                val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull()) // Adjust media type if needed
+                // Step 3: Prepare file for upload - IMPORTANT: paramName must be "file"
+                val requestFile = file.asRequestBody("*/*".toMediaTypeOrNull()) // Accept any file type
                 val multipartBody = MultipartBody.Part.createFormData("file", file.name, requestFile)
 
-                // Step 4: Upload to Cloudinary (use `upload_preset` instead of `signature`)
-                val uploadResponse = apiService.uploadFile(
+                // Create request body for each parameter to ensure proper formatting
+                val apiKeyPart = MultipartBody.Part.createFormData("api_key", apiKey)
+                val signaturePart = MultipartBody.Part.createFormData("signature", signature)
+                val timestampPart = MultipartBody.Part.createFormData("timestamp", timestamp.toString())
+                val folderPart = MultipartBody.Part.createFormData("folder", folder)
+
+                Log.d("FileUpload", "Uploading with reformatted parameters")
+
+                // Step 4: Upload to Cloudinary with required parameters as MultipartBody.Part
+                val uploadResponse = apiService.uploadFileWithParts(
                     cloudName = cloudName,
                     file = multipartBody,
-                    folder = folder,
-                    timestamp = timestamp,
-                    apiKey = apiKey,
-                    uploadPreset = signedPreset  // Use `upload_preset` instead of `signature`
+                    signature = signaturePart,
+                    timestamp = timestampPart, 
+                    apiKey = apiKeyPart,
+                    folder = folderPart
                 )
 
-                Log.d("FileUpload", "Upload successful: $uploadResponse")
+                Log.d("FileUpload", "Upload successful - Secure URL: ${uploadResponse.secure_url}")
                 uploadResponse
-            } catch (e: IOException) {
+            } catch (e: Exception) {
                 Log.e("FileUpload", "Upload failed: ${e.message}", e)
+                Log.e("FileUpload", "Stack trace:", e)
                 null
             }
         }
 }
 
-object FileUtils {  //Create new Object FileUtils , to make it simple
-
+object FileUtils {  // File utility methods
     fun uriToFile(uri: Uri, context: Context): File? {
         return try {
             val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
-                ?: return null  // Handle null input stream
+                ?: return null
 
-            val fileName = getFileName(uri, context) ?: "temp_file"  // Get a suitable file name
-
-            val file = File(context.cacheDir, fileName)  // Use the app's cache directory
+            val fileName = getFileName(uri, context) ?: "temp_file"
+            val file = File(context.cacheDir, fileName)
 
             inputStream.use { input ->
                 FileOutputStream(file).use { output ->
@@ -83,9 +90,9 @@ object FileUtils {  //Create new Object FileUtils , to make it simple
                     output.flush()
                 }
             }
-            file  // Return the temporary file
+            file
         } catch (e: Exception) {
-            e.printStackTrace()
+            Log.e("FileUtils", "Error converting URI to file: ${e.message}", e)
             null
         }
     }

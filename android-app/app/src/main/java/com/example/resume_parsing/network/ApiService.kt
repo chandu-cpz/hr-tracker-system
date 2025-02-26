@@ -258,15 +258,16 @@ interface ApiService {
     ): JobResponse
     @GET("/api/signed-upload/{folder}")  // Adjust endpoint if needed
     suspend fun getSignedUploadPreset(@retrofit2.http.Path("folder") folder: String): SignedUploadResponse
+    // New upload method using MultipartBody.Part for all parameters
     @Multipart
     @POST("https://api.cloudinary.com/v1_1/{cloudName}/auto/upload")
-    suspend fun uploadFile(
+    suspend fun uploadFileWithParts(
         @Path("cloudName") cloudName: String,
         @Part file: MultipartBody.Part,
-        @Part("folder") folder: String,
-        @Part("timestamp") timestamp: Long,
-        @Part("api_key") apiKey: String,
-        @Part("upload_preset") uploadPreset: String  // ✅ Use `upload_preset` instead of `signature`
+        @Part signature: MultipartBody.Part,
+        @Part timestamp: MultipartBody.Part,
+        @Part apiKey: MultipartBody.Part,
+        @Part folder: MultipartBody.Part
     ): CloudinaryUploadResponse
     @PATCH("/api/updateUser") // Endpoint to update user data
     suspend fun updateUser(@Body updateUserRequest: UpdateUserRequest): Response<UserResponse>

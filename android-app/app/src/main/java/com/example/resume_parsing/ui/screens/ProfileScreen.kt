@@ -1,5 +1,3 @@
-
-
 package com.example.resume_parsing.ui.screens
 
 import android.content.Context
@@ -189,31 +187,27 @@ fun ProfileScreen(navController: NavHostController) {
                     try {
                         val file = FileUtils.uriToFile(pdfUri, context)
                         if (file != null) {
-                            val requestFile = file.asRequestBody("application/pdf".toMediaTypeOrNull())
-                            val body = MultipartBody.Part.createFormData("resume", file.name, requestFile)
-                            val signedPreset = RetrofitClient.apiService.getSignedUploadPreset("resume").signedPreset
-                            val response = RetrofitClient.apiService.uploadFile(
-                                "your_cloudinary_cloud_name", // Replace with your cloud name
-                                file = body,
-                                folder = "resume",
-                                timestamp = System.currentTimeMillis(),
-                                apiKey = "your_cloudinary_api_key", // Replace with your API Key
-                                uploadPreset = signedPreset
+                            // Use the FileUploadUtil instead of direct API calls
+                            val cloudinaryResponse = com.example.resume_parsing.utils.FileUploadUtil.uploadFile(
+                                context, 
+                                pdfUri, 
+                                "resume"
                             )
-                            if (response.secure_url != null) {
+                            Log.d("cloudinary Response" , cloudinaryResponse.toString());
+                            if (cloudinaryResponse != null && cloudinaryResponse.secure_url.isNotEmpty()) {
                                 // Update the User Data and Save
-                                val updatedUser = userData.value?.copy(resume = response.secure_url)
+                                val updatedUser = userData.value?.copy(resume = cloudinaryResponse.secure_url)
                                 if (updatedUser != null) {
                                     saveUserData(updatedUser)
 
-                                    val newBitmap = convertPdfToBitmap(response.secure_url)
+                                    val newBitmap = convertPdfToBitmap(cloudinaryResponse.secure_url)
                                     withContext(Dispatchers.Main) {
                                         pdfBitmapState.value = newBitmap
                                     }
                                 }
-                                Toast.makeText(context, "Resume Uploaded Successful", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, "Resume Uploaded Successfully", Toast.LENGTH_SHORT).show()
                             } else {
-                                Toast.makeText(context, "Upload Failed", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, "Upload Failed: No response from server", Toast.LENGTH_SHORT).show()
                             }
                         } else {
                             Toast.makeText(context, "Could not create file from URI", Toast.LENGTH_SHORT).show()
