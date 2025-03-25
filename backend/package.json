@@ -6,8 +6,7 @@
     "type": "module",
     "scripts": {
         "dev": "nodemon -r dotenv/config --experimental-json-modules src/index.js",
-        "start": "node -r dotenv/config --experimental-json-modules src/index.js",
-        "concurrently" : "concurrently \"cd ../recSys/src && python3 main.py\" \"node -r dotenv/config --experimental-json-modules src/index.js\""
+        "start": "node -r dotenv/config --experimental-json-modules src/index.js"
     },
     "author": "",
     "license": "ISC",
