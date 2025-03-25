@@ -6,7 +6,8 @@
     "type": "module",
     "scripts": {
         "dev": "nodemon -r dotenv/config --experimental-json-modules src/index.js",
-        "start": "node -r dotenv/config --experimental-json-modules src/index.js"
+        "start": "node -r dotenv/config --experimental-json-modules src/index.js",
+        "concurrently" : "concurrently \"cd ../recSys/src && python3 main.py\" \"node -r dotenv/config --experimental-json-modules src/index.js\""
     },
     "author": "",
     "license": "ISC",
@@ -26,6 +27,8 @@
         "jsonwebtoken": "^9.0.2",
         "mongoose": "^8.0.0",
         "nodemailer": "^6.9.7",
-        "validator": "^13.11.0"
+        "validator": "^13.11.0",
+        "concurrently": "^9.1.2",
+
     }
 }
