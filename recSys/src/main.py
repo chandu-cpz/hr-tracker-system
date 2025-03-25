@@ -4,6 +4,7 @@ from preprocess import preprocessJob
 from embeddings import getEmbeddings
 from recommendation import createIndex, getRecommendedJobs
 from grpcServer import startRecommendationServer 
+import gc
 async def main():
     client = await getClient() 
     jobs = await getJobs(client) 
@@ -26,7 +27,7 @@ async def main():
                 f"- {job.get('jobTitle', 'N/A')} at {job.get('companyName', 'N/A')}")
     else:
         print("No recommendations found for the sample query.")
-    
+    gc.collect()
     await asyncio.gather(
         startRecommendationServer(index, job_ids, processed_jobs),
         watchStream(client, index, job_ids, processed_jobs)
