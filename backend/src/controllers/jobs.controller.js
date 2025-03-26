@@ -2,7 +2,7 @@ import { Job } from "../models/jobs.model.js";
 import { User } from "../models/user.model.js";
 import validator from "validator";
 import express from "express";
-import { getRecommendationClient } from "../utils/grpc.js";
+import { getRecommendationClient,getATSClient } from "../utils/grpc.js";
 import mongoose from "mongoose";
 
 const router = express.Router();
@@ -303,13 +303,48 @@ export async function recommendJobs(req, res) {
                 try {
                     // 1. Convert job IDs to ObjectIds and fetch jobs from MongoDB
                     const recommendedJobObjectIds = response.recommendedJobIds.map(jobId => new mongoose.Types.ObjectId(jobId));
-                    const recommendedJobs = await Promise.all( // Use Promise.all to fetch jobs concurrently
-                        recommendedJobObjectIds.map(objectId => Job.findById(objectId).lean()) // .lean() to get plain JavaScript objects
+
+                    // 2. Fetch jobs from MongoDB and enrich postedBy
+                    const recommendedJobs = await Promise.all(
+                        recommendedJobObjectIds.map(async objectId => {
+                            const job = await Job.findById(objectId).lean(); // Get plain JavaScript objects
+
+                            if (job && job.postedBy) {
+                                try {
+                                    const user = await User.findById(job.postedBy).lean();  // Find the User
+
+                                    if (user) {
+                                        // Create the postedBy object
+                                        job.postedBy = {
+                                            _id: user._id,
+                                            name: user.name,
+                                            displayName: `${user.name} (${user._id})` // For display purposes
+                                        };
+                                    } else {
+                                        // Handle case where user is not found
+                                        job.postedBy = {
+                                            _id: job.postedBy.toString(), //original object ID
+                                            name: "Unknown User",
+                                            displayName: `Unknown User (${job.postedBy.toString()})`
+                                        };
+                                    }
+                                } catch (userError) {
+                                    console.error("Error fetching user:", userError);
+                                    // Handle case where there's an error fetching the user
+                                    job.postedBy = {
+                                        _id: job.postedBy.toString(),//original object ID
+                                        name: "Error Fetching User",
+                                        displayName: `Error Fetching User (${job.postedBy.toString()})`
+                                    };
+                                }
+                            }
+                            return job;
+                        })
                     );
 
-                    console.log("Recommended Jobs from MongoDB:", recommendedJobs); // Log the fetched job objects
+                    console.log("Recommended Jobs from MongoDB:", recommendedJobs);
 
-                    // 2. Send the fetched job objects in the JSON response
+                    // 3. Send the fetched job objects in the JSON response
                     return res.json({
                         "recommendedJobs": recommendedJobs
                     });
