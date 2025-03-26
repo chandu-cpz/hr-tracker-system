@@ -31,7 +31,7 @@ fun JobCard(job: Job, onClick: () -> Unit) {
             .width(cardWidth)
             .background(Color.White, shape = RoundedCornerShape(16.dp))
             .clickable { onClick() }
-            .padding(16.dp)
+            .padding(12.dp)
     ) {
         Column(
             modifier = Modifier.fillMaxWidth()
@@ -40,56 +40,68 @@ fun JobCard(job: Job, onClick: () -> Unit) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(220.dp)
+                    .height(240.dp)
                     .background(Color(0xFF80D0FF), shape = RoundedCornerShape(12.dp))
-                    .padding(16.dp)
+                    .padding(12.dp)
             ) {
                 Column {
                     // Date Posted
                     Box(
                         modifier = Modifier
                             .background(Color(0xFFE3F2FD), shape = RoundedCornerShape(50))
-                            .padding(horizontal = 10.dp, vertical = 4.dp)
+                            .padding(horizontal = 12.dp, vertical = 6.dp)
                     ){
                         job.updatedAt?.let { dateString ->
                             val formattedDate = formatDate(dateString)
-
-                            Text(text =  formattedDate, fontSize = 12.sp, color = Color.Black.copy(alpha = 0.7f))
+                            Text(
+                                text = formattedDate, 
+                                fontSize = 13.sp, 
+                                color = Color.Black.copy(alpha = 0.7f),
+                                fontWeight = FontWeight.Medium
+                            )
                         }
                     }
 
+                    Spacer(modifier = Modifier.height(8.dp))
+
                     // Company Name
                     Text(
-                        text = job.companyName ?: "Company Name Unavailable", // Handle null case
-                        fontSize = 16.sp,
+                        text = job.companyName ?: "Company Name Unavailable",
+                        fontSize = 17.sp,
                         color = Color.DarkGray,
-                        modifier = Modifier.padding(12.dp)
+                        modifier = Modifier.padding(vertical = 4.dp)
                     )
 
                     // Job Title
                     Text(
-                        text = job.jobTitle ?: "Job Title Unavailable", // Handle null case
-                        fontSize = 22.sp,
+                        text = job.jobTitle ?: "Job Title Unavailable",
+                        fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.Black,
-                        modifier = Modifier.padding(12.dp)
+                        modifier = Modifier.padding(vertical = 4.dp)
                     )
+
+                    Spacer(modifier = Modifier.height(8.dp))
 
                     // Skills
                     FlowRow(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 8.dp),
-                        horizontalArrangement = Arrangement.spacedBy(6.dp),
-                        verticalArrangement = Arrangement.spacedBy(6.dp)
+                            .fillMaxWidth(),  // Removed the top padding here
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         job.skills?.forEach { skill ->
                             Box(
                                 modifier = Modifier
                                     .background(Color(0xFFE3F2FD), shape = RoundedCornerShape(50))
-                                    .padding(horizontal = 10.dp, vertical = 4.dp)
+                                    .padding(horizontal = 16.dp, vertical = 8.dp)
                             ) {
-                                Text(text = skill, fontSize = 12.sp, color = Color.Black)
+                                Text(
+                                    text = skill, 
+                                    fontSize = 14.sp, 
+                                    color = Color.Black,
+                                    fontWeight = FontWeight.Medium
+                                )
                             }
                         }
                     }
@@ -100,21 +112,22 @@ fun JobCard(job: Job, onClick: () -> Unit) {
                     model = job.postedBy?.companyImage,
                     contentDescription = "Company Logo",
                     modifier = Modifier
-                        .size(50.dp)
+                        .size(56.dp)
                         .align(Alignment.TopEnd)
                 )
             }
 
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 // Salary (Bottom Left)
                 Text(
-                    text = "${'$'}${job.salary ?: "Salary Negotiable"}/month", // Handle null case
-                    fontSize = 18.sp,
+                    text = "${'$'}${job.salary ?: "Salary Negotiable"}/month",
+                    fontSize = 19.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.Black
                 )
@@ -123,9 +136,14 @@ fun JobCard(job: Job, onClick: () -> Unit) {
                 Button(
                     onClick = onClick,
                     shape = RoundedCornerShape(50),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
+                    modifier = Modifier.padding(start = 8.dp)
                 ) {
-                    Text(text = "Details", color = Color.White)
+                    Text(
+                        text = "Details", 
+                        color = Color.White,
+                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                    )
                 }
             }
         }

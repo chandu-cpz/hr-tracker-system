@@ -2,11 +2,8 @@ package com.example.resume_parsing.ui.screens
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.pdf.PdfRenderer
 import android.net.Uri
 import android.os.Build
-import android.os.ParcelFileDescriptor
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -17,16 +14,16 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AttachFile
+import androidx.compose.material.icons.filled.* // Import common icons
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.Color // Keep original explicit colors for now
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -36,145 +33,408 @@ import coil.compose.rememberAsyncImagePainter
 import com.example.resume_parsing.App
 import com.example.resume_parsing.network.RetrofitClient
 import com.example.resume_parsing.network.UserResponse
+import com.example.resume_parsing.utils.FileUploadUtil // Ensure this path is correct
 import com.example.resume_parsing.utils.FileUtils
 import com.example.resume_parsing.utils.PreferencesHelper
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.File
-import java.io.FileOutputStream
-import java.net.URL
+
+// --- Helper Composables (Slightly enhanced) ---
 
 @Composable
-fun InfoItem(label: String, value: String) {
+fun InfoItem(label: String, value: String?) { // Make value nullable for safety
     Row(modifier = Modifier.padding(vertical = 4.dp)) {
-        Text("$label: ", fontSize = 16.sp, color = Color.Black)
-        Text(value.ifEmpty { "-" }, fontSize = 16.sp, color = Color.Black)
+        Text(
+            text = "$label: ",
+            style = MaterialTheme.typography.bodyLarge,
+            fontWeight = FontWeight.SemiBold,
+            color = Color.Black // Using original color for now
+            // color = MaterialTheme.colorScheme.onSurfaceVariant // Theme alternative
+        )
+        Text(
+            text = value?.takeIf { it.isNotEmpty() } ?: "-", // Use takeIf for cleaner check
+            style = MaterialTheme.typography.bodyLarge,
+            color = Color.Black // Using original color for now
+           // color = MaterialTheme.colorScheme.onSurfaceVariant // Theme alternative
+        )
     }
 }
 
 @Composable
-fun ShowFileViewer(context: Context, pdfUrl: String){
-    Text(
-        text = "Error loading resume. Tap to View as PDF",
-        textAlign = TextAlign.Center,
-        modifier = Modifier.clickable {
-            // Launch the intent here, outside of the composable scope
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.setDataAndType(Uri.parse(pdfUrl), "application/pdf")
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-            val new_intent = Intent.createChooser(intent, "Open File")
-            startActivity(context, new_intent, null)
-        }
-    )
+fun ProfileHeader(
+    userData: UserResponse?,
+    onEditClick: () -> Unit,
+    onLogoutClick: () -> Unit
+) {
+    // Use original background color
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Color(0xFFFFE5C2)), // Original background color
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 24.dp)
+        ) {
+            // Profile Image
+            Image(
+                painter = rememberAsyncImagePainter(
+                    model = userData?.profileImage?.takeIf { it.isNotEmpty() }
+                        ?: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2IYhSn8Y9S9_HF3tVaYOepJBcrYcd809pBA&s" // Placeholder
+                ),
+                contentDescription = "Profile Picture",
+                modifier = Modifier
+                    .size(120.dp)
+                    .clip(CircleShape)
+                    .border(2.dp, Color(0xFFE65100), CircleShape), // Use original accent color for border
+                contentScale = ContentScale.Crop
+            )
 
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Name
+            Text(
+                text = userData?.fullName ?: "Unknown User",
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFFE65100) // Original accent color
+            )
+
+            Spacer(modifier = Modifier.height(4.dp))
+
+            // Email with Icon
+            Row(verticalAlignment = Alignment.CenterVertically){
+                Icon(
+                    Icons.Default.Email,
+                    contentDescription = "Email Icon",
+                    modifier = Modifier.size(16.dp),
+                    tint = Color.Black.copy(alpha = 0.7f) // Slightly muted black
+                )
+                Spacer(modifier = Modifier.width(4.dp))
+                Text(
+                    text = userData?.email ?: "No Email Provided",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color.Black.copy(alpha = 0.8f)
+                )
+            }
+
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Action Buttons Row
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterHorizontally)
+            ) {
+                // Edit Profile Button
+                Button(
+                    onClick = onEditClick,
+                    shape = MaterialTheme.shapes.medium,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFFFF7043) // Original button color
+                    )
+                ) {
+                    Icon(
+                        Icons.Default.Edit,
+                        contentDescription = "Edit Profile",
+                        modifier = Modifier.size(ButtonDefaults.IconSize)
+                    )
+                    Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+                    Text("Edit Profile", color = Color.White)
+                }
+
+                // Logout Button
+                Button( // Keep as filled Button as per original, but use Red
+                    onClick = onLogoutClick,
+                    shape = MaterialTheme.shapes.medium,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Red // Original button color
+                    )
+                ) {
+                     Icon(
+                        Icons.Default.Logout,
+                        contentDescription = "Log Out",
+                         modifier = Modifier.size(ButtonDefaults.IconSize)
+                    )
+                    Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+                    Text("Log Out", color = Color.White)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun ResumeSection(
+    resumeUrl: String?,
+    isLoading: Boolean,
+    context: Context,
+    pdfPickerLauncher: androidx.activity.result.ActivityResultLauncher<String> // Explicit type
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+    ) {
+        Text(
+            text = "Manage Resume",
+            style = MaterialTheme.typography.titleLarge,
+            color = Color.White, // Text on dark background
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
+
+        if (isLoading) {
+            CircularProgressIndicator(
+                modifier = Modifier.padding(vertical = 32.dp),
+                color = Color(0xFFFF7043) // Original accent color
+            )
+        } else if (resumeUrl.isNullOrEmpty()) {
+            // --- Upload Resume State ---
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { pdfPickerLauncher.launch("application/pdf") },
+                shape = MaterialTheme.shapes.medium,
+                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+                 // Use a lighter shade for contrast on dark background
+                colors = CardDefaults.cardColors(containerColor = Color(0xFF455A64))
+            ) {
+                Column(
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp, vertical = 32.dp)
+                        .fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Icon(
+                        Icons.Filled.AttachFile,
+                        contentDescription = "Upload Resume Icon",
+                        tint = Color(0xFFFFE5C2), // Lighter color for icon
+                        modifier = Modifier.size(48.dp)
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Text(
+                        text = "No Resume Uploaded",
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = Color.White // Text on card background
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = "Tap here to upload your PDF resume",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Color.White.copy(alpha = 0.8f), // Slightly muted white
+                        textAlign = TextAlign.Center
+                    )
+                }
+            }
+        } else {
+            // --- Resume Exists State ---
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                shape = MaterialTheme.shapes.medium,
+                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+                 // Use a lighter shade for contrast on dark background
+                colors = CardDefaults.cardColors(containerColor = Color(0xFF455A64))
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween // Space out icon/text and button
+                ) {
+                    // Info about attached resume
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            Icons.Filled.PictureAsPdf,
+                            contentDescription = "PDF Icon",
+                            tint = Color(0xFFFFE5C2), // Lighter color for icon
+                            modifier = Modifier.size(32.dp)
+                        )
+                        Spacer(modifier = Modifier.width(12.dp))
+                        Text(
+                            "Resume Attached",
+                            style = MaterialTheme.typography.bodyLarge,
+                            fontWeight = FontWeight.Medium,
+                            color = Color.White // Text on card background
+                        )
+                    }
+
+                    // View Resume Button
+                    Button(
+                        onClick = {
+                            try {
+                                val intent = Intent(Intent.ACTION_VIEW).apply {
+                                    setDataAndType(Uri.parse(resumeUrl), "application/pdf")
+                                    // Flags might help ensure viewer apps can access the URI
+                                    flags = Intent.FLAG_ACTIVITY_NO_HISTORY or Intent.FLAG_GRANT_READ_URI_PERMISSION
+                                }
+                                val chooserIntent = Intent.createChooser(intent, "Open PDF with")
+                                startActivity(context, chooserIntent, null)
+                            } catch (e: Exception) {
+                                Log.e("ProfileScreen", "Error opening PDF viewer", e)
+                                Toast.makeText(context, "Cannot open PDF. No suitable app found or invalid URL.", Toast.LENGTH_LONG).show()
+                            }
+                        },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFFFF7043) // Original button color
+                        )
+                    ) {
+                        Text("View PDF", color = Color.White) // Clearer button text
+                    }
+                }
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            // Change Resume Button
+            Button( // Keep as filled Button as per original
+                 onClick = { pdfPickerLauncher.launch("application/pdf") },
+                 modifier = Modifier.fillMaxWidth(), // Make it full width for easy tapping
+                 shape = MaterialTheme.shapes.medium,
+                 colors = ButtonDefaults.buttonColors(
+                     containerColor = Color(0xFFFF7043).copy(alpha = 0.8f) // Slightly less prominent? Or keep same
+                 )
+            ) {
+                Icon(
+                    Icons.Default.ChangeCircle, // Changed Icon
+                    contentDescription = "Change Resume",
+                     modifier = Modifier.size(ButtonDefaults.IconSize)
+                    )
+                Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+                Text("Change Resume", color = Color.White)
+            }
+        }
+    }
+}
+
+@Composable
+fun UserInfoCard(userData: UserResponse?) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 8.dp),
+        shape = MaterialTheme.shapes.large, // Nicer rounded corners
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFFFFE5C2)) // Original card color
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+
+            // Use Row for side-by-side Info and Experience as in original
+             Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                // Info Column
+                Column(modifier = Modifier.weight(1f)) { // Use weight for flexible width
+                    Text(
+                        "Info",
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0xFFE65100), // Original title color
+                        modifier = Modifier.padding(bottom = 8.dp)
+                    )
+                    InfoItem(label = "Gender", value = userData?.gender)
+                    InfoItem(label = "Location", value = userData?.address)
+                    InfoItem(label = "Education", value = userData?.education)
+                }
+
+                Spacer(modifier = Modifier.width(16.dp)) // Add space between columns
+
+                // Experience Column
+                Column(modifier = Modifier.weight(1f)) { // Use weight for flexible width
+                    Text(
+                        "Experience",
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0xFFE65100), // Original title color
+                        modifier = Modifier.padding(bottom = 8.dp)
+                    )
+                    InfoItem(label = "Years", value = userData?.experience)
+                }
+            }
+
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Skills Section Title
+             Text(
+                "Skills",
+                style = MaterialTheme.typography.titleMedium,
+                 fontWeight = FontWeight.Bold,
+                color = Color(0xFFE65100), // Original title color
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+            // Skills List (or placeholder)
+            val skillsText = userData?.skills
+                ?.takeIf { it.isNotEmpty() }
+                ?.joinToString(", ")
+                ?: "-"
+            Text(
+                text = skillsText,
+                style = MaterialTheme.typography.bodyLarge,
+                color = Color.Black // Original text color on card
+            )
+        }
+    }
 }
 
 
-@RequiresApi(Build.VERSION_CODES.Q)
+// --- Main Profile Screen Composable ---
+
+@RequiresApi(Build.VERSION_CODES.Q) // Still potentially needed for FileUtils.uriToFile
 @Composable
 fun ProfileScreen(navController: NavHostController) {
     val context = LocalContext.current
-
-    // Get data from SharedPreferences once and remember it
-    val initialUserData = remember { PreferencesHelper.getUserData(context) }
-    val userData = remember { mutableStateOf(initialUserData) } // MutableState for potential updates
-
-    val userRole = userData.value?.role ?: "USER"
-    val resumeUrl = userData.value?.resume // Retrieve resumeUrl from shared preferences
-
-    var showEditDialog by remember { mutableStateOf(false) }
-    var isResumeExpanded by remember { mutableStateOf(false) }
-    var isLoading by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
 
-    // MutableState to hold the converted Bitmap (or null if there's an error)
-    val pdfBitmapState = remember { mutableStateOf<Bitmap?>(null) }
+    // State for user data, loading, and dialog visibility
+    val initialUserData = remember { PreferencesHelper.getUserData(context) }
+    val userData = remember { mutableStateOf(initialUserData) }
+    var isLoading by remember { mutableStateOf(false) } // Loading state specifically for resume upload/change
+    var showEditDialog by remember { mutableStateOf(false) }
 
-    // Save UserData to SharedPreferences
+    // Derived state (read-only)
+    val userRole = userData.value?.role ?: "USER"
+    val resumeUrl = userData.value?.resume
+
+    // --- Callbacks ---
+    // Function to save UserData to SharedPreferences AND update local state
     fun saveUserData(user: UserResponse) {
         PreferencesHelper.saveUserData(context, user)
-        userData.value = user // Update the MutableState
+        userData.value = user // Update the MutableState to trigger recomposition
+        Log.d("ProfileScreen", "User data saved to SharedPreferences and UI state updated.")
     }
 
-    // Function to convert PDF to Bitmap
-    suspend fun convertPdfToBitmap(url: String?): Bitmap? {
-        if (url.isNullOrBlank()) {
-            return null
-        }
-
-        return withContext(Dispatchers.IO) {
-            try {
-                // Download the PDF from the URL
-                val pdfUrl = URL(url)
-                val connection = pdfUrl.openConnection()
-                connection.connect()
-                val inputStream = connection.getInputStream()
-
-                // Create a temporary file
-                val tempFile = File.createTempFile("resume", ".pdf", context.cacheDir)
-                val outputStream = FileOutputStream(tempFile)
-
-                inputStream.copyTo(outputStream)
-                inputStream.close()
-                outputStream.close()
-
-                val parcelFileDescriptor: ParcelFileDescriptor? =
-                    ParcelFileDescriptor.open(tempFile, ParcelFileDescriptor.MODE_READ_ONLY)
-                val pdfRenderer = parcelFileDescriptor?.let { PdfRenderer(it) }
-
-                if (pdfRenderer != null) {
-                    val pageCount = pdfRenderer.pageCount
-                    Log.d("PDFPageCount", "Number of pages in PDF: $pageCount")
-                    if (pageCount > 0) {
-                        val page = pdfRenderer.openPage(0)
-                        val bitmap: Bitmap = Bitmap.createBitmap(
-                            page?.width ?: 1,
-                            page?.height ?: 1,
-                            Bitmap.Config.ARGB_8888
-                        ) // Add default values to prevent NPE
-                        page.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY)
-                        page.close()
-                        pdfRenderer.close()
-                        parcelFileDescriptor.close()
-                        return@withContext bitmap
-                    } else {
-                        pdfRenderer.close()
-                        parcelFileDescriptor.close()
-                        Log.e("PdfConverter", "Could not load the first PDF page")
-                        return@withContext null
-                    }
-                } else {
-                    Log.e("PdfConverter", "Could not create PdfRenderer")
-                    return@withContext null
+    fun handleLogout() {
+        // Keep original logout logic
+        RetrofitClient.apiService.logout().enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                // Clear prefs and navigate regardless of server response for better UX
+                PreferencesHelper.clearPreferences(App.context)
+                Toast.makeText(App.context, "Logged out", Toast.LENGTH_SHORT).show()
+                navController.navigate("login") {
+                    popUpTo(navController.graph.startDestinationId) { inclusive = true } // Clear back stack
                 }
-
-            } catch (e: Exception) {
-                Log.e("PdfConverter", "Error converting PDF to Bitmap", e)
-                return@withContext null
-            }
-        }
-    }
-
-    // Load PDF as Image at Composition
-    LaunchedEffect(resumeUrl) {
-        if (userRole == "USER" && !resumeUrl.isNullOrBlank()) { //Only attempt for users
-            isLoading = true
-            coroutineScope.launch {
-                val bitmap = convertPdfToBitmap(resumeUrl)
-                withContext(Dispatchers.Main) {
-                    pdfBitmapState.value = bitmap
-                    isLoading = false
+                if (!response.isSuccessful) {
+                    Log.e("ProfileScreen", "Logout API call failed: ${response.code()}")
                 }
             }
-        }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.e("ProfileScreen", "Logout network error", t)
+                // Clear prefs and navigate regardless of network error
+                PreferencesHelper.clearPreferences(App.context)
+                Toast.makeText(App.context, "Logged out (offline)", Toast.LENGTH_SHORT).show()
+                 navController.navigate("login") {
+                    popUpTo(navController.graph.startDestinationId) { inclusive = true }
+                }
+            }
+        })
     }
 
     // Activity Result Launcher for PDF picking
@@ -183,267 +443,119 @@ fun ProfileScreen(navController: NavHostController) {
         onResult = { uri: Uri? ->
             uri?.let { pdfUri ->
                 coroutineScope.launch {
-                    isLoading = true
+                    isLoading = true // Start loading indicator for upload process
                     try {
-                        val file = FileUtils.uriToFile(pdfUri, context)
-                        if (file != null) {
-                            // Use the FileUploadUtil instead of direct API calls
-                            val cloudinaryResponse = com.example.resume_parsing.utils.FileUploadUtil.uploadFile(
-                                context, 
-                                pdfUri, 
-                                "resume"
-                            )
-                            Log.d("cloudinary Response" , cloudinaryResponse.toString());
-                            if (cloudinaryResponse != null && cloudinaryResponse.secure_url.isNotEmpty()) {
-                                // Update the User Data and Save
-                                val updatedUser = userData.value?.copy(resume = cloudinaryResponse.secure_url)
-                                if (updatedUser != null) {
-                                    saveUserData(updatedUser)
+                        // Use the FileUploadUtil as in the original code
+                        val cloudinaryResponse = FileUploadUtil.uploadFile(
+                            context,
+                            pdfUri,
+                            "resume" // Assuming "resume" is the desired identifier/folder
+                        )
+                        Log.d("ProfileScreen", "Cloudinary Response: $cloudinaryResponse")
 
-                                    val newBitmap = convertPdfToBitmap(cloudinaryResponse.secure_url)
-                                    withContext(Dispatchers.Main) {
-                                        pdfBitmapState.value = newBitmap
-                                    }
-                                }
+                        if (cloudinaryResponse != null && cloudinaryResponse.secure_url.isNotEmpty()) {
+                            // --- IMPORTANT: Update local data and SharedPreferences ONLY ---
+                            val updatedUser = userData.value?.copy(resume = cloudinaryResponse.secure_url)
+                            if (updatedUser != null) {
+                                saveUserData(updatedUser) // This now saves to prefs and updates state
                                 Toast.makeText(context, "Resume Uploaded Successfully", Toast.LENGTH_SHORT).show()
                             } else {
-                                Toast.makeText(context, "Upload Failed: No response from server", Toast.LENGTH_SHORT).show()
+                                // Should not happen if userData.value was not null initially
+                                Toast.makeText(context, "Error updating local user data", Toast.LENGTH_SHORT).show()
                             }
                         } else {
-                            Toast.makeText(context, "Could not create file from URI", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Upload Failed: No response from server", Toast.LENGTH_SHORT).show()
                         }
                     } catch (e: Exception) {
                         Log.e("ProfileScreen", "Error uploading PDF", e)
-                        Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                        // Use localizedMessage for potentially more user-friendly error
+                        Toast.makeText(context, "Error: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
                     } finally {
-                        isLoading = false
+                        isLoading = false // Stop loading indicator
                     }
                 }
+            } ?: run {
+                 Log.d("ProfileScreen", "PDF picker cancelled.")
             }
         }
     )
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState()) // Making Profile Screen Scrollable
-            .background(Color(0xFF2C3E50)),
-    ) {
-        Box(
+    // --- UI Structure ---
+    Scaffold(
+        // Use the original dark background color
+        containerColor = Color(0xFF2C3E50)
+    ) { paddingValues ->
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .background(Color(0xFFFFE5C2)),
-            contentAlignment = Alignment.Center
+                .fillMaxSize()
+                .padding(paddingValues) // Apply padding from Scaffold
+                .verticalScroll(rememberScrollState()) // Make content scrollable
         ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(16.dp) // Adding padding to the entire column
-            ) {
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier
-                        .size(100.dp)
-                        .clip(CircleShape)
-                        .background(Color.Gray)
-                ) {
-                    val imageUrl = userData.value?.profileImage ?: ""
-                    Image(
-                        painter = rememberAsyncImagePainter(
-                            if (imageUrl.isNotEmpty()) imageUrl
-                            else "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2IYhSn8Y9S9_HF3tVaYOepJBcrYcd809pBA&s"
-                        ),
-                        contentDescription = "Profile Picture",
-                        modifier = Modifier.fillMaxSize(),
-                        contentScale = ContentScale.Crop
-                    )
-                }
+            // Profile Header Section
+            ProfileHeader(
+                userData = userData.value,
+                onEditClick = { showEditDialog = true },
+                onLogoutClick = { handleLogout() }
+            )
 
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(userData.value?.fullName ?: "Unknown", fontSize = 22.sp, color = Color(0xFFE65100))
-                Text("\uD83D\uDCE7 ${userData.value?.email ?: "No Email"}", fontSize = 14.sp, color = Color.Black)
-                Spacer(modifier = Modifier.height(8.dp))
-
-                Button(
-                    onClick = { showEditDialog = true },
-                    colors = ButtonDefaults.buttonColors(Color(0xFFFF7043))
-                ) {
-                    Text("Edit Profile", color = Color.White)
-                }
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                Button(
-                    onClick = {
-                        RetrofitClient.apiService.logout().enqueue(object : Callback<ResponseBody> {
-                            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                                if (response.isSuccessful) {
-                                    PreferencesHelper.clearPreferences(App.context)
-                                    Toast.makeText(App.context, "Logged out successfully", Toast.LENGTH_SHORT).show()
-                                    navController.navigate("login") {
-                                        popUpTo("login") { inclusive = true }
-                                    }
-                                } else {
-                                    Toast.makeText(App.context, "Error logging out", Toast.LENGTH_SHORT).show()
-                                }
-                            }
-
-                            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                                Toast.makeText(App.context, "Network error: ${t.message}", Toast.LENGTH_SHORT).show()
-                            }
-                        })
-                    },
-                    colors = ButtonDefaults.buttonColors(Color.Red)
-                ) {
-                    Text("Log Out", color = Color.White)
-                }
-            }
-        }
-
-        // Conditionally render Resume section for USER
-        if (userRole == "USER") {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-            ) {
-
-                if (resumeUrl.isNullOrEmpty()) {
-                    Text(text = "Upload Your Resume", fontSize = 16.sp)
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Box(
-                        modifier = Modifier
-                            .size(100.dp)
-                            .clip(CircleShape)
-                            .background(Color.Gray.copy(alpha = 0.2f))
-                            .clickable { pdfPickerLauncher.launch("application/pdf") },
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Icon(
-                            Icons.Filled.AttachFile,
-                            contentDescription = "Upload",
-                            tint = Color.White,
-                            modifier = Modifier.size(48.dp)
-                        )
-                    }
-
-                    if (isLoading) {
-                        CircularProgressIndicator(modifier = Modifier.padding(top = 8.dp))
-                    }
-                } else {
-                    //Show file from Image URL or file picker
-                    Text(text = "Your Resume", fontSize = 18.sp)
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(if (isResumeExpanded) 400.dp else 200.dp) // increased box size
-                            .border(1.dp, Color.Gray, RoundedCornerShape(8.dp))
-                            .padding(8.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-
-                        if (isLoading) {
-                            CircularProgressIndicator()
-                        } else if (pdfBitmapState.value != null) {
-                            // Display the PDF as an Image
-                            Image(
-                                bitmap = pdfBitmapState.value!!.asImageBitmap(),
-                                contentDescription = "Resume Image",
-                                modifier = Modifier.fillMaxSize(),
-                                contentScale = ContentScale.Fit
-                            )
-                        } else {
-                            // Composable FileViewer Invocation
-                            ShowFileViewer(context = context,pdfUrl = resumeUrl )
-                        }
-                    }
-
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Row(
-                        horizontalArrangement = Arrangement.SpaceAround,
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        TextButton(onClick = { isResumeExpanded = !isResumeExpanded }) {
-                            Text(if (isResumeExpanded) "Show Less" else "View Full Resume")
-                        }
-
-                        Button(
-                            onClick = { pdfPickerLauncher.launch("application/pdf") },
-                            colors = ButtonDefaults.buttonColors(Color(0xFFFF7043))
-                        ) {
-                            Text("Change Resume", color = Color.White)
-                        }
-                    }
-                }
-            }
-        }
-
-        // Info/Experience/Skills Card
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            shape = RoundedCornerShape(16.dp),
-            colors = CardDefaults.cardColors(Color(0xFFFFE5C2))
-        ) {
-            Column(modifier = Modifier.padding(16.dp)) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Column {
-                        Text("Info", fontSize = 18.sp, color = Color(0xFFE65100))
-                        Spacer(modifier = Modifier.height(8.dp))
-                        InfoItem(label = "Gender", value = userData.value?.gender ?: "")
-                        InfoItem(label = "Location", value = userData.value?.address ?: "")
-                        InfoItem(label = "Education", value = userData.value?.education ?: "")
-                    }
-
-                    //Experience section should also be there on the HR View
-                    Column {
-                        Text("Experience", fontSize = 18.sp, color = Color(0xFFE65100))
-                        Spacer(modifier = Modifier.height(8.dp))
-                        InfoItem(label = "Years", value = userData.value?.experience ?: "")
-                    }
-                }
-                Spacer(modifier = Modifier.height(16.dp))
-                Text("Skills", fontSize = 18.sp, color = Color(0xFFE65100))
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = userData.value?.skills?.takeIf { it.isNotEmpty() }?.joinToString(", ") ?: "-",
-                    fontSize = 16.sp,
-                    color = Color.Black
+            // Conditionally render Resume section for USER role
+            if (userRole == "USER") {
+                ResumeSection(
+                    resumeUrl = resumeUrl,
+                    isLoading = isLoading, // Pass loading state
+                    context = context,
+                    pdfPickerLauncher = pdfPickerLauncher
                 )
+            } else {
+                 Spacer(modifier = Modifier.height(16.dp)) // Add space if resume section not shown
             }
+
+            // Info Card Section
+            UserInfoCard(userData = userData.value)
+
+            // Add some padding at the bottom
+             Spacer(modifier = Modifier.height(16.dp))
         }
     }
 
+    // --- Edit Profile Dialog ---
     if (showEditDialog) {
         val userId = userData.value?._id ?: ""
-
+        // Ensure EditProfileDialog exists and is correctly defined elsewhere
+        // Use the original logic for the dialog save action
         EditProfileDialog(
             user = userData.value,
-            userId = userId,
+            userId = userId, // Pass userId as originally intended if needed by dialog
             onDismiss = { showEditDialog = false },
-            onSave = { updatedUserRequest -> // Receive the updated user data
+            onSave = { updatedUserRequest -> // Receive the updated user data request
+                // Keep original API call logic within the dialog save action
                 coroutineScope.launch {
+                    var isDialogLoading by mutableStateOf(false) // Dialog specific loading maybe? Or reuse global isLoading?
+                    isDialogLoading = true
                     try {
+                        // Assuming updateUser takes the request object
                         val response = RetrofitClient.apiService.updateUser(updatedUserRequest)
                         if (response.isSuccessful) {
                             val updatedUser = response.body()
                             if (updatedUser != null) {
-                                saveUserData(updatedUser) // Save to SharedPreferences
+                                saveUserData(updatedUser) // Save to SharedPreferences & update state
                                 Toast.makeText(context, "Profile Updated Successfully", Toast.LENGTH_SHORT).show()
-                            }
+                                showEditDialog = false // Close dialog on success
+                            } else {
+                                Toast.makeText(context, "Profile update succeeded but no data returned.", Toast.LENGTH_LONG).show()
+                             }
                         } else {
-                            Toast.makeText(context, "Failed to Update Profile${response.body()}", Toast.LENGTH_LONG).show()
-                            Log.d("Error api","Failed to Update Profile ${response}")
+                            val errorMsg = response.errorBody()?.string() ?: "Unknown error"
+                            Log.e("ProfileScreen", "Failed to Update Profile: ${response.code()} - $errorMsg")
+                            Toast.makeText(context, "Failed to Update Profile: $errorMsg", Toast.LENGTH_LONG).show()
                         }
                     } catch (e: Exception) {
-                        Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                        Log.e("ProfileScreen", "Error updating profile", e)
+                        Toast.makeText(context, "Error: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
                     } finally {
-                        showEditDialog = false // Dismiss dialog after save attempt
+                         isDialogLoading = false
+                        // Decide if dialog should close on failure
+                        // showEditDialog = false
                     }
                 }
             }
