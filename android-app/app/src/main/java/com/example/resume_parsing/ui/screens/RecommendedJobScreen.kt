@@ -63,13 +63,13 @@ fun RecommendedJobsScreen(navController: NavHostController, jobViewModel: JobVie
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black)
+            .background(MaterialTheme.colorScheme.background)  // Changed from Color.Black
     ) {
         // Title Text
         Text(
             text = "Recommended Jobs",
             fontSize = 24.sp,
-            color = Color.White,
+            color = MaterialTheme.colorScheme.onBackground,  // Changed from Color.White
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .padding(top = 16.dp),
@@ -98,7 +98,7 @@ fun RecommendedJobsScreen(navController: NavHostController, jobViewModel: JobVie
                             .padding(16.dp),
                         contentAlignment = Alignment.Center
                     ) {
-                        CircularProgressIndicator(color = Color.White)
+                        CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)  // Changed from Color.White
                     }
                 }
             }
@@ -117,7 +117,10 @@ fun RecommendedJobsScreen(navController: NavHostController, jobViewModel: JobVie
                     .fillMaxSize()
                     .padding(16.dp)
             ) {
-                Text("Failed to load recommended jobs. Please try again.", color = Color.White)
+                Text(
+                    "Failed to load recommended jobs. Please try again.", 
+                    color = MaterialTheme.colorScheme.onBackground  // Changed from Color.White
+                )
             }
         }
 
@@ -126,7 +129,7 @@ fun RecommendedJobsScreen(navController: NavHostController, jobViewModel: JobVie
                 contentAlignment = Alignment.Center,
                 modifier = Modifier.fillMaxSize()
             ) {
-                CircularProgressIndicator(color = Color.White)
+                CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)  // Changed from Color.White
             }
         }
     }
